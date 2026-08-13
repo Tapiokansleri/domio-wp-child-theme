@@ -1,0 +1,143 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "domio/card-grid",
+  "version": "1.0.0",
+  "title": "Domio: Korttiruudukko",
+  "category": "domio",
+  "icon": "grid-view",
+  "description": "Korttiruudukko palveluille, perusteluille tai referensseille.",
+  "keywords": [
+    "kortti",
+    "ruudukko",
+    "palvelut",
+    "domio"
+  ],
+  "textdomain": "domio",
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Kiinteistöhuoltomme osa-alueet"
+    },
+    "intro": {
+      "type": "string",
+      "default": "Domion kiinteistöhuolto kattaa kaikki ne osa-alueet, joista kiinteistön laadukas huolto ja ylläpito koostuu."
+    },
+    "columns": {
+      "type": "number",
+      "default": 3
+    },
+    "cards": {
+      "type": "array",
+      "default": [
+        {
+          "id": "service-1",
+          "icon": "key",
+          "title": "Kiinteistöhuolto ja kiinteistönhoitopalvelut",
+          "text": "Säännölliset huoltokierrokset, LVIS-järjestelmien valvonta, yleisten tilojen kunnossapito ja ns. talonmiespalvelut taloyhtiöille ja yrityskiinteistöille.",
+          "linkUrl": "/kiinteistohuolto/",
+          "linkText": "Lue lisää"
+        },
+        {
+          "id": "service-2",
+          "icon": "shield",
+          "title": "Siivouspalvelut",
+          "text": "Porrassiivous ja toimitilojen ylläpitosiivous.",
+          "linkUrl": "/siivouspalvelut/",
+          "linkText": "Lue lisää"
+        },
+        {
+          "id": "service-3",
+          "icon": "heart",
+          "title": "Piha- ja vihertyöt",
+          "text": "Nurmikonleikkuu, pensaiden ja puiden leikkaukset, lehtityöt ja piha-alueiden hoito vuodenajasta riippumatta.",
+          "linkUrl": "/piha-ja-vihertyot/",
+          "linkText": "Lue lisää"
+        },
+        {
+          "id": "service-4",
+          "icon": "check",
+          "title": "Remontti- ja korjauspalvelut",
+          "text": "Huoneistokunnostukset, pienkorjaukset ja laajemmat kunnostustyöt.",
+          "linkUrl": "/remontti-ja-korjauspalvelut/",
+          "linkText": "Lue lisää"
+        },
+        {
+          "id": "service-5",
+          "icon": "pin",
+          "title": "Kone- ja kuljetuspalvelut",
+          "text": "Kalusto maansiirtotöihin ja kiinteistön konetöihin.",
+          "linkUrl": "/kone-ja-kuljetuspalvelut/",
+          "linkText": "Lue lisää"
+        },
+        {
+          "id": "service-6",
+          "icon": "snowflake",
+          "title": "Lumenauraus ja hiekoitus",
+          "text": "Talvikunnossapito [alueen] vaihteleviin keliolosuhteisiin.",
+          "linkUrl": "/piha-ja-vihertyot/",
+          "linkText": "Lue lisää"
+        },
+        {
+          "id": "service-7",
+          "icon": "key",
+          "title": "LVI-palvelut",
+          "text": "Putkityöt, korjaukset ja talotekniset huollot.",
+          "linkUrl": "/lvi-palvelut/",
+          "linkText": "Lue lisää"
+        },
+        {
+          "id": "service-8",
+          "icon": "clock",
+          "title": "24/7 vikapäivystys",
+          "text": "Apu vesivuotoihin, sähköhäiriöihin ja muihin äkillisiin tilanteisiin, kellonajasta riippumatta.",
+          "linkUrl": "/kiinteistohuolto/",
+          "linkText": "Lue lisää"
+        }
+      ]
+    },
+    "variant": {
+      "type": "string",
+      "default": "service"
+    },
+    "background": {
+      "type": "string",
+      "default": "surface"
+    },
+    "pattern": {
+      "type": "string",
+      "default": "none"
+    },
+    "patternOpacity": {
+      "type": "number",
+      "default": 3
+    }
+  },
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "heading": "Kiinteistöhuoltomme osa-alueet",
+      "columns": 3,
+      "variant": "service"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

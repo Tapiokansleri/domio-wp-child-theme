@@ -1,0 +1,80 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "domio/cta",
+	"version": "1.1.0",
+	"title": "Domio: Toimintakehote",
+	"category": "domio",
+	"icon": "megaphone",
+	"description": "Täysleveä CTA toistuvalla taustakuviolla, väli-CTA:na tai lomakkeella.",
+	"keywords": [ "cta", "lomake", "yhteydenotto", "domio" ],
+	"textdomain": "domio",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": "Haluatko tietää mitä kiinteistösi huolto maksaisi?"
+		},
+		"text": {
+			"type": "string",
+			"default": "Laske suuntaa-antava arvio muutamassa sekunnissa."
+		},
+		"ctaText": {
+			"type": "string",
+			"default": "Laske hinta-arvio"
+		},
+		"ctaUrl": {
+			"type": "string",
+			"default": "/hintalaskuri/"
+		},
+		"phone": {
+			"type": "string",
+			"default": ""
+		},
+		"formShortcode": {
+			"type": "string",
+			"default": ""
+		},
+		"variant": {
+			"type": "string",
+			"default": "band"
+		},
+		"align": {
+			"type": "string",
+			"default": "full"
+		},
+		"background": {
+			"type": "string",
+			"default": "green"
+		},
+		"pattern": {
+			"type": "string",
+			"default": "1"
+		},
+		"patternOpacity": {
+			"type": "number",
+			"default": 100
+		}
+	},
+	"supports": {
+		"align": [ "wide", "full" ],
+		"anchor": true,
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"example": {
+		"attributes": {
+			"heading": "Haluatko tietää mitä kiinteistösi huolto maksaisi?",
+			"text": "Laske suuntaa-antava arvio muutamassa sekunnissa.",
+			"ctaText": "Laske hinta-arvio",
+			"variant": "band",
+			"align": "full"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

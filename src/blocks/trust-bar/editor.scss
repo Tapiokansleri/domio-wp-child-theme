@@ -1,0 +1,23 @@
+.domio-trust-bar-editor__item {
+	margin-bottom: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+
+.domio-trust-bar-editor__media {
+	display: grid;
+	gap: 0.75rem;
+}
+
+.domio-trust-bar-editor__media img {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-height: 120px;
+	object-fit: cover;
+	border-radius: 0.35rem;
+}
+
+.editor-styles-wrapper .domio-trust-bar {
+	min-height: 4.5rem;
+}

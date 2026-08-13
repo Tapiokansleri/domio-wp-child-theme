@@ -1,0 +1,49 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "domio/hintalaskuri",
+	"version": "1.0.2",
+	"title": "Domio: Hintalaskuri",
+	"category": "domio",
+	"icon": "calculator",
+	"description": "Näyttää Domion hintalaskurin [domio_hintalaskuri]-shortcoden sisältä.",
+	"keywords": [ "hintalaskuri", "laskuri", "hinta", "domio" ],
+	"textdomain": "domio",
+	"attributes": {
+		"anchor": {
+			"type": "string",
+			"default": "hintalaskuri"
+		},
+		"align": {
+			"type": "string",
+			"default": "full"
+		},
+		"background": {
+			"type": "string",
+			"default": "surface"
+		},
+		"pattern": {
+			"type": "string",
+			"default": "none"
+		},
+		"patternOpacity": {
+			"type": "number",
+			"default": 3
+		}
+	},
+	"supports": {
+		"align": [ "wide", "full" ],
+		"anchor": true,
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"example": {
+		"attributes": {}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"render": "file:./render.php"
+}

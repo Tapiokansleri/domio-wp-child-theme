@@ -1,0 +1,115 @@
+.domio-related-links {
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink));
+	padding-block: var(--wp--preset--spacing--60);
+}
+
+.domio-related-links__inner {
+	width: var(--domio-shell-width, min(1300px, calc(100% - 2.5rem)));
+	max-width: var(--domio-content-max, 1300px);
+	margin-inline: auto;
+	padding-inline: 0;
+	box-sizing: border-box;
+}
+
+.domio-related-links__heading {
+	margin: 0 0 var(--wp--preset--spacing--50);
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink));
+	font-size: var(--wp--preset--font-size--x-large);
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+.domio-related-links__grid {
+	display: grid;
+	gap: var(--wp--preset--spacing--50) var(--wp--preset--spacing--60);
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 700px) {
+	.domio-related-links__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.domio-related-links__group {
+	min-width: 0;
+	align-self: start;
+}
+
+.domio-related-links__group-title {
+	margin: 0 0 var(--wp--preset--spacing--30);
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink));
+	font-size: var(--wp--preset--font-size--large);
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+.domio-related-links__list {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	gap: 0;
+}
+
+.domio-related-links__item {
+	display: block;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	line-height: 0;
+	border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--domio-ink) 12%, transparent);
+}
+
+.domio-related-links__item:last-child {
+	border-bottom: 1px solid color-mix(in srgb, var(--wp--preset--color--domio-ink) 12%, transparent);
+}
+
+.domio-related-links a.domio-related-links__link,
+.domio-related-links .domio-related-links__link {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-block: 0.85rem;
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink));
+	font-size: var(--wp--preset--font-size--medium);
+	font-weight: 500;
+	line-height: 1.35;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.domio-related-links__arrow {
+	flex-shrink: 0;
+	color: var(--wp--preset--color--domio-accent);
+	font-weight: 600;
+	line-height: 1;
+	transition: transform 0.2s ease;
+}
+
+.domio-related-links a.domio-related-links__link:hover,
+.domio-related-links .domio-related-links__link:hover {
+	color: var(--wp--preset--color--domio-primary);
+}
+
+.domio-related-links a.domio-related-links__link:hover .domio-related-links__arrow,
+.domio-related-links .domio-related-links__link:hover .domio-related-links__arrow {
+	transform: translateX(0.2rem);
+}
+
+.domio-related-links a.domio-related-links__link:focus-visible,
+.domio-related-links .domio-related-links__link:focus-visible {
+	outline: 3px solid var(--wp--preset--color--domio-accent);
+	outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.domio-related-links a.domio-related-links__link,
+	.domio-related-links .domio-related-links__link,
+	.domio-related-links__arrow {
+		transition: none;
+	}
+}

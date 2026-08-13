@@ -1,0 +1,18 @@
+{
+	"name": "domio-theme",
+	"version": "1.0.0",
+	"description": "Hello Elementor child theme for Domio: custom blocks, patterns, styles, and schema. Made by Tapio Kauranen (tapiokauranen.com).",
+	"author": "Tapio Kauranen <https://tapiokauranen.com>",
+	"license": "GPL-2.0-or-later",
+	"private": true,
+	"scripts": {
+		"build": "wp-scripts build --webpack-copy-php --blocks-manifest",
+		"start": "wp-scripts start --webpack-copy-php --blocks-manifest",
+		"packages-update": "wp-scripts packages-update",
+		"lint:js": "wp-scripts lint-js",
+		"lint:css": "wp-scripts lint-style"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.25.0"
+	}
+}

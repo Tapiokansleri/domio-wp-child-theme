@@ -1,0 +1,94 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "domio/trust-bar",
+  "version": "1.0.1",
+  "title": "Domio: Luottamuspalkki",
+  "category": "domio",
+  "icon": "shield",
+  "description": "Kapea, koko leveä palkki ikoneilla ja luottamuslauseilla. Oletuksena heron jälkeen.",
+  "keywords": [
+    "luottamus",
+    "ikoni",
+    "palkki",
+    "trust",
+    "domio"
+  ],
+  "textdomain": "domio",
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "id": "trust-clock",
+          "icon": "clock",
+          "text": "Vikapäivystys 24/7"
+        },
+        {
+          "id": "trust-shield",
+          "icon": "shield",
+          "text": "10 vuoden kokemus alalta"
+        },
+        {
+          "id": "trust-check",
+          "icon": "check",
+          "text": "Kaikki palvelut yhdeltä kumppanilta"
+        },
+        {
+          "id": "trust-pin",
+          "icon": "pin",
+          "text": "Helsinki, Espoo, Vantaa"
+        }
+      ]
+    },
+    "imageId": {
+      "type": "number",
+      "default": 0
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "background": {
+      "type": "string",
+      "default": "green"
+    },
+    "pattern": {
+      "type": "string",
+      "default": "none"
+    },
+    "patternOpacity": {
+      "type": "number",
+      "default": 100
+    }
+  },
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": false
+    }
+  },
+  "example": {
+    "attributes": {
+      "align": "full"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

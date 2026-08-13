@@ -1,0 +1,201 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "domio/contacts",
+  "version": "1.0.0",
+  "title": "Domio: Yhteystiedot",
+  "category": "domio",
+  "icon": "id",
+  "description": "Yhteystiedot toimipisteillä, henkilöillä ja laskutustiedoilla.",
+  "keywords": [
+    "yhteystiedot",
+    "kontakti",
+    "osoite",
+    "laskutus",
+    "domio"
+  ],
+  "textdomain": "domio",
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Yhteystiedot"
+    },
+    "serviceHours": {
+      "type": "string",
+      "default": ""
+    },
+    "servicePhone": {
+      "type": "string",
+      "default": ""
+    },
+    "urgentHeading": {
+      "type": "string",
+      "default": "Akuutti asia? Soita, me hoidamme."
+    },
+    "serviceBlocks": {
+      "type": "array",
+      "default": [
+        {
+          "id": "espoo-oncall",
+          "title": "Espoon 24/7 päivystys",
+          "phone": "040 665 6598",
+          "email": "",
+          "description": "Akuutit vikatilanteet ja ovenavaukset vuorokauden ympäri."
+        },
+        {
+          "id": "customer-service",
+          "title": "Asiakaspalvelu",
+          "phone": "040 630 5536",
+          "email": "asiakaspalvelu@domio.fi",
+          "description": ""
+        }
+      ]
+    },
+    "serviceNote": {
+      "type": "string",
+      "default": "Asutko espoolaisessa taloyhtiössä, jonka huoltoyhtiö on joku muu? Löydät oikean päivystysnumeron taloyhtiösi porrastaulusta tai isännöitsijältä."
+    },
+    "activeArea": {
+      "type": "string",
+      "default": "helsinki"
+    },
+    "areas": {
+      "type": "array",
+      "default": [
+        {
+          "id": "espoo",
+          "label": "Espoo ja Kauniainen",
+          "street": "Tiistinniityntie 8C, halli 8",
+          "city": "02230 Espoo",
+          "mapQuery": "Tiistinniityntie 8C halli 8, 02230 Espoo"
+        },
+        {
+          "id": "helsinki",
+          "label": "Helsinki",
+          "street": "Keimolanmäentie 11, halli 21",
+          "city": "01700 Vantaa",
+          "mapQuery": "Keimolanmaentie 11 halli 21, 01700 Vantaa"
+        },
+        {
+          "id": "vantaa",
+          "label": "Vantaa",
+          "street": "Keimolanmäentie 11, halli 21",
+          "city": "01700 Vantaa",
+          "mapQuery": "Keimolanmaentie 11 halli 21, 01700 Vantaa"
+        }
+      ]
+    },
+    "people": {
+      "type": "array",
+      "default": [
+        {
+          "id": "elias",
+          "section": "Myynti",
+          "name": "Elias Myllykoski",
+          "role": "Tarjoukset",
+          "phone": "040 156 9126",
+          "email": "elias.myllykoski@domio.fi",
+          "imageId": 0,
+          "imageAlt": "Elias Myllykoski, Domion myynti"
+        },
+        {
+          "id": "eero",
+          "section": "Operatiivinen toiminta",
+          "name": "Eero Järvenpää",
+          "role": "Operatiiviseen toimintaan liittyvät asiat",
+          "phone": "044 983 2760",
+          "email": "eero.jarvenpaa@domio.fi",
+          "imageId": 0,
+          "imageAlt": "Eero Järvenpää, Domion operatiivinen toiminta"
+        },
+        {
+          "id": "henna",
+          "section": "Hallinto",
+          "name": "Henna Järvenpää",
+          "role": "Hallinto",
+          "phone": "",
+          "email": "henna.jarvenpaa@domio.fi",
+          "imageId": 0,
+          "imageAlt": "Henna Järvenpää, Domion hallinto"
+        }
+      ]
+    },
+    "invoiceHeading": {
+      "type": "string",
+      "default": "Laskutustiedot"
+    },
+    "invoiceRows": {
+      "type": "array",
+      "default": [
+        {
+          "id": "company",
+          "label": "Yritys",
+          "value": "Domio Kiinteistöpalvelut Oy"
+        },
+        {
+          "id": "business-id",
+          "label": "Y-tunnus",
+          "value": "3534853-3"
+        },
+        {
+          "id": "einvoice",
+          "label": "Verkkolaskutusosoite",
+          "value": "003735348533"
+        },
+        {
+          "id": "operator",
+          "label": "Välittäjätunnus",
+          "value": "003708599126 (OpenText)"
+        },
+        {
+          "id": "email-invoice",
+          "label": "Sähköpostilaskutus",
+          "value": "fennoa.519570@erin.posti.com",
+          "href": "mailto:fennoa.519570@erin.posti.com"
+        },
+        {
+          "id": "paper",
+          "label": "Paperilaskut",
+          "value": "Domio Kiinteistöpalvelut Oy\nPL 62521\n00062 LASKUTUS"
+        }
+      ]
+    },
+    "background": {
+      "type": "string",
+      "default": "surface"
+    },
+    "pattern": {
+      "type": "string",
+      "default": "none"
+    },
+    "patternOpacity": {
+      "type": "number",
+      "default": 3
+    }
+  },
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "heading": "Yhteystiedot"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

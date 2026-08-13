@@ -1,0 +1,28 @@
+/**
+ * Domio block editor chrome (outside the iframe).
+ */
+
+/* Hide Elementor “Muokkaa elementorilla” when Domio sivupohja is selected */
+body.domio-uses-sivupohja #elementor-switch-mode,
+body.domio-uses-sivupohja #elementor-edit-button-gutenberg,
+body.domio-uses-sivupohja #elementor-editor,
+body.domio-uses-sivupohja .elementor-edit-mode-gutenberg {
+	display: none !important;
+}
+
+.block-editor-page .editor-header,
+.block-editor-page .edit-post-header {
+	padding-inline-start: 12px;
+}
+
+.block-editor-page .editor-header__toolbar,
+.block-editor-page .edit-post-header-toolbar,
+.block-editor-page .editor-document-tools {
+	padding-inline-start: 8px;
+	gap: 8px;
+}
+
+.block-editor-page .editor-document-tools__inserter-toggle,
+.block-editor-page .edit-post-header-toolbar__inserter-toggle {
+	margin-inline-start: 4px;
+}

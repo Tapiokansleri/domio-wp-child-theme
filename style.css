@@ -1,0 +1,203 @@
+/*
+Theme Name: Domio
+Theme URI: https://github.com/Tapiokansleri/domio-wp-child-theme
+Description: Child theme of Hello Elementor for the Domio site. Adds Domio design tokens, custom Gutenberg blocks, landing block patterns, block styles, and JSON-LD schema (LocalBusiness, FAQPage, Service). Made by Tapio Kauranen — https://tapiokauranen.com
+Author: Tapio Kauranen
+Author URI: https://tapiokauranen.com
+Template: hello-elementor
+Version: 1.0.34
+Requires at least: 6.0
+Tested up to: 6.8
+Requires PHP: 7.4
+License: GNU General Public License v3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: domio
+Tags: flexible-header, custom-colors, custom-menu, custom-logo, featured-images, rtl-language-support, threaded-comments, translation-ready
+*/
+
+/* -------------------------------------------------------------------------
+   Domio sivupohja — full-width layout
+   Breaks out of Hello Elementor / Gutenberg constrained content width.
+   ------------------------------------------------------------------------- */
+
+body.domio-template {
+	overflow-x: clip;
+	--domio-content-max: 1300px;
+	--domio-shell-gutter: 1.25rem;
+	--domio-shell-width: min(
+		var(--domio-content-max),
+		calc(100% - (var(--domio-shell-gutter) * 2))
+	);
+	--domio-section-pad-x: 0;
+	--wp--style--global--content-size: 1300px;
+}
+
+body.domio-template .domio-landing-template .page-header {
+	display: none;
+}
+
+body.domio-template #content.domio-landing-template,
+body.domio-template .domio-landing-template,
+body.domio-template .domio-landing-template__content,
+body.domio-template .page-content.domio-landing-template__content {
+	width: 100% !important;
+	max-width: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+/* Neutralize WP 6+ constrained layout; Domio inners use --domio-content-max */
+body.domio-template .is-layout-constrained,
+body.domio-template .domio-landing-template__content.is-layout-constrained,
+body.domio-template .page-content.is-layout-constrained {
+	--wp--style--global--content-size: 1300px;
+	--wp--style--global--wide-size: 100%;
+}
+
+body.domio-template .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+	max-width: none !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
+body.domio-template .domio-landing-template__content > * {
+	max-width: none !important;
+	width: 100%;
+}
+
+body.domio-template .domio-landing-template__content > *:first-child {
+	margin-top: 0;
+}
+
+/* Hero banner + trust bar: true viewport full-bleed */
+body.domio-template .domio-hero--banner,
+body.domio-template .wp-block-domio-hero.domio-hero--banner,
+body.domio-template .wp-block-domio-hero.alignfull.domio-hero--banner,
+body.domio-template .domio-trust-bar,
+body.domio-template .wp-block-domio-trust-bar,
+body.domio-template .domio-cta,
+body.domio-template .wp-block-domio-cta {
+	width: 100vw !important;
+	max-width: 100vw !important;
+	margin-left: calc(50% - 50vw) !important;
+	margin-right: calc(50% - 50vw) !important;
+	position: relative;
+}
+
+body.domio-template .domio-hero--banner,
+body.domio-template .wp-block-domio-hero.domio-hero--banner,
+body.domio-template .wp-block-domio-hero.alignfull.domio-hero--banner {
+	min-height: 65vh;
+}
+
+/* Other Domio sections: full-bleed shell; content width via __inner */
+body.domio-template .domio-card-grid,
+body.domio-template .domio-media-text,
+body.domio-template .domio-steps,
+body.domio-template .domio-faq,
+body.domio-template .domio-related-links,
+body.domio-template .domio-hintalaskuri-block,
+body.domio-template .domio-trustmary {
+	width: 100%;
+	max-width: none;
+}
+
+body.domio-nav-lock {
+	overflow: hidden;
+}
+
+/* Kill Elementor header leftovers / sticky spacers that leave a white strip */
+body.domio-has-header .elementor-location-header,
+body.domio-has-header .elementor-sticky__spacer,
+body.domio-has-header [data-elementor-type="header"] {
+	display: none !important;
+	height: 0 !important;
+	min-height: 0 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	overflow: hidden !important;
+	border: 0 !important;
+}
+
+body.domio-has-header {
+	padding-top: 0 !important;
+}
+
+/* Domio buttons: brand green appearance */
+.wp-block-button .wp-block-button__link,
+.wp-element-button:not(.domio-header__toggle):not(.domio-header__sub-toggle):not(.domio-header__cta) {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	background-color: #004c3e !important;
+	color: #fff !important;
+	border: 0 !important;
+	border-radius: 30px !important;
+	font-family: Onest, sans-serif !important;
+	font-size: 13px !important;
+	font-weight: 500 !important;
+	line-height: 1 !important;
+	padding: 15px 30px !important;
+	min-height: 44px !important;
+	text-align: center !important;
+	white-space: nowrap !important;
+	-webkit-font-smoothing: antialiased;
+	transition: background-color 0.12s ease, transform 0.06s ease !important;
+}
+
+.wp-block-button .wp-block-button__link:hover,
+.wp-block-button .wp-block-button__link:focus,
+.wp-block-button .wp-block-button__link:focus-visible,
+.wp-element-button:not(.domio-header__toggle):not(.domio-header__sub-toggle):not(.domio-header__cta):hover,
+.wp-element-button:not(.domio-header__toggle):not(.domio-header__sub-toggle):not(.domio-header__cta):focus,
+.wp-element-button:not(.domio-header__toggle):not(.domio-header__sub-toggle):not(.domio-header__cta):focus-visible {
+	background-color: #04e78d !important;
+	color: #121212 !important;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link {
+	background-color: transparent !important;
+	color: var(--wp--preset--color--domio-ink, #121212) !important;
+	border-color: var(--wp--preset--color--domio-accent, #04e78d) !important;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link:hover,
+.wp-block-button.is-style-outline .wp-block-button__link:focus,
+.wp-block-button.is-style-outline .wp-block-button__link:focus-visible {
+	background-color: var(--wp--preset--color--domio-accent, #04e78d) !important;
+	color: var(--wp--preset--color--domio-ink, #121212) !important;
+}
+
+/* Domio buttons: never underline (Elementor kit link styles) */
+.wp-block-button .wp-block-button__link,
+.wp-block-button .wp-block-button__link:hover,
+.wp-block-button .wp-block-button__link:focus,
+.wp-block-button .wp-block-button__link:focus-visible,
+.wp-block-button .wp-block-button__link:visited,
+.wp-element-button,
+.wp-element-button:hover,
+.wp-element-button:focus,
+.wp-element-button:focus-visible,
+.wp-element-button:visited,
+.domio-header__cta,
+.domio-header__cta:hover,
+.domio-header__cta:focus,
+.domio-header__cta:focus-visible,
+.domio-header__cta:visited,
+.domio-hero__cta,
+.domio-hero__cta:hover,
+.domio-hero__cta:focus,
+.domio-hero__cta:focus-visible,
+.domio-hero__cta:visited,
+.domio-cta__link,
+.domio-cta__link:hover,
+.domio-cta__link:focus,
+.domio-cta__link:focus-visible,
+.domio-cta__link:visited,
+.page-content .domio-related-links__link,
+.page-content .domio-related-links__link:hover,
+.page-content .domio-related-links__link:focus,
+.page-content .domio-related-links__link:focus-visible,
+.page-content .domio-related-links__link:visited {
+	text-decoration: none !important;
+}

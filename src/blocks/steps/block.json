@@ -1,0 +1,90 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "domio/steps",
+	"version": "1.0.0",
+	"title": "Domio: Vaiheet",
+	"category": "domio",
+	"icon": "editor-ol",
+	"description": "Numeroitu vaihelista prosessin esittelyyn.",
+	"keywords": [ "vaiheet", "prosessi", "lista", "domio" ],
+	"textdomain": "domio",
+	"attributes": {
+		"align": {
+			"type": "string",
+			"default": "full"
+		},
+		"heading": {
+			"type": "string",
+			"default": "Näin pääset alkuun"
+		},
+		"steps": {
+			"type": "array",
+			"default": [
+				{
+					"id": "step-1",
+					"title": "Ota yhteyttä",
+					"text": "Kerro kiinteistöstäsi lomakkeella tai puhelimitse. Riittää, että tiedämme kohteen tyypin ja osoitteen.",
+					"timeLabel": ""
+				},
+				{
+					"id": "step-2",
+					"title": "Maksuton kartoitus",
+					"text": "Käymme kohteessa ja käymme läpi, mitä kiinteistö todella tarvitsee. Kartoitus ei sido mihinkään.",
+					"timeLabel": ""
+				},
+				{
+					"id": "step-3",
+					"title": "Selkeä tarjous",
+					"text": "Saat tarjouksen, jossa näkyy mitä sopimukseen kuuluu ja mitä laskutetaan erikseen.",
+					"timeLabel": ""
+				},
+				{
+					"id": "step-4",
+					"title": "Sopimus ja aloitus",
+					"text": "Sovimme aloitusajankohdan ja yhteyshenkilön. Huolto käynnistyy sovitusti.",
+					"timeLabel": ""
+				}
+			]
+		},
+		"orientation": {
+			"type": "string",
+			"default": "horizontal"
+		},
+		"showNumbers": {
+			"type": "boolean",
+			"default": true
+		},
+		"background": {
+			"type": "string",
+			"default": "surface"
+		},
+		"pattern": {
+			"type": "string",
+			"default": "none"
+		},
+		"patternOpacity": {
+			"type": "number",
+			"default": 3
+		}
+	},
+	"supports": {
+		"align": [ "wide", "full" ],
+		"anchor": true,
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"example": {
+		"attributes": {
+			"heading": "Näin pääset alkuun",
+			"orientation": "horizontal"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

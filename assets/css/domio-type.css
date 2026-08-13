@@ -1,0 +1,600 @@
+/**
+ * Domio landing typography system.
+ *
+ * Scoped to the Domio page template (and editor canvas) so Elementor kit
+ * typography does not control Domio block type.
+ */
+
+:root {
+	--domio-font: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+	--domio-fs-display: clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem);
+	--domio-fs-h2: clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem);
+	--domio-fs-h3: clamp(1.15rem, 1.05rem + 0.45vw, 1.35rem);
+	--domio-fs-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+	--domio-fs-small: clamp(0.8125rem, 0.78rem + 0.15vw, 0.9375rem);
+	--domio-lh-display: 1.12;
+	--domio-lh-heading: 1.2;
+	--domio-lh-body: 1.65;
+	--domio-tracking-display: -0.03em;
+	--domio-tracking-heading: -0.02em;
+	--domio-content-max: 1300px;
+	/* Same shell as header: 1300px max, 1.25rem gutter each side */
+	--domio-shell-gutter: 1.25rem;
+	--domio-shell-width: min(
+		var(--domio-content-max),
+		calc(100% - (var(--domio-shell-gutter) * 2))
+	);
+	--domio-section-pad-y: clamp(3rem, 2rem + 4vw, 5.5rem);
+	--domio-section-pad-x: 0;
+	--domio-radius-media: 0.75rem;
+	--domio-radius-cta: 30px;
+	--domio-btn-bg: #004c3e;
+	--domio-btn-hover: #04e78d;
+	--domio-btn-text: #ffffff;
+	--domio-btn-hover-text: #121212;
+	--domio-btn-font-size: 13px;
+	--domio-btn-line-height: 1;
+	--domio-btn-weight: 500;
+	--domio-btn-pad-y: 15px;
+	--domio-btn-pad-x: 30px;
+	--domio-btn-min-height: 44px;
+	--domio-cta-pattern: url("../images/cover-bg.png");
+	--domio-section-bg: var(--wp--preset--color--domio-surface, #ffffff);
+	--domio-section-text: var(--wp--preset--color--domio-ink, #121212);
+	--domio-section-muted: var(--wp--preset--color--domio-muted, #777777);
+	--domio-header-offset: 4.5rem;
+}
+
+/* Smooth in-page anchors under sticky Domio header */
+html:has(body.domio-template) {
+	scroll-behavior: smooth;
+}
+
+body.domio-template .domio-landing-template [id] {
+	scroll-margin-top: calc(var(--domio-header-offset, 4.5rem) + 0.75rem);
+}
+
+/* Section backgrounds (Styles tab radio) */
+.domio-bg--surface {
+	--domio-section-bg: var(--wp--preset--color--domio-surface, #ffffff);
+	--domio-section-text: var(--wp--preset--color--domio-ink, #121212);
+	--domio-section-muted: var(--wp--preset--color--domio-muted, #777777);
+	background-color: var(--domio-section-bg);
+	color: var(--domio-section-text);
+}
+
+.domio-bg--muted {
+	--domio-section-bg: color-mix(
+		in srgb,
+		var(--wp--preset--color--domio-muted, #777777) 12%,
+		var(--wp--preset--color--domio-surface, #ffffff)
+	);
+	--domio-section-text: var(--wp--preset--color--domio-ink, #121212);
+	--domio-section-muted: var(--wp--preset--color--domio-muted, #777777);
+	background-color: var(--domio-section-bg);
+	color: var(--domio-section-text);
+}
+
+.domio-bg--green {
+	--domio-section-bg: var(--domio-btn-bg, #004c3e);
+	--domio-section-text: var(--wp--preset--color--domio-surface, #ffffff);
+	--domio-section-muted: color-mix(
+		in srgb,
+		var(--wp--preset--color--domio-surface, #ffffff) 82%,
+		transparent
+	);
+	background-color: var(--domio-section-bg);
+	color: var(--domio-section-text);
+}
+
+.domio-bg--green h1,
+.domio-bg--green h2,
+.domio-bg--green h3,
+.domio-bg--green h4,
+.domio-bg--green p,
+.domio-bg--green li,
+.domio-bg--green a:not(.domio-cta__link):not(.domio-hero__cta):not(.wp-block-button__link):not(.wp-element-button),
+.domio-bg--green span,
+.domio-bg--green summary,
+.domio-bg--green blockquote,
+.domio-bg--green cite {
+	color: var(--domio-section-text);
+}
+
+.domio-cta__form .metform-btn,
+.domio-cta__form .metform-btn span,
+.domio-cta__form .metform-btn *,
+.domio-cta__form .metform-submit-btn,
+.domio-cta__form .metform-submit-btn span,
+.domio-cta__form .metform-submit-btn *,
+.domio-cta__form .mf-btn,
+.domio-cta__form .mf-btn span,
+.domio-cta__form button[type="submit"],
+.domio-cta__form button[type="submit"] span,
+.domio-cta__form button[type="submit"] *,
+.domio-cta__form input[type="submit"] {
+	color: #fff !important;
+	-webkit-text-fill-color: #fff !important;
+}
+
+.domio-bg--green .domio-card-grid__intro,
+.domio-bg--green .domio-faq__answer,
+.domio-bg--green .domio-steps__text,
+.domio-bg--green .domio-cta__text,
+.domio-bg--green .domio-cta__phone-label {
+	color: var(--domio-section-muted);
+}
+
+.domio-bg--green .domio-faq__item,
+.domio-bg--green .domio-related-links__item,
+.domio-bg--green .domio-related-links__item:last-child {
+	border-color: color-mix(in srgb, #fff 22%, transparent);
+}
+
+.domio-bg--green .domio-related-links__link:hover {
+	color: var(--wp--preset--color--domio-accent, #04e78d);
+}
+
+/* Shared landing button appearance */
+.domio-hero__cta--primary,
+.domio-cta__link,
+.domio-cta__form .mf-btn,
+.domio-cta__form .metform-btn,
+.domio-cta__form .metform-submit-btn,
+.domio-cta__form button[type="submit"],
+.domio-cta__form input[type="submit"] {
+	appearance: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	margin: 0;
+	padding: var(--domio-btn-pad-y, 15px) var(--domio-btn-pad-x, 30px);
+	min-height: var(--domio-btn-min-height, 44px);
+	border: 1.5px solid transparent;
+	border-radius: var(--domio-radius-cta, 30px);
+	background: var(--domio-btn-bg, #004c3e);
+	color: #fff !important;
+	-webkit-text-fill-color: #fff !important;
+	font-family: var(--domio-font, Onest, sans-serif);
+	font-size: var(--domio-btn-font-size, 13px);
+	font-weight: var(--domio-btn-weight, 500);
+	line-height: 1;
+	letter-spacing: normal;
+	text-align: center;
+	text-decoration: none;
+	text-transform: none;
+	white-space: nowrap;
+	cursor: pointer;
+	user-select: none;
+	-webkit-font-smoothing: antialiased;
+	transition: background-color 0.12s ease, transform 0.06s ease;
+}
+
+.domio-hero__cta--primary:hover,
+.domio-cta__link:hover,
+.domio-cta__form .mf-btn:hover,
+.domio-cta__form .metform-btn:hover,
+.domio-cta__form .metform-submit-btn:hover,
+.domio-cta__form button[type="submit"]:hover,
+.domio-cta__form input[type="submit"]:hover {
+	background: var(--domio-btn-hover, #04e78d);
+	color: var(--domio-btn-hover-text, #121212) !important;
+	-webkit-text-fill-color: var(--domio-btn-hover-text, #121212) !important;
+}
+
+.domio-cta__form .mf-btn:hover *,
+.domio-cta__form .metform-btn:hover *,
+.domio-cta__form .metform-submit-btn:hover *,
+.domio-cta__form button[type="submit"]:hover * {
+	color: var(--domio-btn-hover-text, #121212) !important;
+	-webkit-text-fill-color: var(--domio-btn-hover-text, #121212) !important;
+}
+
+.domio-hero__cta--primary:active,
+.domio-cta__link:active,
+.domio-cta__form .mf-btn:active,
+.domio-cta__form .metform-btn:active,
+.domio-cta__form .metform-submit-btn:active,
+.domio-cta__form button[type="submit"]:active,
+.domio-cta__form input[type="submit"]:active {
+	transform: scale(0.98);
+}
+
+.domio-hero__cta {
+	appearance: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	padding: var(--domio-btn-pad-y, 15px) var(--domio-btn-pad-x, 30px);
+	min-height: var(--domio-btn-min-height, 44px);
+	border-radius: var(--domio-radius-cta, 30px);
+	font-family: var(--domio-font, Onest, sans-serif);
+	font-size: var(--domio-btn-font-size, 13px);
+	font-weight: var(--domio-btn-weight, 500);
+	line-height: 1;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	-webkit-font-smoothing: antialiased;
+	transition: background-color 0.12s ease, transform 0.06s ease;
+}
+
+/* Nested cards and form panels stay dark-on-light */
+.domio-bg--green .domio-card-grid__card,
+.domio-bg--green .domio-card-grid__card h3,
+.domio-bg--green .domio-card-grid__card p,
+.domio-bg--green .domio-card-grid__card a,
+.domio-bg--green .domio-card-grid__card span,
+.domio-bg--green .domio-card-grid__card cite,
+.domio-bg--green .domio-cta__panel,
+.domio-bg--green .domio-cta__panel p,
+.domio-bg--green .domio-cta__panel label,
+.domio-bg--green .domio-cta__panel span,
+.domio-bg--green .domio-cta__panel a {
+	color: var(--wp--preset--color--domio-ink, #121212);
+}
+
+.domio-bg--green .domio-card-grid__text {
+	color: var(--wp--preset--color--domio-muted, #777777);
+}
+
+.domio-bg--green .domio-card-grid__icon {
+	color: var(--wp--preset--color--domio-accent, #04e78d);
+}
+
+/* Repeating icon patterns (cover-bg.png / cover-bg-green.png) */
+.domio-pattern--1,
+.domio-pattern--2 {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+}
+
+.domio-pattern--1::after,
+.domio-pattern--2::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	background-repeat: repeat;
+	background-position: center;
+	background-size: 768px auto;
+}
+
+.domio-pattern--1::after {
+	background-image: url("../images/cover-bg.png");
+}
+
+.domio-pattern--2::after {
+	background-image: url("../images/cover-bg-green.png");
+}
+
+.domio-bg--green.domio-pattern--1::after,
+.domio-bg--green.domio-pattern--2::after {
+	mix-blend-mode: screen;
+	opacity: var(--domio-pattern-opacity, 1);
+}
+
+.domio-bg--surface.domio-pattern--1::after,
+.domio-bg--muted.domio-pattern--1::after,
+.domio-bg--surface.domio-pattern--2::after,
+.domio-bg--muted.domio-pattern--2::after {
+	filter: invert(1);
+	mix-blend-mode: multiply;
+	opacity: var(--domio-pattern-opacity, 0.03);
+}
+
+.domio-pattern--1 > *:not(.domio-hero__media):not(.domio-trust-bar__media),
+.domio-pattern--2 > *:not(.domio-hero__media):not(.domio-trust-bar__media) {
+	position: relative;
+	z-index: 1;
+}
+
+/* Front: only when Domio sivupohja is active */
+body.domio-template .domio-landing-template,
+body.domio-template .domio-landing-template .domio-hero,
+body.domio-template .domio-landing-template .domio-card-grid,
+body.domio-template .domio-landing-template .domio-steps,
+body.domio-template .domio-landing-template .domio-media-text,
+body.domio-template .domio-landing-template .domio-faq,
+body.domio-template .domio-landing-template .domio-cta,
+body.domio-template .domio-landing-template .domio-trust-bar,
+body.domio-template .domio-landing-template .domio-hintalaskuri-block,
+body.domio-template .domio-landing-template .domio-trustmary,
+body.domio-template .domio-landing-template .domio-related-links,
+body.domio-template .domio-landing-template .domio-contacts {
+	font-family: var(--domio-font) !important;
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink, #121212));
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body.domio-template .domio-landing-template h1,
+body.domio-template .domio-landing-template h2,
+body.domio-template .domio-landing-template h3,
+body.domio-template .domio-landing-template h4,
+body.domio-template .domio-landing-template p,
+body.domio-template .domio-landing-template li,
+body.domio-template .domio-landing-template a,
+body.domio-template .domio-landing-template span,
+body.domio-template .domio-landing-template summary,
+body.domio-template .domio-landing-template blockquote,
+body.domio-template .domio-landing-template cite {
+	font-family: var(--domio-font) !important;
+}
+
+body.domio-template .domio-landing-template h1,
+body.domio-template .domio-landing-template .domio-hero__heading {
+	font-size: var(--domio-fs-display) !important;
+	font-weight: 600 !important;
+	line-height: var(--domio-lh-display) !important;
+	letter-spacing: var(--domio-tracking-display) !important;
+	text-transform: none !important;
+}
+
+body.domio-template .domio-landing-template .domio-hero--banner,
+body.domio-template .domio-landing-template .domio-hero--banner .domio-hero__heading {
+	color: #fff !important;
+}
+
+body.domio-template .domio-landing-template .domio-hero--banner .domio-hero__breadcrumbs,
+body.domio-template .domio-landing-template .domio-hero--banner .domio-hero__breadcrumbs a,
+body.domio-template .domio-landing-template .domio-hero--banner .domio-hero__breadcrumbs span {
+	color: #fff !important;
+	font-family: var(--domio-font) !important;
+	font-size: var(--domio-fs-small) !important;
+	font-weight: 400 !important;
+}
+
+body.domio-template .domio-landing-template h2,
+body.domio-template .domio-landing-template .domio-card-grid__heading,
+body.domio-template .domio-landing-template .domio-steps__heading,
+body.domio-template .domio-landing-template .domio-media-text__heading,
+body.domio-template .domio-landing-template .domio-faq__heading,
+body.domio-template .domio-landing-template .domio-related-links__heading,
+body.domio-template .domio-landing-template .domio-contacts__title {
+	font-size: var(--domio-fs-h2) !important;
+	font-weight: 600 !important;
+	line-height: var(--domio-lh-heading) !important;
+	letter-spacing: var(--domio-tracking-heading) !important;
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink, #121212)) !important;
+	text-transform: none !important;
+}
+
+body.domio-template .domio-landing-template .domio-cta__heading {
+	font-size: var(--domio-fs-h2) !important;
+	font-weight: 600 !important;
+	line-height: var(--domio-lh-heading) !important;
+	letter-spacing: var(--domio-tracking-heading) !important;
+	color: var(--domio-section-text, #fff) !important;
+	text-transform: none !important;
+}
+
+body.domio-template .domio-landing-template h3,
+body.domio-template .domio-landing-template .domio-faq__question,
+body.domio-template .domio-landing-template .domio-steps__title,
+body.domio-template .domio-landing-template .domio-related-links__group-title {
+	font-size: var(--domio-fs-h3) !important;
+	font-weight: 600 !important;
+	line-height: 1.35 !important;
+	letter-spacing: -0.01em !important;
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink, #121212)) !important;
+	text-transform: none !important;
+}
+
+body.domio-template .domio-landing-template .domio-card-grid__card-title {
+	font-size: var(--domio-fs-h3) !important;
+	font-weight: 600 !important;
+	line-height: 1.35 !important;
+	letter-spacing: -0.01em !important;
+	color: var(--wp--preset--color--domio-ink, #121212) !important;
+	text-transform: none !important;
+}
+
+body.domio-template .domio-landing-template p,
+body.domio-template .domio-landing-template li:not(.domio-related-links__item),
+body.domio-template .domio-landing-template .domio-hero__subheading,
+body.domio-template .domio-landing-template .domio-card-grid__intro,
+body.domio-template .domio-landing-template .domio-card-grid__card-text,
+body.domio-template .domio-landing-template .domio-steps__text,
+body.domio-template .domio-landing-template .domio-faq__answer,
+body.domio-template .domio-landing-template .domio-media-text__content {
+	font-size: var(--domio-fs-body) !important;
+	font-weight: 400 !important;
+	line-height: var(--domio-lh-body) !important;
+	letter-spacing: 0 !important;
+}
+
+body.domio-template .domio-landing-template .domio-contacts a {
+	color: inherit !important;
+	font-weight: inherit !important;
+	text-decoration: none !important;
+}
+
+body.domio-template .domio-landing-template .domio-contacts a:hover {
+	text-decoration: underline !important;
+	text-decoration-thickness: 1px !important;
+	text-underline-offset: 0.18em !important;
+}
+
+body.domio-template .domio-landing-template .domio-contacts__map-link:hover {
+	text-decoration: none !important;
+}
+
+body.domio-template .domio-landing-template .domio-contacts__h:not(.domio-contacts__h--billing):not(.domio-contacts__h--service) {
+	font-size: var(--domio-fs-small) !important;
+	font-weight: 400 !important;
+	line-height: 1.4 !important;
+	letter-spacing: 0 !important;
+	color: var(--domio-section-muted) !important;
+	text-transform: none !important;
+}
+
+body.domio-template .domio-landing-template .domio-contacts__h--billing {
+	font-size: var(--domio-fs-h3) !important;
+	font-weight: 600 !important;
+	line-height: 1.35 !important;
+	letter-spacing: -0.01em !important;
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink, #121212)) !important;
+	text-transform: none !important;
+}
+
+body.domio-template .domio-landing-template .domio-contacts__name {
+	font-size: var(--domio-fs-body) !important;
+	font-weight: 600 !important;
+	line-height: 1.35 !important;
+	letter-spacing: -0.01em !important;
+}
+
+body.domio-template .domio-landing-template .domio-contacts__role,
+body.domio-template .domio-landing-template .domio-contacts__sub,
+body.domio-template .domio-landing-template .domio-contacts__contact,
+body.domio-template .domio-landing-template .domio-contacts__inv-label,
+body.domio-template .domio-landing-template .domio-contacts__map-copy span,
+body.domio-template .domio-landing-template .domio-contacts__service-desc,
+body.domio-template .domio-landing-template .domio-contacts__service-note {
+	font-size: var(--domio-fs-small) !important;
+	font-weight: 400 !important;
+	line-height: 1.5 !important;
+	letter-spacing: 0 !important;
+	color: var(--domio-section-muted) !important;
+}
+
+body.domio-template .domio-landing-template .domio-contacts__map-copy strong,
+body.domio-template .domio-landing-template .domio-contacts__inv-value,
+body.domio-template .domio-landing-template .domio-contacts__sub a,
+body.domio-template .domio-landing-template .domio-contacts__urgent-heading,
+body.domio-template .domio-landing-template .domio-contacts__h--service,
+body.domio-template .domio-landing-template .domio-contacts__service-contact {
+	font-size: var(--domio-fs-body) !important;
+	font-weight: 500 !important;
+	line-height: 1.4 !important;
+	letter-spacing: 0 !important;
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink, #121212)) !important;
+}
+
+body.domio-template .domio-landing-template .page-content a.domio-related-links__link,
+body.domio-template .domio-landing-template .domio-related-links a.domio-related-links__link {
+	color: inherit !important;
+	text-decoration: none !important;
+	font-size: var(--wp--preset--font-size--medium, 1.125rem) !important;
+	font-weight: 500 !important;
+	line-height: 1.35 !important;
+	letter-spacing: 0 !important;
+}
+
+body.domio-template .domio-landing-template .domio-cta,
+body.domio-template .domio-landing-template .domio-cta .domio-cta__text,
+body.domio-template .domio-landing-template .domio-cta .domio-cta__phone-label {
+	color: var(--domio-section-text, #fff) !important;
+}
+
+body.domio-template .domio-landing-template .domio-cta .domio-cta__text {
+	font-size: var(--domio-fs-body) !important;
+	font-weight: 400 !important;
+	line-height: var(--domio-lh-body) !important;
+	opacity: 0.86;
+}
+
+body.domio-template .domio-landing-template .domio-cta__panel,
+body.domio-template .domio-landing-template .domio-cta__panel p,
+body.domio-template .domio-landing-template .domio-cta__panel label,
+body.domio-template .domio-landing-template .domio-cta__panel .mf-input-label {
+	color: var(--wp--preset--color--domio-ink, #121212) !important;
+}
+
+body.domio-template .domio-landing-template .domio-trust-bar,
+body.domio-template .domio-landing-template .domio-trust-bar .domio-trust-bar__text,
+body.domio-template .domio-landing-template .domio-trust-bar li {
+	color: var(--domio-section-text, #fff) !important;
+	font-size: var(--domio-fs-small) !important;
+	font-weight: 500 !important;
+	line-height: 1.3 !important;
+}
+
+body.domio-template .domio-landing-template .domio-bg--green,
+body.domio-template .domio-landing-template .domio-bg--green h1,
+body.domio-template .domio-landing-template .domio-bg--green h2,
+body.domio-template .domio-landing-template .domio-bg--green h3:not(.domio-card-grid__card-title):not(.domio-contacts__h),
+body.domio-template .domio-landing-template .domio-bg--green .domio-faq__question,
+body.domio-template .domio-landing-template .domio-bg--green .domio-steps__title,
+body.domio-template .domio-landing-template .domio-bg--green .domio-related-links__link {
+	color: var(--domio-section-text, #fff) !important;
+}
+
+body.domio-template .domio-landing-template .domio-bg--green .domio-card-grid__card,
+body.domio-template .domio-landing-template .domio-bg--green .domio-card-grid__card-title,
+body.domio-template .domio-landing-template .domio-bg--green .domio-cta__panel,
+body.domio-template .domio-landing-template .domio-bg--green .domio-cta__panel p,
+body.domio-template .domio-landing-template .domio-bg--green .domio-cta__panel label,
+body.domio-template .domio-landing-template .domio-bg--green .domio-cta__panel .mf-input-label {
+	color: var(--wp--preset--color--domio-ink, #121212) !important;
+}
+
+/* Editor canvas mirrors the same type system */
+.editor-styles-wrapper .domio-hero,
+.editor-styles-wrapper .domio-card-grid,
+.editor-styles-wrapper .domio-steps,
+.editor-styles-wrapper .domio-media-text,
+.editor-styles-wrapper .domio-faq,
+.editor-styles-wrapper .domio-cta,
+.editor-styles-wrapper .domio-trust-bar,
+.editor-styles-wrapper .domio-hintalaskuri-block,
+.editor-styles-wrapper .domio-trustmary,
+.editor-styles-wrapper .domio-related-links,
+.editor-styles-wrapper .domio-contacts {
+	font-family: var(--domio-font) !important;
+	-webkit-font-smoothing: antialiased;
+}
+
+.editor-styles-wrapper .domio-hero__heading {
+	font-size: var(--domio-fs-display) !important;
+	font-weight: 600 !important;
+	line-height: var(--domio-lh-display) !important;
+	letter-spacing: var(--domio-tracking-display) !important;
+	font-family: var(--domio-font) !important;
+}
+
+.editor-styles-wrapper .domio-card-grid__heading,
+.editor-styles-wrapper .domio-steps__heading,
+.editor-styles-wrapper .domio-media-text__heading,
+.editor-styles-wrapper .domio-faq__heading,
+.editor-styles-wrapper .domio-contacts__title {
+	font-size: var(--domio-fs-h2) !important;
+	font-weight: 600 !important;
+	line-height: var(--domio-lh-heading) !important;
+	letter-spacing: var(--domio-tracking-heading) !important;
+	font-family: var(--domio-font) !important;
+}
+
+.editor-styles-wrapper .domio-cta__heading {
+	font-size: var(--domio-fs-h2) !important;
+	font-weight: 600 !important;
+	line-height: var(--domio-lh-heading) !important;
+	letter-spacing: var(--domio-tracking-heading) !important;
+	font-family: var(--domio-font) !important;
+	color: var(--domio-section-text, #fff) !important;
+}
+
+.editor-styles-wrapper .domio-cta__text,
+.editor-styles-wrapper .domio-cta__phone-label {
+	color: var(--domio-section-muted, rgba(255, 255, 255, 0.86)) !important;
+}
+
+.editor-styles-wrapper .domio-bg--green :is(
+	.domio-card-grid__heading,
+	.domio-steps__heading,
+	.domio-media-text__heading,
+	.domio-faq__heading,
+	.domio-related-links__heading,
+	.domio-faq__question,
+	.domio-steps__title,
+	.domio-contacts__title,
+	.domio-contacts__h--billing
+) {
+	color: var(--domio-section-text, #fff) !important;
+}

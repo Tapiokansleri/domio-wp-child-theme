@@ -1,0 +1,38 @@
+name: Attach theme zip to release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build domio.zip
+        run: |
+          mkdir -p staging/domio
+          rsync -a \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'node_modules' \
+            --exclude 'staging' \
+            --exclude 'dist' \
+            --exclude '.DS_Store' \
+            --exclude '*.log' \
+            --exclude '.env' \
+            --exclude '.env.*' \
+            ./ staging/domio/
+          cd staging
+          zip -r ../domio.zip domio
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: domio.zip
+          tag_name: ${{ github.event.release.tag_name }}

@@ -1,0 +1,309 @@
+.domio-cta {
+	--domio-cta-bg: #0c1815;
+	--domio-cta-on-dark: #ffffff;
+	--domio-cta-on-dark-muted: rgba(255, 255, 255, 0.82);
+
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	color: var(--domio-cta-on-dark);
+	background-color: var(--domio-cta-bg);
+	font-family: var(--domio-font, "Onest", system-ui, sans-serif);
+	padding-block: var(--wp--preset--spacing--80);
+}
+
+.domio-cta::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background: color-mix(in srgb, var(--domio-cta-bg) 28%, transparent);
+}
+
+.domio-cta__inner {
+	position: relative;
+	z-index: 1;
+	width: var(--domio-shell-width, min(1300px, calc(100% - 2.5rem)));
+	max-width: var(--domio-content-max, 1300px);
+	margin-inline: auto;
+	padding-inline: 0;
+	box-sizing: border-box;
+}
+
+.domio-cta__heading {
+	margin: 0;
+	color: var(--domio-cta-on-dark);
+	font-size: var(--domio-fs-h2, clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem));
+	font-weight: 600;
+	line-height: var(--domio-lh-heading, 1.2);
+	letter-spacing: var(--domio-tracking-heading, -0.02em);
+}
+
+.domio-cta__text {
+	margin: 1rem 0 0;
+	max-width: 38rem;
+	color: var(--domio-cta-on-dark-muted);
+	font-size: var(--domio-fs-body, 1.125rem);
+	line-height: var(--domio-lh-body, 1.65);
+}
+
+.domio-cta__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	margin-top: 1.5rem;
+	min-height: var(--domio-btn-min-height, 44px);
+	padding: var(--domio-btn-pad-y, 15px) var(--domio-btn-pad-x, 30px);
+	text-decoration: none;
+	font-family: var(--domio-font, Onest, sans-serif);
+	font-size: var(--domio-btn-font-size, 13px);
+	font-weight: var(--domio-btn-weight, 500);
+	line-height: 1;
+	text-align: center;
+	white-space: nowrap;
+	background: var(--domio-btn-bg, #004c3e);
+	color: var(--domio-btn-text, #fff);
+	border: 0;
+	border-radius: var(--domio-radius-cta, 30px);
+	cursor: pointer;
+	-webkit-font-smoothing: antialiased;
+	transition: background-color 0.12s ease, transform 0.06s ease;
+}
+
+.domio-cta__link:hover {
+	background: var(--domio-btn-hover, #04e78d);
+	color: var(--domio-btn-hover-text, #121212);
+}
+
+.domio-cta__link:focus-visible {
+	outline: 3px solid var(--domio-btn-hover, #04e78d);
+	outline-offset: 3px;
+}
+
+.domio-cta__phone-wrap {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.35rem 0.65rem;
+	margin: 1.35rem 0 0;
+}
+
+.domio-cta__phone-label {
+	color: var(--domio-cta-on-dark-muted);
+	font-size: var(--domio-fs-small, 0.9375rem);
+}
+
+.domio-cta__phone {
+	color: var(--domio-btn-hover, #04e78d);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.domio-cta__phone:hover {
+	color: #fff;
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+
+.domio-cta__panel {
+	width: 100%;
+	background: #fff;
+	color: var(--wp--preset--color--domio-ink, #121212);
+	border-radius: 1rem;
+	padding: clamp(1.35rem, 1.1rem + 1.4vw, 2.25rem);
+	box-shadow: 0 22px 50px rgba(0, 0, 0, 0.28);
+}
+
+.domio-cta__form {
+	width: 100%;
+}
+
+.domio-cta__form .mf-input-label,
+.domio-cta__form label {
+	display: block;
+	margin-bottom: 0.35rem;
+	color: var(--wp--preset--color--domio-ink, #121212);
+	font-size: var(--domio-fs-small, 0.9375rem);
+	font-weight: 600;
+}
+
+.domio-cta__form .mf-input,
+.domio-cta__form input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="hidden"]):not([type="image"]):not([type="file"]),
+.domio-cta__form textarea,
+.domio-cta__form select {
+	width: 100%;
+	max-width: 100%;
+	margin: 0;
+	padding: 0.75rem 1rem;
+	border: 1px solid #d6d6d6;
+	border-radius: 0.5rem;
+	background: #fff;
+	color: var(--wp--preset--color--domio-ink, #121212);
+	font-family: inherit;
+	font-size: 1rem;
+	line-height: 1.4;
+}
+
+.domio-cta__form textarea {
+	min-height: 7rem;
+	resize: vertical;
+}
+
+.domio-cta__form .mf-btn,
+.domio-cta__form .metform-btn,
+.domio-cta__form .metform-submit-btn,
+.domio-cta__form button[type="submit"],
+.domio-cta__form input[type="submit"] {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	min-height: var(--domio-btn-min-height, 44px);
+	margin-top: 0.5rem;
+	padding: var(--domio-btn-pad-y, 15px) var(--domio-btn-pad-x, 30px);
+	border: 0 !important;
+	border-radius: var(--domio-radius-cta, 30px);
+	background: var(--domio-btn-bg, #004c3e) !important;
+	color: #fff !important;
+	-webkit-text-fill-color: #fff !important;
+	font-family: var(--domio-font, Onest, sans-serif);
+	font-size: var(--domio-btn-font-size, 13px);
+	font-weight: var(--domio-btn-weight, 500);
+	line-height: 1;
+	text-align: center;
+	white-space: nowrap;
+	cursor: pointer;
+	-webkit-font-smoothing: antialiased;
+	transition: background-color 0.12s ease, transform 0.06s ease;
+}
+
+.domio-cta__form .mf-btn span,
+.domio-cta__form .mf-btn *,
+.domio-cta__form .metform-btn span,
+.domio-cta__form .metform-btn *,
+.domio-cta__form .metform-submit-btn span,
+.domio-cta__form .metform-submit-btn *,
+.domio-cta__form button[type="submit"] span,
+.domio-cta__form button[type="submit"] * {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	background: transparent !important;
+	color: #fff !important;
+	-webkit-text-fill-color: #fff !important;
+	font: inherit;
+}
+
+.domio-cta__form .mf-btn:hover,
+.domio-cta__form .metform-btn:hover,
+.domio-cta__form .metform-submit-btn:hover,
+.domio-cta__form button[type="submit"]:hover,
+.domio-cta__form input[type="submit"]:hover {
+	background: var(--domio-btn-hover, #04e78d) !important;
+	color: var(--domio-btn-hover-text, #121212) !important;
+	-webkit-text-fill-color: var(--domio-btn-hover-text, #121212) !important;
+}
+
+.domio-cta__form .mf-btn:hover *,
+.domio-cta__form .metform-btn:hover *,
+.domio-cta__form .metform-submit-btn:hover *,
+.domio-cta__form button[type="submit"]:hover * {
+	color: var(--domio-btn-hover-text, #121212) !important;
+	-webkit-text-fill-color: var(--domio-btn-hover-text, #121212) !important;
+}
+
+.domio-cta--band {
+	display: flex;
+	align-items: center;
+	min-height: clamp(20rem, 16rem + 12vw, 28rem);
+}
+
+.domio-cta--band .domio-cta__inner {
+	display: grid;
+	justify-items: center;
+	text-align: center;
+}
+
+.domio-cta--band .domio-cta__copy {
+	display: grid;
+	justify-items: center;
+	max-width: 44rem;
+}
+
+.domio-cta--band .domio-cta__text {
+	margin-inline: auto;
+}
+
+.domio-cta--form .domio-cta__inner {
+	display: grid;
+	gap: var(--wp--preset--spacing--50, 2rem);
+	align-items: start;
+}
+
+.domio-cta--form .domio-cta__copy {
+	max-width: 36rem;
+}
+
+@media (min-width: 900px) {
+	.domio-cta--form .domio-cta__inner {
+		column-gap: 100px;
+		grid-template-columns: minmax(0, 1fr) minmax(24rem, 42rem);
+	}
+}
+
+.domio-cta.domio-bg--green {
+	background-color: var(--domio-cta-bg, #0c1815);
+}
+
+.domio-cta.domio-bg--surface,
+.domio-cta.domio-bg--muted {
+	background-color: var(--domio-section-bg);
+	color: var(--domio-section-text);
+}
+
+.domio-cta.domio-bg--surface::before,
+.domio-cta.domio-bg--muted::before {
+	content: none;
+}
+
+.domio-cta.domio-bg--surface .domio-cta__heading,
+.domio-cta.domio-bg--muted .domio-cta__heading {
+	color: var(--domio-section-text);
+}
+
+.domio-cta.domio-bg--surface .domio-cta__text,
+.domio-cta.domio-bg--muted .domio-cta__text,
+.domio-cta.domio-bg--surface .domio-cta__phone-label,
+.domio-cta.domio-bg--muted .domio-cta__phone-label {
+	color: var(--domio-section-muted);
+}
+
+.domio-cta.domio-bg--surface .domio-cta__link,
+.domio-cta.domio-bg--muted .domio-cta__link {
+	background: var(--domio-btn-bg, #004c3e);
+	color: var(--domio-btn-text, #fff);
+}
+
+.domio-cta.domio-bg--surface .domio-cta__link:hover,
+.domio-cta.domio-bg--muted .domio-cta__link:hover {
+	background: var(--domio-btn-hover, #04e78d);
+	color: var(--domio-btn-hover-text, #121212);
+}
+
+.domio-cta.domio-bg--surface .domio-cta__phone,
+.domio-cta.domio-bg--muted .domio-cta__phone {
+	color: var(--domio-btn-bg, #004c3e);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.domio-cta__link,
+	.domio-cta__form .mf-btn,
+	.domio-cta__form .metform-btn,
+	.domio-cta__form .metform-submit-btn,
+	.domio-cta__form button[type="submit"],
+	.domio-cta__form input[type="submit"] {
+		transition: none;
+	}
+}

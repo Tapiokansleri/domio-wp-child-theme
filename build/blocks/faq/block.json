@@ -1,0 +1,103 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "domio/faq",
+  "version": "1.0.0",
+  "title": "Domio: UKK",
+  "category": "domio",
+  "icon": "editor-help",
+  "description": "Usein kysytyt kysymykset details/summary-rakenteella.",
+  "keywords": [
+    "ukk",
+    "faq",
+    "kysymykset",
+    "domio"
+  ],
+  "textdomain": "domio",
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Usein kysytyt kysymykset"
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "id": "faq-1",
+          "question": "Mitä kiinteistöhuolto tarkoittaa?",
+          "answer": "Kiinteistöhuolto tarkoittaa kiinteistön teknisten järjestelmien, yleisten tilojen ja ulkoalueiden säännöllistä ylläpitoa, jotta rakennus pysyy turvallisena ja toimivana. Käytännössä tähän kuuluu LVIS-järjestelmien valvonta, pienkorjaukset, talvikunnossapito ja vikatilanteisiin reagointi."
+        },
+        {
+          "id": "faq-2",
+          "question": "Missä asioissa kiinteistöhuoltoon voi olla yhteydessä?",
+          "answer": "Esimerkiksi vesivuodoissa, lämmityksen tai ilmanvaihdon ongelmissa, valaistuksen vioissa, lukitusongelmissa sekä piha-alueiden ja talvikunnossapidon tarpeissa. Akuuteissa tilanteissa päivystyksemme vastaa vuorokauden ympäri."
+        },
+        {
+          "id": "faq-3",
+          "question": "Mitä kiinteistöhuolto maksaa?",
+          "answer": "Hinta määräytyy kiinteistön koon, käyttötarkoituksen ja sovittujen palveluiden mukaan. Räätälöimme sopimuksen aina kohteen todellisten tarpeiden mukaan, joten pyydä tarjous tai laske suuntaa-antava arvio hintalaskurillamme."
+        },
+        {
+          "id": "faq-4",
+          "question": "Mitä sopimukseen kuuluu ja mitä laskutetaan erikseen?",
+          "answer": "Perussopimus kattaa sovitun säännöllisen huollon ja ylläpidon. Korjaustyöt, tarvikkeet ja suuremmat kausityöt laskutetaan yleensä erikseen. Erittelemme tämän aina tarjouksessa."
+        },
+        {
+          "id": "faq-5",
+          "question": "Toimitteko koko pääkaupunkiseudulla?",
+          "answer": "Palvelemme kiinteistöjä Helsingissä, Espoossa ja Vantaalla, ja toimimme tarvittaessa myös muualla Uudellamaalla."
+        },
+        {
+          "id": "faq-6",
+          "question": "Miten huoltoyhtiön vaihto käytännössä tapahtuu?",
+          "answer": "Vaihto tehdään voimassa olevan sopimuksen irtisanomisajan puitteissa. Sovimme aloituspäivän niin, ettei palveluun jää katkosta, ja varmistamme huoltokirjan ja avainten siirron."
+        }
+      ]
+    },
+    "defaultOpen": {
+      "type": "number",
+      "default": -1
+    },
+    "emitSchema": {
+      "type": "boolean",
+      "default": true
+    },
+    "background": {
+      "type": "string",
+      "default": "surface"
+    },
+    "pattern": {
+      "type": "string",
+      "default": "none"
+    },
+    "patternOpacity": {
+      "type": "number",
+      "default": 3
+    }
+  },
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "heading": "Usein kysytyt kysymykset"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

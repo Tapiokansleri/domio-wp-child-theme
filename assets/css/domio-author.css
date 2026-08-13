@@ -1,0 +1,246 @@
+/**
+ * Domio author archive template.
+ */
+
+body.domio-author {
+	font-family: var(--domio-font, "Onest", system-ui, -apple-system, "Segoe UI", sans-serif);
+	color: var(--domio-section-text, #121212);
+	background: var(--domio-section-bg, #ffffff);
+}
+
+body.domio-author #content.domio-author,
+body.domio-author .domio-author {
+	width: 100% !important;
+	max-width: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.domio-author__inner {
+	width: var(--domio-shell-width, min(1300px, calc(100% - 2.5rem)));
+	max-width: 100%;
+	margin-inline: auto;
+	padding-block: clamp(2.5rem, 1.5rem + 3vw, 4.5rem) clamp(3.5rem, 2rem + 4vw, 6rem);
+}
+
+.domio-author__profile {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+	align-items: start;
+	padding-bottom: clamp(2rem, 1.25rem + 2vw, 3rem);
+	margin-bottom: clamp(2rem, 1.25rem + 2vw, 3rem);
+	border-bottom: 1px solid color-mix(in srgb, #121212 12%, transparent);
+}
+
+.domio-author__avatar-wrap {
+	width: 5.5rem;
+	height: 5.5rem;
+	border-radius: 50%;
+	overflow: hidden;
+	flex-shrink: 0;
+	background: color-mix(in srgb, #004c3e 12%, #ffffff);
+}
+
+.domio-author__avatar {
+	display: block !important;
+	width: 100% !important;
+	height: 100% !important;
+	max-width: none !important;
+	object-fit: cover;
+}
+
+.domio-author__eyebrow {
+	margin: 0 0 0.35rem;
+	font-size: var(--domio-fs-small, 0.875rem);
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--domio-section-muted, #777777);
+}
+
+.domio-author__title {
+	margin: 0;
+	font-size: var(--domio-fs-display, clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem));
+	font-weight: 700;
+	line-height: var(--domio-lh-display, 1.12);
+	letter-spacing: var(--domio-tracking-display, -0.03em);
+	color: #121212;
+}
+
+.domio-author__bio {
+	margin-top: 0.85rem;
+	max-width: 42rem;
+	font-size: var(--domio-fs-body, 1.0625rem);
+	line-height: var(--domio-lh-body, 1.65);
+	color: var(--domio-section-muted, #777777);
+}
+
+.domio-author__bio p {
+	margin: 0 0 0.75rem;
+}
+
+.domio-author__bio p:last-child {
+	margin-bottom: 0;
+}
+
+.domio-author__count {
+	margin: 0.85rem 0 0;
+	font-size: var(--domio-fs-small, 0.875rem);
+	font-weight: 500;
+	color: #121212;
+}
+
+.domio-author__posts {
+	display: flex;
+	flex-direction: column;
+	gap: clamp(2.5rem, 1.75rem + 2.5vw, 4rem);
+}
+
+.domio-author__post {
+	margin: 0;
+	padding: 0;
+}
+
+.domio-author__post-title {
+	margin: 0 0 1rem;
+	font-size: var(--domio-fs-h2, clamp(1.5rem, 1.25rem + 1vw, 2rem));
+	font-weight: 700;
+	line-height: var(--domio-lh-heading, 1.2);
+	letter-spacing: var(--domio-tracking-heading, -0.02em);
+}
+
+.domio-author__post-title a {
+	color: #004c3e;
+	text-decoration: none;
+}
+
+.domio-author__post-title a:hover,
+.domio-author__post-title a:focus-visible {
+	color: #04e78d;
+}
+
+.domio-author__post-media {
+	display: block;
+	margin: 0 0 1rem;
+	border-radius: var(--domio-radius-media, 0.75rem);
+	overflow: hidden;
+	line-height: 0;
+}
+
+.domio-author__post-image {
+	display: block !important;
+	width: 100% !important;
+	max-width: none !important;
+	height: auto !important;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+}
+
+.domio-author__post-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.4rem;
+	margin: 0 0 0.75rem;
+	font-size: var(--domio-fs-small, 0.875rem);
+	font-weight: 500;
+	color: var(--domio-section-muted, #777777);
+}
+
+.domio-author__post-meta-sep {
+	opacity: 0.65;
+}
+
+.domio-author__post-excerpt {
+	max-width: 48rem;
+	font-size: var(--domio-fs-body, 1.0625rem);
+	line-height: var(--domio-lh-body, 1.65);
+	color: var(--domio-section-muted, #777777);
+}
+
+.domio-author__post-excerpt p {
+	margin: 0 0 0.75rem;
+}
+
+.domio-author__post-excerpt p:last-child {
+	margin-bottom: 0;
+}
+
+.domio-author__post-more {
+	margin: 1rem 0 0;
+}
+
+.domio-author__read-more {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	font-size: var(--domio-btn-font-size, 13px);
+	font-weight: var(--domio-btn-weight, 500);
+	line-height: 1;
+	color: #004c3e;
+	text-decoration: none;
+}
+
+.domio-author__read-more:hover,
+.domio-author__read-more:focus-visible {
+	color: #04e78d;
+}
+
+.domio-author__empty {
+	margin: 0;
+	font-size: var(--domio-fs-body, 1.0625rem);
+	color: var(--domio-section-muted, #777777);
+}
+
+.domio-author__pagination,
+.domio-author .navigation.pagination {
+	margin-top: clamp(2.5rem, 1.75rem + 2.5vw, 4rem);
+	padding-top: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+	border-top: 1px solid color-mix(in srgb, #121212 12%, transparent);
+}
+
+.domio-author .navigation.pagination .nav-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.domio-author .navigation.pagination .page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2.5rem;
+	min-height: 2.5rem;
+	padding: 0.4rem 0.75rem;
+	border-radius: 999px;
+	font-size: var(--domio-fs-small, 0.875rem);
+	font-weight: 500;
+	color: #121212;
+	text-decoration: none;
+	background: color-mix(in srgb, #121212 6%, #ffffff);
+}
+
+.domio-author .navigation.pagination a.page-numbers:hover,
+.domio-author .navigation.pagination a.page-numbers:focus-visible {
+	background: #04e78d;
+	color: #121212;
+}
+
+.domio-author .navigation.pagination .page-numbers.current {
+	background: #004c3e;
+	color: #ffffff;
+}
+
+@media (max-width: 640px) {
+	.domio-author__profile {
+		grid-template-columns: 1fr;
+		justify-items: start;
+	}
+
+	.domio-author__avatar-wrap {
+		width: 4.5rem;
+		height: 4.5rem;
+	}
+}

@@ -1,0 +1,47 @@
+.domio-hero-editor__hint {
+	margin-top: 0;
+	opacity: 0.8;
+}
+
+.domio-hero-editor__media {
+	display: grid;
+	gap: 0.75rem;
+}
+
+.domio-hero-editor__media img {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-height: 160px;
+	object-fit: cover;
+	border-radius: 0.35rem;
+}
+
+.domio-hero__media-placeholder {
+	display: grid;
+	place-items: center;
+	min-height: 12rem;
+	padding: 1rem;
+	color: rgba(255, 255, 255, 0.75);
+	background: #2a2a2a;
+	text-align: center;
+	font-family: var(--domio-font, "Onest", system-ui, sans-serif);
+}
+
+.domio-hero--banner .domio-hero__media-placeholder {
+	position: absolute;
+	inset: 0;
+	min-height: 100%;
+}
+
+.domio-hero__cta {
+	pointer-events: none;
+}
+
+.editor-styles-wrapper .domio-hero .components-notice {
+	margin-bottom: 1rem;
+}
+
+.editor-styles-wrapper .domio-hero--banner {
+	min-height: 65vh;
+}

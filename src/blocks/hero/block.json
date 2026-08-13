@@ -1,0 +1,94 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "domio/hero",
+	"version": "1.1.0",
+	"title": "Domio: Hero",
+	"category": "domio",
+	"icon": "cover-image",
+	"description": "Sivun yläbanneri taustakuvalla, otsikolla ja CTA:lla.",
+	"keywords": [ "hero", "banneri", "otsikko", "domio" ],
+	"textdomain": "domio",
+	"attributes": {
+		"align": {
+			"type": "string",
+			"default": "full"
+		},
+		"heading": {
+			"type": "string",
+			"default": "Kiinteistöhuolto [alue]"
+		},
+		"headingLevel": {
+			"type": "number",
+			"default": 1
+		},
+		"subheading": {
+			"type": "string",
+			"default": "Huolehdimme kiinteistösi arjen sujuvuudesta, turvallisuudesta ja viihtyisyydestä. Kaikki palvelut saman sopimuksen alla."
+		},
+		"primaryCtaText": {
+			"type": "string",
+			"default": "Pyydä maksuton kartoitus"
+		},
+		"primaryCtaUrl": {
+			"type": "string",
+			"default": "#tarjous"
+		},
+		"secondaryCtaText": {
+			"type": "string",
+			"default": "Laske hinta-arvio"
+		},
+		"secondaryCtaUrl": {
+			"type": "string",
+			"default": "#hintalaskuri"
+		},
+		"imageId": {
+			"type": "number",
+			"default": 0
+		},
+		"imageUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"imageAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"layout": {
+			"type": "string",
+			"default": "banner"
+		},
+		"background": {
+			"type": "string",
+			"default": "surface"
+		},
+		"pattern": {
+			"type": "string",
+			"default": "none"
+		},
+		"patternOpacity": {
+			"type": "number",
+			"default": 3
+		}
+	},
+	"supports": {
+		"align": [ "wide", "full" ],
+		"anchor": true,
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": false
+		}
+	},
+	"example": {
+		"attributes": {
+			"heading": "Kiinteistöhuolto [alue]",
+			"subheading": "Huolehdimme kiinteistösi arjen sujuvuudesta, turvallisuudesta ja viihtyisyydestä. Kaikki palvelut saman sopimuksen alla.",
+			"layout": "banner"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

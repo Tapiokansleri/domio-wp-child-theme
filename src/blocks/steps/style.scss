@@ -1,0 +1,99 @@
+.domio-steps {
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink));
+	padding-block: var(--wp--preset--spacing--60);
+}
+
+.domio-steps__inner {
+	width: var(--domio-shell-width, min(1300px, calc(100% - 2.5rem)));
+	max-width: var(--domio-content-max, 1300px);
+	margin-inline: auto;
+	padding-inline: 0;
+	box-sizing: border-box;
+}
+
+.domio-steps__heading {
+	margin: 0 0 var(--wp--preset--spacing--50);
+	font-size: var(--wp--preset--font-size--x-large);
+	line-height: 1.2;
+	font-weight: 500;
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink));
+}
+
+.domio-steps__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	counter-reset: domio-step;
+	display: grid;
+	gap: var(--wp--preset--spacing--40);
+}
+
+.domio-steps__item {
+	position: relative;
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+	counter-increment: domio-step;
+}
+
+.domio-steps--numbered .domio-steps__item::before {
+	content: counter(domio-step);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: 999px;
+	background: var(--wp--preset--color--domio-accent);
+	color: var(--wp--preset--color--domio-primary);
+	font-weight: 700;
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1;
+}
+
+.domio-steps--plain .domio-steps__item::before {
+	content: none;
+}
+
+.domio-steps__title {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--large);
+	line-height: 1.25;
+	font-weight: 600;
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink));
+}
+
+.domio-steps__text {
+	margin: 0;
+	color: var(--domio-section-muted, var(--wp--preset--color--domio-muted));
+	font-size: var(--wp--preset--font-size--medium);
+}
+
+.domio-steps__time {
+	display: inline-block;
+	margin-top: var(--wp--preset--spacing--20);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	color: var(--wp--preset--color--domio-ink);
+}
+
+/* Always vertical on mobile; horizontal only from tablet up when requested. */
+.domio-steps--horizontal .domio-steps__list,
+.domio-steps--vertical .domio-steps__list {
+	grid-template-columns: 1fr;
+}
+
+@media (max-width: 781px) {
+	.domio-steps__inner {
+		text-align: center;
+	}
+
+	.domio-steps__item {
+		justify-items: center;
+	}
+}
+
+@media (min-width: 782px) {
+	.domio-steps--horizontal .domio-steps__list {
+		grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+	}
+}

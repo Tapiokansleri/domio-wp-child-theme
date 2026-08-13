@@ -1,0 +1,26 @@
+.domio-cta__link {
+	pointer-events: none;
+}
+
+.domio-cta__phone {
+	pointer-events: none;
+}
+
+.domio-cta__form-preview,
+.domio-cta-editor__empty {
+	margin: 0;
+	padding: var(--wp--preset--spacing--30, 1rem);
+	border: 1px dashed color-mix(in srgb, currentColor 28%, transparent);
+	border-radius: 0.5rem;
+	font-size: var(--wp--preset--font-size--small, 0.875rem);
+}
+
+.domio-cta-editor__empty {
+	color: var(--wp--preset--color--domio-muted, #777);
+}
+
+.editor-styles-wrapper .domio-cta__heading,
+.editor-styles-wrapper .domio-cta__text,
+.editor-styles-wrapper .domio-cta__phone-label {
+	color: inherit;
+}

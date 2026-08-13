@@ -1,0 +1,65 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "domio/related-links",
+  "version": "1.0.0",
+  "title": "Domio: Tutustu myös",
+  "category": "domio",
+  "icon": "admin-links",
+  "description": "Keskitetysti hallittavat sisäiset linkit alueille ja palveluille.",
+  "keywords": [
+    "linkit",
+    "alueet",
+    "palvelut",
+    "tutustu",
+    "domio"
+  ],
+  "textdomain": "domio",
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Tutustu myös"
+    },
+    "groups": {
+      "type": "array",
+      "default": []
+    },
+    "background": {
+      "type": "string",
+      "default": "surface"
+    },
+    "pattern": {
+      "type": "string",
+      "default": "none"
+    },
+    "patternOpacity": {
+      "type": "number",
+      "default": 3
+    }
+  },
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "heading": "Tutustu myös"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,78 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "domio/media-text",
+	"version": "1.0.0",
+	"title": "Domio: Teksti ja media",
+	"category": "domio",
+	"icon": "align-pull-right",
+	"description": "Teksti- ja mediapalsta InnerBlocks-sisällöllä.",
+	"keywords": [ "media", "teksti", "kuva", "domio" ],
+	"textdomain": "domio",
+	"attributes": {
+		"align": {
+			"type": "string",
+			"default": "full"
+		},
+		"heading": {
+			"type": "string",
+			"default": "Kiinteistöhuolto [alueella]"
+		},
+		"layout": {
+			"type": "string",
+			"default": "default"
+		},
+		"mediaPosition": {
+			"type": "string",
+			"default": "right"
+		},
+		"mediaId": {
+			"type": "number",
+			"default": 0
+		},
+		"mediaUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"mediaAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"mediaWidth": {
+			"type": "number",
+			"default": 50
+		},
+		"background": {
+			"type": "string",
+			"default": "surface"
+		},
+		"pattern": {
+			"type": "string",
+			"default": "none"
+		},
+		"patternOpacity": {
+			"type": "number",
+			"default": 3
+		}
+	},
+	"supports": {
+		"align": [ "wide", "full" ],
+		"anchor": true,
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"example": {
+		"attributes": {
+			"heading": "Kiinteistöhuolto [alueella]",
+			"mediaPosition": "right",
+			"background": "surface"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

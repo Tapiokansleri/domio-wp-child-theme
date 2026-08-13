@@ -1,0 +1,58 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "domio/trustmary",
+  "version": "1.0.1",
+  "title": "Domio: Trustmary",
+  "category": "domio",
+  "icon": "star-filled",
+  "description": "Upottaa Trustmary-arvosteluwidgetin.",
+  "keywords": [
+    "trustmary",
+    "arvostelut",
+    "referenssit",
+    "domio"
+  ],
+  "textdomain": "domio",
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
+    "widgetSrc": {
+      "type": "string",
+      "default": "https://widget.trustmary.com/n3eIUlhS5"
+    },
+    "background": {
+      "type": "string",
+      "default": "surface"
+    },
+    "pattern": {
+      "type": "string",
+      "default": "none"
+    },
+    "patternOpacity": {
+      "type": "number",
+      "default": 3
+    }
+  },
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "example": {
+    "attributes": {}
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

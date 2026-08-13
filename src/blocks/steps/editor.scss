@@ -1,0 +1,18 @@
+.domio-steps-editor__item {
+	margin-bottom: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+
+.domio-steps-editor__label {
+	margin: 0 0 0.5rem;
+	font-weight: 600;
+}
+
+.domio-steps-editor__empty {
+	margin: 0;
+	padding: var(--wp--preset--spacing--40);
+	border: 1px dashed color-mix(in srgb, currentColor 35%, transparent);
+	color: var(--wp--preset--color--domio-muted);
+	text-align: center;
+}
