@@ -54,8 +54,24 @@ function domio_enqueue_header_assets() {
 		DOMIO_THEME_VERSION,
 		true
 	);
+	wp_script_add_data( 'domio-header', 'strategy', 'defer' );
 }
 add_action( 'wp_enqueue_scripts', 'domio_enqueue_header_assets', 25 );
+
+/**
+ * Keep header nav JS out of WP Rocket delay/lazyload so the menu opens on first tap.
+ *
+ * @param string[] $exclusions Exclusion patterns.
+ * @return string[]
+ */
+function domio_rocket_exclude_header_js( $exclusions ) {
+	$exclusions[] = 'domio-header.js';
+	$exclusions[] = 'domio-nav-boot';
+	return $exclusions;
+}
+add_filter( 'rocket_delay_js_exclusions', 'domio_rocket_exclude_header_js' );
+add_filter( 'rocket_exclude_defer_js', 'domio_rocket_exclude_header_js' );
+add_filter( 'rocket_exclude_js', 'domio_rocket_exclude_header_js' );
 
 /**
  * Add body class when Domio header is active.

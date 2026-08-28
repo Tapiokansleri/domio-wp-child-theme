@@ -113,9 +113,13 @@
 	enhanceSubmenus();
 
 	if ( toggle && nav ) {
-		toggle.addEventListener( 'click', () => {
-			setOpen( ! header.classList.contains( 'is-nav-open' ) );
-		} );
+		// Inline bootstrap (domio-nav-boot) may already own the toggle click.
+		if ( header.dataset.domioNavBound !== '1' ) {
+			header.dataset.domioNavBound = '1';
+			toggle.addEventListener( 'click', () => {
+				setOpen( ! header.classList.contains( 'is-nav-open' ) );
+			} );
+		}
 
 		document.addEventListener( 'keydown', ( event ) => {
 			if ( event.key === 'Escape' ) {

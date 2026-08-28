@@ -61,6 +61,10 @@ $menu_id    = domio_get_primary_menu_id();
 				<span class="screen-reader-text"><?php echo esc_html__( 'Avaa valikko', 'domio' ); ?></span>
 				<span class="domio-header__toggle-bars" aria-hidden="true"></span>
 			</button>
+			<script>
+			/* domio-nav-boot: open mobile menu before deferred header.js loads */
+			(function(){var h=document.querySelector("[data-domio-header]");if(!h||h.dataset.domioNavBound)return;var t=h.querySelector("[data-domio-nav-toggle]");if(!t)return;h.dataset.domioNavBound="1";t.addEventListener("click",function(){var o=!h.classList.contains("is-nav-open");h.classList.toggle("is-nav-open",o);t.setAttribute("aria-expanded",o?"true":"false");document.body.classList.toggle("domio-nav-lock",o);if(!o){h.querySelectorAll(".menu-item-has-children.is-sub-open").forEach(function(i){i.classList.remove("is-sub-open");});}});})();
+			</script>
 
 			<nav id="domio-header-nav" class="domio-header__nav" data-domio-nav aria-label="<?php echo esc_attr__( 'Päävalikko', 'domio' ); ?>">
 				<?php
