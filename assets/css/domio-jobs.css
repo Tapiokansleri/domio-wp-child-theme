@@ -1,0 +1,301 @@
+/**
+ * Avoimet työpaikat — list archive and single.
+ */
+
+body.domio-jobs {
+	--e-global-typography-primary-font-size: 50px;
+	font-family: var(--domio-font, "Onest", system-ui, -apple-system, "Segoe UI", sans-serif);
+	color: #121212;
+	background: #fff;
+}
+
+body.domio-jobs #content.domio-jobs,
+body.domio-jobs .domio-jobs {
+	width: 100% !important;
+	max-width: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.domio-jobs__inner {
+	width: var(--domio-shell-width, min(1300px, calc(100% - 2.5rem)));
+	max-width: 800px;
+	margin-inline: auto;
+	padding-block: clamp(2.25rem, 1.4rem + 2.4vw, 3.5rem) clamp(3.5rem, 2rem + 4vw, 6rem);
+}
+
+.domio-jobs__head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	border: none;
+	margin-bottom: 0;
+}
+
+body.domio-jobs h1.domio-jobs__title,
+body.single-tyopaikka h1.domio-job__title {
+	margin: 0;
+	font-size: 50px !important;
+	font-weight: 700 !important;
+	line-height: 1.1 !important;
+	letter-spacing: -0.03em !important;
+	color: #121212 !important;
+}
+
+body.single-tyopaikka h1.domio-job__title {
+	margin: 0.85rem 0 1.75rem !important;
+}
+
+.domio-jobs__count {
+	margin: 0;
+	font-size: 1rem;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.domio-jobs__lead,
+.domio-jobs__empty {
+	margin: 1.35rem 0 0;
+	padding-bottom: 1.35rem;
+	border-bottom: 1px solid #cfcfcf;
+	font-size: 1.0625rem;
+	line-height: 1.65;
+	color: #121212;
+}
+
+.domio-jobs__empty {
+	border-bottom: 0;
+	color: #555;
+}
+
+.domio-jobs__list {
+	display: flex;
+	flex-direction: column;
+}
+
+.domio-job-card {
+	margin: 0;
+	padding: 1.75rem 0 1.85rem;
+	border-bottom: 1px solid #cfcfcf;
+}
+
+body.domio-jobs h2.domio-job-card__title {
+	margin: 0;
+	font-size: clamp(1.45rem, 1.2rem + 0.9vw, 1.85rem) !important;
+	font-weight: 700 !important;
+	line-height: 1.2 !important;
+	letter-spacing: -0.02em !important;
+}
+
+.domio-job-card__title a {
+	color: #121212;
+	text-decoration: none;
+}
+
+.domio-job-card__title a:hover,
+.domio-job-card__title a:focus-visible {
+	color: #004c3e;
+}
+
+.domio-job-card__cta {
+	margin: 0.7rem 0 1rem;
+}
+
+.domio-job-card__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: #004c3e;
+	font-size: 0.95rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.domio-job-card__more a {
+	color: #004c3e;
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: 0.15em;
+}
+
+.domio-job-card__link:hover,
+.domio-job-card__link:focus-visible,
+.domio-job-card__more a:hover,
+.domio-job-card__more a:focus-visible {
+	color: #04e78d;
+}
+
+.domio-jobs-arrow {
+	display: inline-flex;
+	flex: 0 0 1.25rem;
+	width: 1.25rem;
+	height: 1.25rem;
+	color: #004c3e;
+}
+
+.domio-jobs-arrow svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.domio-job-card__link:hover .domio-jobs-arrow,
+.domio-job-card__link:focus-visible .domio-jobs-arrow {
+	color: #04e78d;
+}
+
+.domio-job-card__body {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 1.25rem 2rem;
+	align-items: center;
+}
+
+.domio-job-card__facts,
+.domio-job__facts {
+	margin: 0;
+}
+
+.domio-job-card__fact,
+.domio-job__fact {
+	display: grid;
+	grid-template-columns: 8.5rem 1fr;
+	gap: 0.5rem 0.85rem;
+	margin: 0 0 0.28rem;
+	font-size: 0.95rem;
+	line-height: 1.45;
+}
+
+.domio-job-card__fact dt,
+.domio-job__fact dt {
+	margin: 0;
+	font-weight: 700;
+	color: #121212;
+}
+
+.domio-job-card__fact dt::after,
+.domio-job__fact dt::after {
+	content: ":";
+}
+
+.domio-job-card__fact dd,
+.domio-job__fact dd {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.45rem;
+}
+
+.domio-job-card__badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.12rem 0.5rem;
+	border-radius: 0.25rem;
+	background: #c81e1e;
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 700;
+	line-height: 1.3;
+	white-space: nowrap;
+}
+
+.domio-job-card__logo {
+	display: block;
+	width: 7.5rem;
+	max-width: 28vw;
+	line-height: 0;
+}
+
+.domio-job-card__logo-img {
+	display: block !important;
+	width: 100% !important;
+	height: auto !important;
+	max-width: none !important;
+	object-fit: contain;
+}
+
+.domio-job-card__excerpt {
+	margin-top: 1rem;
+	max-width: none;
+	font-size: 1rem;
+	line-height: 1.65;
+	color: #333;
+}
+
+.domio-job-card__excerpt p {
+	margin: 0 0 0.4rem;
+}
+
+.domio-job-card__more {
+	margin: 0.15rem 0 0;
+}
+
+.domio-job__eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.domio-job__eyebrow a {
+	color: #555;
+	text-decoration: none;
+}
+
+.domio-job__eyebrow a:hover,
+.domio-job__eyebrow a:focus-visible {
+	color: #004c3e;
+}
+
+.single-tyopaikka .domio-job__facts {
+	display: flex;
+	flex-direction: column;
+	gap: 0.7rem;
+	margin: 0 0 2rem;
+	padding-bottom: 1.75rem;
+	border-bottom: 1px solid #cfcfcf;
+}
+
+.single-tyopaikka .domio-job__fact {
+	margin: 0;
+}
+
+.domio-job__media {
+	margin: 0 0 1.25rem;
+	line-height: 0;
+}
+
+.domio-job__image {
+	display: block !important;
+	width: auto !important;
+	max-width: 10rem !important;
+	height: auto !important;
+}
+
+.domio-job__content {
+	font-size: 1.0625rem;
+	line-height: 1.65;
+}
+
+.domio-job__content > *:first-child {
+	margin-top: 0;
+}
+
+@media (max-width: 640px) {
+	.domio-job-card__body {
+		grid-template-columns: 1fr;
+	}
+
+	.domio-job-card__logo {
+		order: -1;
+		width: 6rem;
+	}
+
+	.domio-job-card__fact,
+	.domio-job__fact {
+		grid-template-columns: 7.25rem 1fr;
+	}
+}

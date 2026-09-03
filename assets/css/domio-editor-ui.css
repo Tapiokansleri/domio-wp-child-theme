@@ -26,3 +26,11 @@ body.domio-uses-sivupohja .elementor-edit-mode-gutenberg {
 .block-editor-page .edit-post-header-toolbar__inserter-toggle {
 	margin-inline-start: 4px;
 }
+
+/* Job editor: keep the writing column aligned if the canvas is not iframed. */
+body.post-type-tyopaikka .editor-styles-wrapper,
+body.post-type-tyopaikka .editor-visual-editor__post-title-wrapper,
+body.post-type-tyopaikka .edit-post-visual-editor__post-title-wrapper {
+	--wp--style--global--content-size: 800px;
+	--wp--style--global--wide-size: 800px;
+}

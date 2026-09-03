@@ -35,6 +35,7 @@ function domio_enqueue_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'domio_enqueue_styles', 20 );
 
+require_once DOMIO_THEME_DIR . '/inc/cpt-tyopaikka.php';
 require_once DOMIO_THEME_DIR . '/inc/elementor.php';
 require_once DOMIO_THEME_DIR . '/inc/blocks.php';
 require_once DOMIO_THEME_DIR . '/inc/block-styles.php';

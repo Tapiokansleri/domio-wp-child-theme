@@ -22,7 +22,109 @@ function domio_get_default_settings() {
 		'cta_text'            => 'Ota yhteyttä',
 		'cta_url'             => '/yhteystiedot/',
 		'related_link_groups' => array(),
+		'jobs_copy'           => domio_get_default_jobs_copy(),
 	);
+}
+
+/**
+ * Default static copy for job archive and single views.
+ *
+ * @return array<string, string>
+ */
+function domio_get_default_jobs_copy() {
+	return array(
+		'archive_title'      => __( 'Työpaikat', 'domio' ),
+		'archive_lead'       => __( 'Tule mukaan pitämään taloyhtiöt ja toimitilat kunnossa. Selaa avoimia tehtäviä ja hae sinua kiinnostavaan paikkaan.', 'domio' ),
+		'archive_empty'      => __( 'Tällä hetkellä ei ole avoimia työpaikkoja.', 'domio' ),
+		'archive_count_one'  => __( '%d työpaikka', 'domio' ),
+		'archive_count_many' => __( '%d työpaikkaa', 'domio' ),
+		'card_cta'           => __( 'Lue työpaikkailmoitus', 'domio' ),
+		'card_read_more'     => __( 'Lue lisää', 'domio' ),
+		'single_eyebrow'     => __( 'Avoimet työpaikat', 'domio' ),
+		'label_company'      => __( 'Yritys', 'domio' ),
+		'label_location'     => __( 'Paikkakunta', 'domio' ),
+		'label_salary'       => __( 'Palkka', 'domio' ),
+		'label_type'         => __( 'Tyyppi', 'domio' ),
+		'label_deadline'     => __( 'Viim. hakupäivä', 'domio' ),
+		'badge_ended'        => __( 'Haku päättynyt', 'domio' ),
+		'badge_last_day'     => __( 'Viimeinen päivä', 'domio' ),
+		'badge_days_one'     => __( '%d päivä jäljellä', 'domio' ),
+		'badge_days_many'    => __( '%d päivää jäljellä', 'domio' ),
+	);
+}
+
+/**
+ * Settings page tabs.
+ *
+ * @return array<string, string>
+ */
+function domio_get_settings_tabs() {
+	return array(
+		'header'  => __( 'Header', 'domio' ),
+		'related' => __( 'Tutustu myös', 'domio' ),
+		'jobs'    => __( 'Työpaikat', 'domio' ),
+	);
+}
+
+/**
+ * Current settings tab slug.
+ *
+ * @return string
+ */
+function domio_get_current_settings_tab() {
+	$tabs = array_keys( domio_get_settings_tabs() );
+	$tab  = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'header'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+	return in_array( $tab, $tabs, true ) ? $tab : 'header';
+}
+
+/**
+ * Public job listing string, with theme-setting override.
+ *
+ * @param string $key Copy key.
+ * @return string
+ */
+function domio_jobs_copy( $key ) {
+	$defaults = domio_get_default_jobs_copy();
+	$settings = domio_get_settings();
+	$copy     = isset( $settings['jobs_copy'] ) && is_array( $settings['jobs_copy'] ) ? $settings['jobs_copy'] : array();
+	$value    = isset( $copy[ $key ] ) ? trim( (string) $copy[ $key ] ) : '';
+
+	if ( '' !== $value ) {
+		return $value;
+	}
+
+	return isset( $defaults[ $key ] ) ? $defaults[ $key ] : '';
+}
+
+/**
+ * Sanitize job copy fields.
+ *
+ * @param mixed $input Raw copy.
+ * @return array<string, string>
+ */
+function domio_sanitize_jobs_copy( $input ) {
+	$defaults = domio_get_default_jobs_copy();
+	$clean    = array();
+
+	if ( ! is_array( $input ) ) {
+		return $defaults;
+	}
+
+	foreach ( $defaults as $key => $default ) {
+		if ( ! isset( $input[ $key ] ) ) {
+			$clean[ $key ] = $default;
+			continue;
+		}
+
+		$value = 'archive_lead' === $key
+			? sanitize_textarea_field( wp_unslash( $input[ $key ] ) )
+			: sanitize_text_field( wp_unslash( $input[ $key ] ) );
+
+		$clean[ $key ] = '' !== $value ? $value : $default;
+	}
+
+	return $clean;
 }
 
 /**
@@ -31,13 +133,20 @@ function domio_get_default_settings() {
  * @return array<string, mixed>
  */
 function domio_get_settings() {
-	$saved = get_option( 'domio_theme_settings', array() );
+	$defaults = domio_get_default_settings();
+	$saved    = get_option( 'domio_theme_settings', array() );
 
 	if ( ! is_array( $saved ) ) {
 		$saved = array();
 	}
 
-	return wp_parse_args( $saved, domio_get_default_settings() );
+	$settings = wp_parse_args( $saved, $defaults );
+	$settings['jobs_copy'] = wp_parse_args(
+		isset( $saved['jobs_copy'] ) && is_array( $saved['jobs_copy'] ) ? $saved['jobs_copy'] : array(),
+		$defaults['jobs_copy']
+	);
+
+	return $settings;
 }
 
 /**
@@ -221,6 +330,25 @@ function domio_register_settings() {
 add_action( 'admin_init', 'domio_register_settings' );
 
 /**
+ * Keep the active settings tab after save.
+ *
+ * @param string $location Redirect URL.
+ * @return string
+ */
+function domio_settings_preserve_tab( $location ) {
+	if ( ! isset( $_POST['option_page'] ) || 'domio_theme_settings_group' !== $_POST['option_page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		return $location;
+	}
+
+	if ( empty( $_POST['domio_settings_tab'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		return $location;
+	}
+
+	return add_query_arg( 'tab', sanitize_key( wp_unslash( $_POST['domio_settings_tab'] ) ), $location );
+}
+add_filter( 'wp_redirect', 'domio_settings_preserve_tab' );
+
+/**
  * Sanitize settings array.
  *
  * @param mixed $input Raw input.
@@ -238,18 +366,33 @@ function domio_sanitize_settings( $input ) {
 		$existing = array();
 	}
 
-	$groups = isset( $_POST['domio_related_links_saved'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified by options.php.
-		? ( isset( $input['related_link_groups'] ) ? domio_sanitize_related_link_groups( $input['related_link_groups'] ) : array() )
-		: ( isset( $existing['related_link_groups'] ) ? $existing['related_link_groups'] : array() );
-
-	return array(
-		'use_header'          => ! empty( $input['use_header'] ),
-		'phone'               => isset( $input['phone'] ) ? sanitize_text_field( $input['phone'] ) : $defaults['phone'],
-		'email'               => isset( $input['email'] ) ? sanitize_email( $input['email'] ) : $defaults['email'],
-		'cta_text'            => isset( $input['cta_text'] ) ? sanitize_text_field( $input['cta_text'] ) : $defaults['cta_text'],
-		'cta_url'             => isset( $input['cta_url'] ) ? esc_url_raw( $input['cta_url'] ) : $defaults['cta_url'],
-		'related_link_groups' => $groups,
+	$existing = wp_parse_args( $existing, $defaults );
+	$existing['jobs_copy'] = wp_parse_args(
+		isset( $existing['jobs_copy'] ) && is_array( $existing['jobs_copy'] ) ? $existing['jobs_copy'] : array(),
+		$defaults['jobs_copy']
 	);
+
+	$tab = isset( $_POST['domio_settings_tab'] ) ? sanitize_key( wp_unslash( $_POST['domio_settings_tab'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified by options.php.
+
+	if ( 'header' === $tab ) {
+		$existing['use_header'] = ! empty( $input['use_header'] );
+		$existing['phone']      = isset( $input['phone'] ) ? sanitize_text_field( $input['phone'] ) : $defaults['phone'];
+		$existing['email']      = isset( $input['email'] ) ? sanitize_email( $input['email'] ) : $defaults['email'];
+		$existing['cta_text']   = isset( $input['cta_text'] ) ? sanitize_text_field( $input['cta_text'] ) : $defaults['cta_text'];
+		$existing['cta_url']    = isset( $input['cta_url'] ) ? esc_url_raw( $input['cta_url'] ) : $defaults['cta_url'];
+	}
+
+	if ( 'related' === $tab || isset( $_POST['domio_related_links_saved'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$existing['related_link_groups'] = isset( $input['related_link_groups'] )
+			? domio_sanitize_related_link_groups( $input['related_link_groups'] )
+			: array();
+	}
+
+	if ( 'jobs' === $tab ) {
+		$existing['jobs_copy'] = domio_sanitize_jobs_copy( isset( $input['jobs_copy'] ) ? $input['jobs_copy'] : array() );
+	}
+
+	return $existing;
 }
 
 /**
@@ -263,88 +406,229 @@ function domio_render_settings_page() {
 	}
 
 	$settings = domio_get_settings();
+	$tabs     = domio_get_settings_tabs();
+	$current  = domio_get_current_settings_tab();
+	$base     = admin_url( 'themes.php?page=domio-settings' );
 	?>
 	<div class="wrap">
 		<h1><?php echo esc_html__( 'Teeman asetukset', 'domio' ); ?></h1>
-		<p><?php echo esc_html__( 'Teeman omat asetukset. Domio-header ohittaa Elementorin Theme Builder -headerin.', 'domio' ); ?></p>
-		<p class="description">
-			<?php echo esc_html__( 'Logo haetaan sivuston asetuksista:', 'domio' ); ?>
-			<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus[control]=custom_logo' ) ); ?>">
-				<?php echo esc_html__( 'Ulkoasu → Muokkaa → Sivuston tunnus', 'domio' ); ?>
-			</a>
-		</p>
+		<?php settings_errors(); ?>
+
+		<nav class="nav-tab-wrapper" aria-label="<?php echo esc_attr__( 'Asetusvälilehdet', 'domio' ); ?>">
+			<?php foreach ( $tabs as $slug => $label ) : ?>
+				<a
+					href="<?php echo esc_url( add_query_arg( 'tab', $slug, $base ) ); ?>"
+					class="nav-tab<?php echo $current === $slug ? ' nav-tab-active' : ''; ?>"
+				><?php echo esc_html( $label ); ?></a>
+			<?php endforeach; ?>
+		</nav>
 
 		<form method="post" action="options.php">
 			<?php settings_fields( 'domio_theme_settings_group' ); ?>
+			<input type="hidden" name="domio_settings_tab" value="<?php echo esc_attr( $current ); ?>" />
 
-			<table class="form-table" role="presentation">
-				<tr>
-					<th scope="row"><?php echo esc_html__( 'Header', 'domio' ); ?></th>
-					<td>
-						<label for="domio_use_header">
-							<input
-								name="domio_theme_settings[use_header]"
-								type="checkbox"
-								id="domio_use_header"
-								value="1"
-								<?php checked( ! empty( $settings['use_header'] ) ); ?>
-							/>
-							<?php echo esc_html__( 'Käytä Domio headeriä', 'domio' ); ?>
-						</label>
-						<p class="description">
-							<?php echo esc_html__( 'Kun käytössä, teema pakottaa custom-headerin ja Elementorin header jätetään pois.', 'domio' ); ?>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="domio_phone"><?php echo esc_html__( 'Puhelin', 'domio' ); ?></label></th>
-					<td>
-						<input name="domio_theme_settings[phone]" type="text" id="domio_phone" value="<?php echo esc_attr( $settings['phone'] ); ?>" class="regular-text" />
-					</td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="domio_email"><?php echo esc_html__( 'Sähköposti', 'domio' ); ?></label></th>
-					<td>
-						<input name="domio_theme_settings[email]" type="email" id="domio_email" value="<?php echo esc_attr( $settings['email'] ); ?>" class="regular-text" />
-					</td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="domio_cta_text"><?php echo esc_html__( 'CTA-teksti', 'domio' ); ?></label></th>
-					<td>
-						<input name="domio_theme_settings[cta_text]" type="text" id="domio_cta_text" value="<?php echo esc_attr( $settings['cta_text'] ); ?>" class="regular-text" />
-					</td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="domio_cta_url"><?php echo esc_html__( 'CTA-linkki', 'domio' ); ?></label></th>
-					<td>
-						<input name="domio_theme_settings[cta_url]" type="url" id="domio_cta_url" value="<?php echo esc_attr( $settings['cta_url'] ); ?>" class="regular-text" />
-					</td>
-				</tr>
-			</table>
-
-			<h2><?php echo esc_html__( 'Tutustu myös -linkit', 'domio' ); ?></h2>
-			<p>
-				<?php echo esc_html__( 'Nämä linkit näkyvät kaikilla sivuilla, joilla on Domio: Tutustu myös -palikka. Muutos päivittyy kaikkiin ländäreihin kerralla.', 'domio' ); ?>
-			</p>
-			<input type="hidden" name="domio_related_links_saved" value="1" />
-			<?php
-			$groups = function_exists( 'domio_get_related_link_groups' )
-				? domio_get_related_link_groups()
-				: array();
-			domio_render_related_links_fields( $groups );
-			?>
+			<?php if ( 'header' === $current ) : ?>
+				<p><?php echo esc_html__( 'Domio-header ohittaa Elementorin Theme Builder -headerin.', 'domio' ); ?></p>
+				<p class="description">
+					<?php echo esc_html__( 'Logo haetaan sivuston asetuksista:', 'domio' ); ?>
+					<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus[control]=custom_logo' ) ); ?>">
+						<?php echo esc_html__( 'Ulkoasu → Muokkaa → Sivuston tunnus', 'domio' ); ?>
+					</a>
+				</p>
+				<?php domio_render_settings_header_fields( $settings ); ?>
+				<p>
+					<?php
+					echo esc_html__( 'Valitse valikko sijainnille “Domio päävalikko” kohdassa', 'domio' );
+					echo ' ';
+					echo '<a href="' . esc_url( admin_url( 'nav-menus.php' ) ) . '">' . esc_html__( 'Ulkoasu → Valikot', 'domio' ) . '</a>.';
+					?>
+				</p>
+			<?php elseif ( 'related' === $current ) : ?>
+				<p>
+					<?php echo esc_html__( 'Nämä linkit näkyvät kaikilla sivuilla, joilla on Domio: Tutustu myös -palikka. Muutos päivittyy kaikkiin ländäreihin kerralla.', 'domio' ); ?>
+				</p>
+				<input type="hidden" name="domio_related_links_saved" value="1" />
+				<?php
+				domio_render_related_links_fields(
+					function_exists( 'domio_get_related_link_groups' ) ? domio_get_related_link_groups() : array()
+				);
+				?>
+			<?php else : ?>
+				<p>
+					<?php echo esc_html__( 'Nämä tekstit näkyvät työpaikkalistauksessa ja yksittäisessä ilmoituksessa. Tyhjä kenttä palauttaa oletustekstin.', 'domio' ); ?>
+				</p>
+				<?php domio_render_settings_jobs_fields( $settings ); ?>
+			<?php endif; ?>
 
 			<?php submit_button( __( 'Tallenna asetukset', 'domio' ) ); ?>
 		</form>
-
-		<p>
-			<?php
-			echo esc_html__( 'Valitse valikko sijainnille “Domio päävalikko” kohdassa', 'domio' );
-			echo ' ';
-			echo '<a href="' . esc_url( admin_url( 'nav-menus.php' ) ) . '">' . esc_html__( 'Ulkoasu → Valikot', 'domio' ) . '</a>.';
-			?>
-		</p>
 	</div>
+	<?php
+}
+
+/**
+ * Header tab fields.
+ *
+ * @param array<string, mixed> $settings Settings.
+ * @return void
+ */
+function domio_render_settings_header_fields( $settings ) {
+	?>
+	<table class="form-table" role="presentation">
+		<tr>
+			<th scope="row"><?php echo esc_html__( 'Header', 'domio' ); ?></th>
+			<td>
+				<label for="domio_use_header">
+					<input
+						name="domio_theme_settings[use_header]"
+						type="checkbox"
+						id="domio_use_header"
+						value="1"
+						<?php checked( ! empty( $settings['use_header'] ) ); ?>
+					/>
+					<?php echo esc_html__( 'Käytä Domio headeriä', 'domio' ); ?>
+				</label>
+				<p class="description">
+					<?php echo esc_html__( 'Kun käytössä, teema pakottaa custom-headerin ja Elementorin header jätetään pois.', 'domio' ); ?>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row"><label for="domio_phone"><?php echo esc_html__( 'Puhelin', 'domio' ); ?></label></th>
+			<td>
+				<input name="domio_theme_settings[phone]" type="text" id="domio_phone" value="<?php echo esc_attr( $settings['phone'] ); ?>" class="regular-text" />
+			</td>
+		</tr>
+		<tr>
+			<th scope="row"><label for="domio_email"><?php echo esc_html__( 'Sähköposti', 'domio' ); ?></label></th>
+			<td>
+				<input name="domio_theme_settings[email]" type="email" id="domio_email" value="<?php echo esc_attr( $settings['email'] ); ?>" class="regular-text" />
+			</td>
+		</tr>
+		<tr>
+			<th scope="row"><label for="domio_cta_text"><?php echo esc_html__( 'CTA-teksti', 'domio' ); ?></label></th>
+			<td>
+				<input name="domio_theme_settings[cta_text]" type="text" id="domio_cta_text" value="<?php echo esc_attr( $settings['cta_text'] ); ?>" class="regular-text" />
+			</td>
+		</tr>
+		<tr>
+			<th scope="row"><label for="domio_cta_url"><?php echo esc_html__( 'CTA-linkki', 'domio' ); ?></label></th>
+			<td>
+				<input name="domio_theme_settings[cta_url]" type="url" id="domio_cta_url" value="<?php echo esc_attr( $settings['cta_url'] ); ?>" class="regular-text" />
+			</td>
+		</tr>
+	</table>
+	<?php
+}
+
+/**
+ * Jobs copy tab fields.
+ *
+ * @param array<string, mixed> $settings Settings.
+ * @return void
+ */
+function domio_render_settings_jobs_fields( $settings ) {
+	$copy   = isset( $settings['jobs_copy'] ) && is_array( $settings['jobs_copy'] ) ? $settings['jobs_copy'] : domio_get_default_jobs_copy();
+	$fields = array(
+		'archive_title'      => array(
+			'label'       => __( 'Listauksen otsikko', 'domio' ),
+			'type'        => 'text',
+			'description' => __( 'H1 työpaikkalistauksessa.', 'domio' ),
+		),
+		'archive_lead'       => array(
+			'label'       => __( 'Johdanto', 'domio' ),
+			'type'        => 'textarea',
+			'description' => __( 'Kappale otsikon alla.', 'domio' ),
+		),
+		'archive_empty'      => array(
+			'label' => __( 'Tyhjä lista', 'domio' ),
+			'type'  => 'text',
+		),
+		'archive_count_one'  => array(
+			'label'       => __( 'Määrä, yksikkö', 'domio' ),
+			'type'        => 'text',
+			'description' => __( 'Käytä %d paikkana, esim. %d työpaikka.', 'domio' ),
+		),
+		'archive_count_many' => array(
+			'label'       => __( 'Määrä, monikko', 'domio' ),
+			'type'        => 'text',
+			'description' => __( 'Käytä %d paikkana, esim. %d työpaikkaa.', 'domio' ),
+		),
+		'card_cta'           => array(
+			'label' => __( '“Lue ilmoitus” -linkki', 'domio' ),
+			'type'  => 'text',
+		),
+		'card_read_more'     => array(
+			'label' => __( '“Lue lisää” -linkki', 'domio' ),
+			'type'  => 'text',
+		),
+		'single_eyebrow'     => array(
+			'label'       => __( 'Yksittäisen ilmoituksen yläotsikko', 'domio' ),
+			'type'        => 'text',
+			'description' => __( 'Linkki takaisin listaukseen.', 'domio' ),
+		),
+		'label_company'      => array(
+			'label' => __( 'Kenttä: Yritys', 'domio' ),
+			'type'  => 'text',
+		),
+		'label_location'     => array(
+			'label' => __( 'Kenttä: Paikkakunta', 'domio' ),
+			'type'  => 'text',
+		),
+		'label_salary'       => array(
+			'label' => __( 'Kenttä: Palkka', 'domio' ),
+			'type'  => 'text',
+		),
+		'label_type'         => array(
+			'label' => __( 'Kenttä: Tyyppi', 'domio' ),
+			'type'  => 'text',
+		),
+		'label_deadline'     => array(
+			'label' => __( 'Kenttä: Viim. hakupäivä', 'domio' ),
+			'type'  => 'text',
+		),
+		'badge_ended'        => array(
+			'label' => __( 'Merkki: haku päättynyt', 'domio' ),
+			'type'  => 'text',
+		),
+		'badge_last_day'     => array(
+			'label' => __( 'Merkki: viimeinen päivä', 'domio' ),
+			'type'  => 'text',
+		),
+		'badge_days_one'     => array(
+			'label'       => __( 'Merkki: päivä jäljellä', 'domio' ),
+			'type'        => 'text',
+			'description' => __( 'Käytä %d paikkana, esim. %d päivä jäljellä.', 'domio' ),
+		),
+		'badge_days_many'    => array(
+			'label'       => __( 'Merkki: päiviä jäljellä', 'domio' ),
+			'type'        => 'text',
+			'description' => __( 'Käytä %d paikkana, esim. %d päivää jäljellä.', 'domio' ),
+		),
+	);
+	?>
+	<table class="form-table" role="presentation">
+		<?php foreach ( $fields as $key => $field ) : ?>
+			<?php
+			$value = isset( $copy[ $key ] ) ? $copy[ $key ] : '';
+			$id    = 'domio_jobs_' . $key;
+			$name  = 'domio_theme_settings[jobs_copy][' . $key . ']';
+			?>
+			<tr>
+				<th scope="row"><label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $field['label'] ); ?></label></th>
+				<td>
+					<?php if ( 'textarea' === $field['type'] ) : ?>
+						<textarea name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" class="large-text" rows="4"><?php echo esc_textarea( $value ); ?></textarea>
+					<?php else : ?>
+						<input name="<?php echo esc_attr( $name ); ?>" type="text" id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $value ); ?>" class="regular-text" />
+					<?php endif; ?>
+					<?php if ( ! empty( $field['description'] ) ) : ?>
+						<p class="description"><?php echo esc_html( $field['description'] ); ?></p>
+					<?php endif; ?>
+				</td>
+			</tr>
+		<?php endforeach; ?>
+	</table>
 	<?php
 }
 

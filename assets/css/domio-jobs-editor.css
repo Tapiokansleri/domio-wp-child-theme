@@ -1,0 +1,101 @@
+/**
+ * Job listing editor canvas — match the published single job column.
+ * Loaded only when editing the tyopaikka post type (overrides full-bleed landing rules).
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap");
+
+.editor-styles-wrapper {
+	--domio-font: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+	--domio-jobs-editor-width: 800px;
+	--wp--style--global--content-size: 800px;
+	--wp--style--global--wide-size: 800px;
+	--wp--style--root--padding-left: 0;
+	--wp--style--root--padding-right: 0;
+	font-family: var(--domio-font) !important;
+	font-size: 1.0625rem;
+	line-height: 1.65;
+	color: #121212 !important;
+	background: #fff !important;
+	padding: 2rem 1.25rem 4rem !important;
+	max-width: none !important;
+}
+
+.editor-styles-wrapper :where(h1, h2, h3, h4, h5, h6, p, li, a, span, button, summary, dt, dd) {
+	font-family: var(--domio-font) !important;
+}
+
+.editor-styles-wrapper .editor-visual-editor__post-title-wrapper,
+.editor-styles-wrapper .edit-post-visual-editor__post-title-wrapper,
+.editor-styles-wrapper .is-root-container,
+.editor-styles-wrapper .block-editor-block-list__layout.is-root-container {
+	max-width: var(--domio-jobs-editor-width) !important;
+	width: 100% !important;
+	margin-inline: auto !important;
+	padding-inline: 0 !important;
+}
+
+.editor-styles-wrapper .is-root-container > .wp-block,
+.editor-styles-wrapper .is-root-container > [data-type^="domio/"],
+.editor-styles-wrapper .wp-block[data-align="wide"],
+.editor-styles-wrapper .wp-block[data-align="full"],
+.editor-styles-wrapper .wp-block-post-title,
+.editor-styles-wrapper .editor-post-title,
+.editor-styles-wrapper .editor-post-title__block {
+	max-width: var(--domio-jobs-editor-width) !important;
+	width: 100% !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+.editor-styles-wrapper .editor-post-title,
+.editor-styles-wrapper .editor-post-title__input,
+.editor-styles-wrapper .wp-block-post-title {
+	font-family: var(--domio-font) !important;
+	font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem) !important;
+	font-weight: 700 !important;
+	line-height: 1.1 !important;
+	letter-spacing: -0.03em;
+	color: #121212 !important;
+}
+
+.editor-styles-wrapper p,
+.editor-styles-wrapper li {
+	font-size: 1.0625rem !important;
+	line-height: 1.65 !important;
+	color: #121212;
+}
+
+.editor-styles-wrapper h2 {
+	font-size: 2rem !important;
+	font-weight: 500 !important;
+	line-height: 1.2 !important;
+	letter-spacing: -0.02em;
+	color: #121212 !important;
+}
+
+.editor-styles-wrapper h3 {
+	font-size: 1.75rem !important;
+	font-weight: 500 !important;
+	line-height: 1.2 !important;
+	color: #121212 !important;
+}
+
+.editor-styles-wrapper h4 {
+	font-size: 1.5rem !important;
+	font-weight: 500 !important;
+	line-height: 1.2 !important;
+}
+
+.editor-styles-wrapper a {
+	color: #121212;
+}
+
+.editor-styles-wrapper a:hover {
+	color: #004c3e;
+}
+
+.editor-styles-wrapper ul,
+.editor-styles-wrapper ol {
+	padding-inline-start: 1.25rem;
+}

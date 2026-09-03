@@ -84,6 +84,11 @@ function domio_print_schema() {
 		$graph[] = $service;
 	}
 
+	$job = function_exists( 'domio_get_job_posting_schema' ) ? domio_get_job_posting_schema() : array();
+	if ( ! empty( $job ) ) {
+		$graph[] = $job;
+	}
+
 	if ( ! empty( $GLOBALS['domio_faq_items'] ) && ! domio_page_has_yoast_faq_block() ) {
 		$faq = domio_get_faq_page_schema( $GLOBALS['domio_faq_items'] );
 		if ( ! empty( $faq ) ) {
@@ -196,4 +201,74 @@ function domio_get_faq_page_schema( $items ) {
 		'@type'      => 'FAQPage',
 		'mainEntity' => $entities,
 	);
+}
+
+/**
+ * JobPosting schema for a single tyopaikka.
+ *
+ * @return array<string, mixed>
+ */
+function domio_get_job_posting_schema() {
+	if ( ! function_exists( 'domio_is_tyopaikka_template' ) || ! is_singular( DOMIO_JOB_POST_TYPE ) ) {
+		return array();
+	}
+
+	$post_id = get_the_ID();
+	if ( ! $post_id ) {
+		return array();
+	}
+
+	$meta = function_exists( 'domio_get_tyopaikka_meta' ) ? domio_get_tyopaikka_meta( $post_id ) : array();
+	$map  = array(
+		'full_time'  => 'FULL_TIME',
+		'part_time'  => 'PART_TIME',
+		'temporary'  => 'TEMPORARY',
+		'internship' => 'INTERN',
+		'open'       => 'OTHER',
+	);
+
+	$schema = array(
+		'@type'            => 'JobPosting',
+		'title'            => get_the_title( $post_id ),
+		'description'      => wp_strip_all_tags( get_the_content( null, false, $post_id ) ),
+		'datePosted'       => get_the_date( 'c', $post_id ),
+		'url'              => get_permalink( $post_id ),
+		'hiringOrganization' => array(
+			'@type'  => 'Organization',
+			'name'   => ! empty( $meta['company'] ) ? $meta['company'] : get_bloginfo( 'name' ),
+			'sameAs' => home_url( '/' ),
+		),
+	);
+
+	if ( ! empty( $meta['deadline'] ) ) {
+		$schema['validThrough'] = $meta['deadline'] . 'T23:59:59';
+	}
+
+	if ( ! empty( $meta['employment_type'] ) && isset( $map[ $meta['employment_type'] ] ) ) {
+		$schema['employmentType'] = $map[ $meta['employment_type'] ];
+	}
+
+	if ( ! empty( $meta['salary'] ) ) {
+		$schema['baseSalary'] = array(
+			'@type'    => 'MonetaryAmount',
+			'currency' => 'EUR',
+			'value'    => array(
+				'@type' => 'QuantitativeValue',
+				'name'  => $meta['salary'],
+			),
+		);
+	}
+
+	if ( ! empty( $meta['location'] ) ) {
+		$schema['jobLocation'] = array(
+			'@type'   => 'Place',
+			'address' => array(
+				'@type'           => 'PostalAddress',
+				'addressLocality' => $meta['location'],
+				'addressCountry'  => 'FI',
+			),
+		);
+	}
+
+	return $schema;
 }

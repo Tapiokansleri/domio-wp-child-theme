@@ -35,18 +35,35 @@ function domio_is_author_template() {
 }
 
 /**
- * Add body class for Domio landing / author templates.
+ * Whether the current view is a job archive or single.
+ *
+ * @return bool
+ */
+function domio_is_jobs_template() {
+	return function_exists( 'domio_is_tyopaikka_template' ) && domio_is_tyopaikka_template();
+}
+
+/**
+ * Add body class for Domio landing / author / jobs templates.
  *
  * @param string[] $classes Body classes.
  * @return string[]
  */
 function domio_landing_body_class( $classes ) {
-	if ( domio_is_landing_template() || domio_is_author_template() ) {
+	if ( domio_is_landing_template() || domio_is_author_template() || domio_is_jobs_template() ) {
 		$classes[] = 'domio-template';
 	}
 
 	if ( domio_is_author_template() ) {
 		$classes[] = 'domio-author';
+	}
+
+	if ( domio_is_jobs_template() ) {
+		$classes[] = 'domio-jobs';
+	}
+
+	if ( domio_is_landing_template() ) {
+		$classes[] = 'domio-overlay-header';
 	}
 
 	return $classes;
@@ -59,7 +76,7 @@ add_filter( 'body_class', 'domio_landing_body_class' );
  * @return void
  */
 function domio_enqueue_landing_typography() {
-	if ( ! domio_is_landing_template() && ! domio_is_author_template() ) {
+	if ( ! domio_is_landing_template() && ! domio_is_author_template() && ! domio_is_jobs_template() ) {
 		return;
 	}
 
@@ -81,6 +98,15 @@ function domio_enqueue_landing_typography() {
 		wp_enqueue_style(
 			'domio-author',
 			DOMIO_THEME_URI . '/assets/css/domio-author.css',
+			array( 'domio-type' ),
+			DOMIO_THEME_VERSION
+		);
+	}
+
+	if ( domio_is_jobs_template() ) {
+		wp_enqueue_style(
+			'domio-jobs',
+			DOMIO_THEME_URI . '/assets/css/domio-jobs.css',
 			array( 'domio-type' ),
 			DOMIO_THEME_VERSION
 		);
@@ -122,6 +148,95 @@ function domio_enqueue_editor_ui() {
 	);
 }
 add_action( 'enqueue_block_editor_assets', 'domio_enqueue_editor_ui' );
+
+/**
+ * Whether the current admin screen is the tyopaikka block editor.
+ *
+ * @return bool
+ */
+function domio_is_tyopaikka_editor() {
+	if ( ! is_admin() ) {
+		return false;
+	}
+
+	if ( defined( 'DOMIO_JOB_POST_TYPE' ) ) {
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		if ( $screen && ! empty( $screen->post_type ) ) {
+			return DOMIO_JOB_POST_TYPE === $screen->post_type;
+		}
+
+		if ( isset( $_GET['post_type'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return DOMIO_JOB_POST_TYPE === sanitize_key( wp_unslash( $_GET['post_type'] ) );
+		}
+
+		if ( isset( $_GET['post'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return DOMIO_JOB_POST_TYPE === get_post_type( (int) $_GET['post'] );
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Constrain the job editor layout to the published 800px column.
+ *
+ * @param array                   $settings Editor settings.
+ * @param WP_Block_Editor_Context $context  Editor context.
+ * @return array
+ */
+function domio_tyopaikka_editor_settings( $settings, $context ) {
+	$post_type = '';
+	if ( isset( $context->post->post_type ) ) {
+		$post_type = $context->post->post_type;
+	} elseif ( ! empty( $settings['postType'] ) ) {
+		$post_type = $settings['postType'];
+	}
+
+	if ( ! defined( 'DOMIO_JOB_POST_TYPE' ) || DOMIO_JOB_POST_TYPE !== $post_type ) {
+		return $settings;
+	}
+
+	if ( isset( $settings['__experimentalFeatures']['layout'] ) && is_array( $settings['__experimentalFeatures']['layout'] ) ) {
+		$settings['__experimentalFeatures']['layout']['contentSize'] = '800px';
+		$settings['__experimentalFeatures']['layout']['wideSize']    = '800px';
+	}
+
+	$css_file = DOMIO_THEME_DIR . '/assets/css/domio-jobs-editor.css';
+	if ( is_readable( $css_file ) ) {
+		$settings['styles'][] = array(
+			'css' => (string) file_get_contents( $css_file ),
+		);
+	}
+
+	return $settings;
+}
+add_filter( 'block_editor_settings_all', 'domio_tyopaikka_editor_settings', 20, 2 );
+
+/**
+ * Load job-column editor CSS inside the iframed canvas.
+ *
+ * @return void
+ */
+function domio_enqueue_jobs_editor_canvas() {
+	if ( ! domio_is_tyopaikka_editor() ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'domio-onest',
+		'https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap',
+		array(),
+		null
+	);
+
+	wp_enqueue_style(
+		'domio-jobs-editor',
+		DOMIO_THEME_URI . '/assets/css/domio-jobs-editor.css',
+		array( 'domio-onest' ),
+		DOMIO_THEME_VERSION
+	);
+}
+add_action( 'enqueue_block_assets', 'domio_enqueue_jobs_editor_canvas' );
 
 /**
  * Use Domio-style breadcrumb separator on landing template.

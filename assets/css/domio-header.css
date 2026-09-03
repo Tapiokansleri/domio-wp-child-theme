@@ -396,8 +396,9 @@ body.domio-has-header [data-elementor-type="header"] {
 /* Admin bar already offsets the page via html margin-top;
    do not add sticky top offset or a white gap appears. */
 
-/* Domio sivupohja: transparent overlay header over hero */
-body.domio-template.domio-has-header .domio-header {
+/* Domio sivupohja: transparent overlay header over hero.
+   Jobs / author pages keep the normal sticky header so titles are not covered. */
+body.domio-overlay-header.domio-has-header .domio-header {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -413,30 +414,30 @@ body.domio-template.domio-has-header .domio-header {
 		backdrop-filter 0.2s ease;
 }
 
-body.admin-bar.domio-template.domio-has-header .domio-header {
+body.admin-bar.domio-overlay-header.domio-has-header .domio-header {
 	top: 32px;
 }
 
 @media (max-width: 782px) {
-	body.admin-bar.domio-template.domio-has-header .domio-header {
+	body.admin-bar.domio-overlay-header.domio-has-header .domio-header {
 		top: 46px;
 	}
 }
 
-body.domio-template.domio-has-header .domio-header__top {
+body.domio-overlay-header.domio-has-header .domio-header__top {
 	border-bottom-color: rgb(255 255 255 / 14%);
 }
 
-body.domio-template.domio-has-header .domio-header.is-scrolled,
-body.domio-template.domio-has-header .domio-header.is-nav-open {
+body.domio-overlay-header.domio-has-header .domio-header.is-scrolled,
+body.domio-overlay-header.domio-has-header .domio-header.is-nav-open {
 	background: rgb(18 18 18 / 92%);
 	backdrop-filter: blur(12px);
 	-webkit-backdrop-filter: blur(12px);
 	box-shadow: 0 8px 28px rgb(0 0 0 / 28%);
 }
 
-body.domio-template.domio-has-header .domio-header.is-scrolled .domio-header__top,
-body.domio-template.domio-has-header .domio-header.is-nav-open .domio-header__top {
+body.domio-overlay-header.domio-has-header .domio-header.is-scrolled .domio-header__top,
+body.domio-overlay-header.domio-has-header .domio-header.is-nav-open .domio-header__top {
 	border-bottom-color: rgb(255 255 255 / 8%);
 }
 
