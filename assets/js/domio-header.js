@@ -155,10 +155,47 @@
 		} );
 	}
 
-	const onScroll = () => {
-		header.classList.toggle( 'is-scrolled', window.scrollY > 8 );
+	const desktopQuery = window.matchMedia( '(min-width: 981px)' );
+	const scrollMode = header.getAttribute( 'data-domio-header-scroll' ) || 'always';
+	let lastScrollY = window.scrollY;
+
+	const syncHeaderHeight = () => {
+		document.documentElement.style.setProperty(
+			'--domio-header-height',
+			Math.ceil( header.getBoundingClientRect().height ) + 'px'
+		);
 	};
 
+	const onScroll = () => {
+		const y = window.scrollY;
+
+		header.classList.toggle( 'is-scrolled', y > 8 );
+
+		if ( 'scroll-up' !== scrollMode || ! desktopQuery.matches || header.classList.contains( 'is-nav-open' ) ) {
+			header.classList.remove( 'is-hidden' );
+			lastScrollY = y;
+			return;
+		}
+
+		if ( header.matches( ':hover' ) || header.contains( document.activeElement ) ) {
+			header.classList.remove( 'is-hidden' );
+			lastScrollY = y;
+			return;
+		}
+
+		if ( y <= 16 ) {
+			header.classList.remove( 'is-hidden' );
+		} else if ( y > lastScrollY + 8 ) {
+			header.classList.add( 'is-hidden' );
+		} else if ( y < lastScrollY - 8 ) {
+			header.classList.remove( 'is-hidden' );
+		}
+
+		lastScrollY = y;
+	};
+
+	syncHeaderHeight();
 	onScroll();
 	window.addEventListener( 'scroll', onScroll, { passive: true } );
+	window.addEventListener( 'resize', syncHeaderHeight, { passive: true } );
 } )();

@@ -17,7 +17,7 @@ $cta_url    = isset( $settings['cta_url'] ) ? $settings['cta_url'] : '';
 $phone_href = $phone ? domio_phone_href( $phone ) : '';
 $menu_id    = domio_get_primary_menu_id();
 ?>
-<header class="domio-header" data-domio-header>
+<header class="domio-header" data-domio-header data-domio-header-scroll="<?php echo esc_attr( function_exists( 'domio_header_scroll_mode' ) ? domio_header_scroll_mode() : 'always' ); ?>">
 	<div class="domio-header__top">
 		<div class="domio-header__shell">
 			<ul class="domio-header__contacts">
@@ -108,3 +108,4 @@ $menu_id    = domio_get_primary_menu_id();
 		</div>
 	</div>
 </header>
+<div class="domio-header-spacer" aria-hidden="true"></div>

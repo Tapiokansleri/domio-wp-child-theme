@@ -82,6 +82,9 @@ add_filter( 'rocket_exclude_js', 'domio_rocket_exclude_header_js' );
 function domio_header_body_class( $classes ) {
 	if ( domio_use_custom_header() ) {
 		$classes[] = 'domio-has-header';
+		$classes[] = 'scroll-up' === domio_header_scroll_mode()
+			? 'domio-header-scroll-up'
+			: 'domio-header-always';
 	}
 
 	return $classes;

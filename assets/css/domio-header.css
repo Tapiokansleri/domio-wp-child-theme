@@ -22,7 +22,16 @@
 	color: var(--domio-header-text);
 	font-family: var(--domio-header-font);
 	box-shadow: 0 1px 0 rgb(255 255 255 / 6%);
-	transition: box-shadow 0.2s ease;
+	transition:
+		box-shadow 0.2s ease,
+		transform 0.28s ease;
+	will-change: transform;
+}
+
+.domio-header-spacer {
+	display: none;
+	height: var(--domio-header-height, 7.25rem);
+	pointer-events: none;
 }
 
 /* Hide leftover Elementor header / spacers when Domio header is active */
@@ -411,7 +420,8 @@ body.domio-overlay-header.domio-has-header .domio-header {
 	transition:
 		background-color 0.2s ease,
 		box-shadow 0.2s ease,
-		backdrop-filter 0.2s ease;
+		backdrop-filter 0.2s ease,
+		transform 0.28s ease;
 }
 
 body.admin-bar.domio-overlay-header.domio-has-header .domio-header {
@@ -439,6 +449,31 @@ body.domio-overlay-header.domio-has-header .domio-header.is-nav-open {
 body.domio-overlay-header.domio-has-header .domio-header.is-scrolled .domio-header__top,
 body.domio-overlay-header.domio-has-header .domio-header.is-nav-open .domio-header__top {
 	border-bottom-color: rgb(255 255 255 / 8%);
+}
+
+/* Desktop: pin the header so body overflow-x: clip cannot unstick it. */
+@media (min-width: 981px) {
+	body.domio-has-header .domio-header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+	}
+
+	body.admin-bar.domio-has-header:not(.domio-overlay-header) .domio-header {
+		top: 32px;
+	}
+
+	body.domio-has-header:not(.domio-overlay-header) .domio-header-spacer {
+		display: block;
+	}
+
+	body.domio-has-header .domio-header.is-hidden {
+		transform: translateY(-110%);
+		box-shadow: none;
+		pointer-events: none;
+	}
 }
 
 @media (max-width: 980px) {

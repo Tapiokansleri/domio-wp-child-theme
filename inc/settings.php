@@ -17,6 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function domio_get_default_settings() {
 	return array(
 		'use_header'          => false,
+		'header_scroll'       => 'always',
 		'phone'               => '040 630 5536',
 		'email'               => 'asiakaspalvelu@domio.fi',
 		'cta_text'            => 'Ota yhteyttä',
@@ -157,6 +158,18 @@ function domio_get_settings() {
 function domio_use_custom_header() {
 	$settings = domio_get_settings();
 	return ! empty( $settings['use_header'] );
+}
+
+/**
+ * Desktop header scroll behaviour.
+ *
+ * @return string always|scroll-up
+ */
+function domio_header_scroll_mode() {
+	$settings = domio_get_settings();
+	$mode     = isset( $settings['header_scroll'] ) ? (string) $settings['header_scroll'] : 'always';
+
+	return 'scroll-up' === $mode ? 'scroll-up' : 'always';
 }
 
 /**
@@ -375,8 +388,11 @@ function domio_sanitize_settings( $input ) {
 	$tab = isset( $_POST['domio_settings_tab'] ) ? sanitize_key( wp_unslash( $_POST['domio_settings_tab'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified by options.php.
 
 	if ( 'header' === $tab ) {
-		$existing['use_header'] = ! empty( $input['use_header'] );
-		$existing['phone']      = isset( $input['phone'] ) ? sanitize_text_field( $input['phone'] ) : $defaults['phone'];
+		$existing['use_header']    = ! empty( $input['use_header'] );
+		$existing['header_scroll'] = ( isset( $input['header_scroll'] ) && 'scroll-up' === $input['header_scroll'] )
+			? 'scroll-up'
+			: 'always';
+		$existing['phone']         = isset( $input['phone'] ) ? sanitize_text_field( $input['phone'] ) : $defaults['phone'];
 		$existing['email']      = isset( $input['email'] ) ? sanitize_email( $input['email'] ) : $defaults['email'];
 		$existing['cta_text']   = isset( $input['cta_text'] ) ? sanitize_text_field( $input['cta_text'] ) : $defaults['cta_text'];
 		$existing['cta_url']    = isset( $input['cta_url'] ) ? esc_url_raw( $input['cta_url'] ) : $defaults['cta_url'];
@@ -490,6 +506,36 @@ function domio_render_settings_header_fields( $settings ) {
 				</label>
 				<p class="description">
 					<?php echo esc_html__( 'Kun käytössä, teema pakottaa custom-headerin ja Elementorin header jätetään pois.', 'domio' ); ?>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row"><?php echo esc_html__( 'Header työpöydällä', 'domio' ); ?></th>
+			<td>
+				<fieldset>
+					<legend class="screen-reader-text"><?php echo esc_html__( 'Headerin käyttäytyminen työpöydällä', 'domio' ); ?></legend>
+					<label>
+						<input
+							name="domio_theme_settings[header_scroll]"
+							type="radio"
+							value="always"
+							<?php checked( domio_header_scroll_mode(), 'always' ); ?>
+						/>
+						<?php echo esc_html__( 'Pysyy näkyvissä, kun sivua rullataan alaspäin', 'domio' ); ?>
+					</label>
+					<br />
+					<label>
+						<input
+							name="domio_theme_settings[header_scroll]"
+							type="radio"
+							value="scroll-up"
+							<?php checked( domio_header_scroll_mode(), 'scroll-up' ); ?>
+						/>
+						<?php echo esc_html__( 'Piiloudu alaspäin rullatessa, tule näkyviin ylöspäin rullatessa', 'domio' ); ?>
+					</label>
+				</fieldset>
+				<p class="description">
+					<?php echo esc_html__( 'Koskee vain työpöytänäkymää. Puhelimessa valikko toimii ennallaan.', 'domio' ); ?>
 				</p>
 			</td>
 		</tr>
