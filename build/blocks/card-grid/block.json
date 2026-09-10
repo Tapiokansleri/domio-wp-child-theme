@@ -6,11 +6,12 @@
   "title": "Domio: Korttiruudukko",
   "category": "domio",
   "icon": "grid-view",
-  "description": "Korttiruudukko palveluille, perusteluille tai referensseille.",
+  "description": "Korttiruudukko palveluille, perusteluille, arvoille tai referensseille.",
   "keywords": [
     "kortti",
     "ruudukko",
     "palvelut",
+    "arvot",
     "domio"
   ],
   "textdomain": "domio",

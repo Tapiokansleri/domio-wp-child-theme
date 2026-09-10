@@ -17,9 +17,12 @@ import {
 	RangeControl,
 	Button,
 	Notice,
+	Flex,
+	FlexItem,
 } from '@wordpress/components';
 import { BackgroundControls, getSectionClasses, getPatternStyle } from '../../shared/background';
 import { DomioTemplateNotice } from '../../shared/template-notice';
+import { DomioIcon, DOMIO_ICON_KEYS, DOMIO_ICON_LABELS } from '../../shared/icons';
 
 const ALLOWED_BLOCKS = [
 	'core/paragraph',
@@ -29,6 +32,7 @@ const ALLOWED_BLOCKS = [
 	'core/buttons',
 	'core/quote',
 	'domio/steps',
+	'domio/hintalaskuri',
 ];
 
 const TEMPLATE = [
@@ -42,6 +46,11 @@ const TEMPLATE = [
 ];
 
 const LAYOUTS = [ 'default', 'narrow' ];
+const CONTENT_WIDTHS = [ 'default', 'full' ];
+const SUMMARY_MAX = 7;
+
+const uid = ( prefix ) =>
+	`${ prefix }-${ Date.now() }-${ Math.floor( Math.random() * 1000 ) }`;
 
 /**
  * @param {Object} props Block props.
@@ -51,6 +60,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	const {
 		heading,
 		layout,
+		contentWidth,
 		mediaPosition,
 		mediaId,
 		mediaUrl,
@@ -59,27 +69,73 @@ export default function Edit( { attributes, setAttributes } ) {
 		background,
 		pattern,
 		patternOpacity,
+		summaryItems,
 	} = attributes;
 
+	const items = Array.isArray( summaryItems ) ? summaryItems : [];
+	const hasSummary = items.some(
+		( item ) => ( item && ( item.title || item.text ) )
+	);
 	const normalizedLayout = LAYOUTS.includes( layout ) ? layout : 'default';
+	const normalizedWidth = CONTENT_WIDTHS.includes( contentWidth )
+		? contentWidth
+		: 'default';
 	const isNarrow = normalizedLayout === 'narrow';
-	const missingAlt = Boolean( mediaId && ! mediaAlt );
+	const isContentFull = normalizedWidth === 'full';
+	const missingAlt = Boolean( mediaId && ! mediaAlt && ! hasSummary );
+	const hasAside = hasSummary || Boolean( mediaUrl );
 
 	const blockProps = useBlockProps( {
 		className: [
 			'domio-media-text',
+			hasSummary ? 'domio-media-text--has-summary' : '',
 			isNarrow
 				? 'domio-media-text--narrow'
-				: `domio-media-text--media-${ mediaPosition }`,
+				: hasAside
+					? `domio-media-text--media-${ mediaPosition }`
+					: 'domio-media-text--no-media',
+			isContentFull ? 'domio-media-text--content-full' : '',
 			getSectionClasses( background, pattern ),
-		].join( ' ' ),
+		]
+			.filter( Boolean )
+			.join( ' ' ),
 		style: {
 			...getPatternStyle( patternOpacity ),
-			...( isNarrow
+			...( isNarrow || ! hasAside
 				? {}
 				: { '--domio-media-width': `${ mediaWidth }%` } ),
 		},
 	} );
+
+	const updateItem = ( index, key, value ) => {
+		const next = items.map( ( item, i ) =>
+			i === index ? { ...item, [ key ]: value } : item
+		);
+		setAttributes( { summaryItems: next } );
+	};
+
+	const addItem = () => {
+		if ( items.length >= SUMMARY_MAX ) {
+			return;
+		}
+		setAttributes( {
+			summaryItems: [
+				...items,
+				{
+					id: uid( 's' ),
+					icon: 'check',
+					title: '',
+					text: '',
+				},
+			],
+		} );
+	};
+
+	const removeItem = ( index ) => {
+		setAttributes( {
+			summaryItems: items.filter( ( _, i ) => i !== index ),
+		} );
+	};
 
 	const mediaPicker = ( open ) => (
 		<button
@@ -123,10 +179,31 @@ export default function Edit( { attributes, setAttributes } ) {
 							setAttributes( { layout: value } )
 						}
 					/>
+					<SelectControl
+						label={ __( 'Leveys', 'domio' ) }
+						value={ normalizedWidth }
+						options={ [
+							{
+								label: __( 'Oletus', 'domio' ),
+								value: 'default',
+							},
+							{
+								label: __( 'Täysleveä', 'domio' ),
+								value: 'full',
+							},
+						] }
+						help={ __(
+							'Täysleveä käyttää sivun täyttä sisältöleveyttä. Oletus kaventaa tekstiä blogikirjoituksissa.',
+							'domio'
+						) }
+						onChange={ ( value ) =>
+							setAttributes( { contentWidth: value } )
+						}
+					/>
 					{ ! isNarrow ? (
 						<>
 							<SelectControl
-								label={ __( 'Median sijainti', 'domio' ) }
+								label={ __( 'Sivupalkin sijainti', 'domio' ) }
 								value={ mediaPosition }
 								options={ [
 									{
@@ -143,7 +220,7 @@ export default function Edit( { attributes, setAttributes } ) {
 								}
 							/>
 							<RangeControl
-								label={ __( 'Median leveys (%)', 'domio' ) }
+								label={ __( 'Sivupalkin leveys (%)', 'domio' ) }
 								value={ mediaWidth }
 								onChange={ ( value ) =>
 									setAttributes( { mediaWidth: value } )
@@ -155,68 +232,133 @@ export default function Edit( { attributes, setAttributes } ) {
 					) : null }
 				</PanelBody>
 
-				<PanelBody title={ __( 'Media', 'domio' ) } initialOpen={ true }>
-					<MediaUploadCheck>
-						<MediaUpload
-							onSelect={ ( media ) =>
-								setAttributes( {
-									mediaId: media.id,
-									mediaUrl: media.url,
-									mediaAlt: media.alt || '',
-								} )
-							}
-							allowedTypes={ [ 'image' ] }
-							value={ mediaId }
-							render={ ( { open } ) => (
-								<div className="domio-media-text-editor__media">
-									{ mediaUrl ? (
-										<img
-											src={ mediaUrl }
-											alt={ mediaAlt || '' }
-										/>
-									) : null }
-									<Button variant="secondary" onClick={ open }>
-										{ mediaId
-											? __( 'Vaihda kuva', 'domio' )
-											: __( 'Valitse kuva', 'domio' ) }
+				<PanelBody
+					title={ __( 'Ikoniyhteenveto (1–7)', 'domio' ) }
+					initialOpen={ true }
+				>
+					<p className="domio-media-text-editor__help">
+						{ __(
+							'Jos lisäät kohtia, ne korvaavat kuvan oikeassa (tai vasemmassa) palstassa.',
+							'domio'
+						) }
+					</p>
+					{ items.map( ( item, index ) => (
+						<div
+							className="domio-media-text-editor__item"
+							key={ item.id || index }
+						>
+							<p className="domio-media-text-editor__item-label">
+								{ __( 'Kohta', 'domio' ) } { index + 1 }
+							</p>
+							<SelectControl
+								label={ __( 'Ikoni', 'domio' ) }
+								value={ item.icon || 'check' }
+								options={ DOMIO_ICON_KEYS.map( ( key ) => ( {
+									label: DOMIO_ICON_LABELS[ key ],
+									value: key,
+								} ) ) }
+								onChange={ ( value ) =>
+									updateItem( index, 'icon', value )
+								}
+							/>
+							<TextControl
+								label={ __( 'Otsikko', 'domio' ) }
+								value={ item.title || '' }
+								onChange={ ( value ) =>
+									updateItem( index, 'title', value )
+								}
+							/>
+							<TextControl
+								label={ __( 'Teksti', 'domio' ) }
+								value={ item.text || '' }
+								onChange={ ( value ) =>
+									updateItem( index, 'text', value )
+								}
+							/>
+							<Flex>
+								<FlexItem>
+									<Button
+										size="small"
+										isDestructive
+										onClick={ () => removeItem( index ) }
+									>
+										{ __( 'Poista', 'domio' ) }
 									</Button>
-									{ mediaId ? (
-										<Button
-											isDestructive
-											variant="link"
-											onClick={ () =>
-												setAttributes( {
-													mediaId: 0,
-													mediaUrl: '',
-													mediaAlt: '',
-												} )
-											}
-										>
-											{ __( 'Poista kuva', 'domio' ) }
-										</Button>
-									) : null }
-								</div>
-							) }
-						/>
-					</MediaUploadCheck>
-					{ mediaId ? (
-						<TextControl
-							label={ __( 'Alt-teksti', 'domio' ) }
-							value={ mediaAlt }
-							onChange={ ( value ) =>
-								setAttributes( { mediaAlt: value } )
-							}
-							help={
-								missingAlt
-									? __(
-											'Lisää alt-teksti saavutettavuutta varten.',
-											'domio'
-									  )
-									: undefined
-							}
-						/>
+								</FlexItem>
+							</Flex>
+						</div>
+					) ) }
+					{ items.length < SUMMARY_MAX ? (
+						<Button variant="secondary" onClick={ addItem }>
+							{ __( 'Lisää kohta', 'domio' ) }
+						</Button>
 					) : null }
 				</PanelBody>
+
+				{ ! hasSummary ? (
+					<PanelBody title={ __( 'Media', 'domio' ) } initialOpen={ true }>
+						<MediaUploadCheck>
+							<MediaUpload
+								onSelect={ ( media ) =>
+									setAttributes( {
+										mediaId: media.id,
+										mediaUrl: media.url,
+										mediaAlt: media.alt || '',
+									} )
+								}
+								allowedTypes={ [ 'image' ] }
+								value={ mediaId }
+								render={ ( { open } ) => (
+									<div className="domio-media-text-editor__media">
+										{ mediaUrl ? (
+											<img
+												src={ mediaUrl }
+												alt={ mediaAlt || '' }
+											/>
+										) : null }
+										<Button variant="secondary" onClick={ open }>
+											{ mediaId
+												? __( 'Vaihda kuva', 'domio' )
+												: __( 'Valitse kuva', 'domio' ) }
+										</Button>
+										{ mediaId ? (
+											<Button
+												isDestructive
+												variant="link"
+												onClick={ () =>
+													setAttributes( {
+														mediaId: 0,
+														mediaUrl: '',
+														mediaAlt: '',
+													} )
+												}
+											>
+												{ __( 'Poista kuva', 'domio' ) }
+											</Button>
+										) : null }
+									</div>
+								) }
+							/>
+						</MediaUploadCheck>
+						{ mediaId ? (
+							<TextControl
+								label={ __( 'Alt-teksti', 'domio' ) }
+								value={ mediaAlt }
+								onChange={ ( value ) =>
+									setAttributes( { mediaAlt: value } )
+								}
+								help={
+									missingAlt
+										? __(
+												'Lisää alt-teksti saavutettavuutta varten.',
+												'domio'
+										  )
+										: undefined
+								}
+							/>
+						) : null }
+					</PanelBody>
+				) : null }
 			</InspectorControls>
 
 			<section { ...blockProps }>
@@ -250,30 +392,66 @@ export default function Edit( { attributes, setAttributes } ) {
 						</div>
 					</div>
 
-					<div className="domio-media-text__media">
-						{ mediaUrl ? (
-							<img
-								src={ mediaUrl }
-								alt={ mediaAlt || '' }
-								className="domio-media-text__image"
-							/>
-						) : (
-							<MediaUploadCheck>
-								<MediaUpload
-									onSelect={ ( media ) =>
-										setAttributes( {
-											mediaId: media.id,
-											mediaUrl: media.url,
-											mediaAlt: media.alt || '',
-										} )
-									}
-									allowedTypes={ [ 'image' ] }
-									value={ mediaId }
-									render={ ( { open } ) => mediaPicker( open ) }
+					{ hasSummary ? (
+						<ul className="domio-media-text__summary">
+							{ items.map( ( item, index ) =>
+								item.title || item.text ? (
+									<li
+										className="domio-media-text__summary-item"
+										key={ item.id || index }
+									>
+										<span
+											className="domio-media-text__summary-icon"
+											aria-hidden="true"
+										>
+											<DomioIcon
+												name={ item.icon || 'check' }
+											/>
+										</span>
+										<div className="domio-media-text__summary-copy">
+											{ item.title ? (
+												<p className="domio-media-text__summary-title">
+													{ item.title }
+												</p>
+											) : null }
+											{ item.text ? (
+												<p className="domio-media-text__summary-text">
+													{ item.text }
+												</p>
+											) : null }
+										</div>
+									</li>
+								) : null
+							) }
+						</ul>
+					) : (
+						<div className="domio-media-text__media">
+							{ mediaUrl ? (
+								<img
+									src={ mediaUrl }
+									alt={ mediaAlt || '' }
+									className="domio-media-text__image"
 								/>
-							</MediaUploadCheck>
-						) }
-					</div>
+							) : (
+								<MediaUploadCheck>
+									<MediaUpload
+										onSelect={ ( media ) =>
+											setAttributes( {
+												mediaId: media.id,
+												mediaUrl: media.url,
+												mediaAlt: media.alt || '',
+											} )
+										}
+										allowedTypes={ [ 'image' ] }
+										value={ mediaId }
+										render={ ( { open } ) =>
+											mediaPicker( open )
+										}
+									/>
+								</MediaUploadCheck>
+							) }
+						</div>
+					) }
 				</div>
 			</section>
 		</>

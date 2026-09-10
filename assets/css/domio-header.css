@@ -451,29 +451,38 @@ body.domio-overlay-header.domio-has-header .domio-header.is-nav-open .domio-head
 	border-bottom-color: rgb(255 255 255 / 8%);
 }
 
-/* Desktop: pin the header so body overflow-x: clip cannot unstick it. */
-@media (min-width: 981px) {
-	body.domio-has-header .domio-header {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		width: 100%;
-	}
+/* Pin the header so body overflow-x: clip cannot unstick it. */
+body.domio-has-header .domio-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+}
 
+body.admin-bar.domio-has-header:not(.domio-overlay-header) .domio-header {
+	top: 32px;
+}
+
+@media (max-width: 782px) {
 	body.admin-bar.domio-has-header:not(.domio-overlay-header) .domio-header {
-		top: 32px;
+		top: 46px;
 	}
+}
 
-	body.domio-has-header:not(.domio-overlay-header) .domio-header-spacer {
-		display: block;
-	}
+body.domio-has-header:not(.domio-overlay-header) .domio-header-spacer {
+	display: block;
+}
 
-	body.domio-has-header .domio-header.is-hidden {
-		transform: translateY(-110%);
-		box-shadow: none;
-		pointer-events: none;
-	}
+body.domio-has-header .domio-header.is-hidden {
+	transform: translateY(-110%);
+	box-shadow: none;
+	pointer-events: none;
+}
+
+body.domio-has-header .domio-header.is-nav-open {
+	transform: none;
+	pointer-events: auto;
 }
 
 @media (max-width: 980px) {

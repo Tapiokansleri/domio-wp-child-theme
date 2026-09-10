@@ -193,6 +193,11 @@ export default function Edit( { attributes, setAttributes } ) {
 									key={ step.id || index }
 								>
 									<div className="domio-steps__content">
+										{ step.timeLabel ? (
+											<span className="domio-steps__time">
+												{ step.timeLabel }
+											</span>
+										) : null }
 										<RichText
 											tagName="h3"
 											className="domio-steps__title"
@@ -216,11 +221,6 @@ export default function Edit( { attributes, setAttributes } ) {
 												'core/italic',
 											] }
 										/>
-										{ step.timeLabel ? (
-											<span className="domio-steps__time">
-												{ step.timeLabel }
-											</span>
-										) : null }
 									</div>
 								</li>
 							) ) }

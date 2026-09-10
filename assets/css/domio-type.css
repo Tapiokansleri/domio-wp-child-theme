@@ -395,8 +395,60 @@ body.domio-template .domio-landing-template .domio-card-grid__card-title {
 	text-transform: none !important;
 }
 
-body.domio-template .domio-landing-template p,
-body.domio-template .domio-landing-template li:not(.domio-related-links__item),
+body.domio-template .domio-landing-template .domio-card-grid:not(.is-stacked) .domio-card-grid__card--has-media,
+body.domio-template .domio-landing-template .domio-card-grid:not(.is-stacked) .domio-card-grid__card--has-media h3,
+body.domio-template .domio-landing-template .domio-card-grid:not(.is-stacked) .domio-card-grid__card--has-media .domio-card-grid__card-title,
+body.domio-template .domio-landing-template .domio-card-grid:not(.is-stacked) .domio-card-grid__card--has-media .domio-card-grid__link,
+body.domio-template .domio-landing-template .domio-card-grid:not(.is-stacked) .domio-card-grid__card--has-media a {
+	color: #fff !important;
+}
+
+body.domio-template .domio-landing-template .domio-card-grid:not(.is-stacked) .domio-card-grid__card--has-media p,
+body.domio-template .domio-landing-template .domio-card-grid:not(.is-stacked) .domio-card-grid__card--has-media .domio-card-grid__text {
+	color: rgba(255, 255, 255, 0.88) !important;
+}
+
+body.domio-template .domio-landing-template .domio-card-grid:not(.is-stacked) .domio-card-grid__card--has-media .domio-card-grid__link:hover,
+body.domio-template .domio-landing-template .domio-card-grid:not(.is-stacked) .domio-card-grid__card--has-media a:hover {
+	color: var(--wp--preset--color--domio-accent, #04e78d) !important;
+}
+
+/* Stacked cards sit on a light surface; do not inherit overlay white text. */
+body.domio-template .domio-landing-template .domio-card-grid.is-stacked .domio-card-grid__card--has-media,
+body.domio-template .domio-landing-template .domio-card-grid.is-stacked .domio-card-grid__card--has-media h3,
+body.domio-template .domio-landing-template .domio-card-grid.is-stacked .domio-card-grid__card--has-media .domio-card-grid__card-title,
+body.domio-template .domio-landing-template .domio-card-grid.is-stacked .domio-card-grid__card--has-media .domio-card-grid__link,
+body.domio-template .domio-landing-template .domio-card-grid.is-stacked .domio-card-grid__card--has-media a {
+	color: var(--wp--preset--color--domio-ink, #121212) !important;
+	text-shadow: none;
+}
+
+body.domio-template .domio-landing-template .domio-card-grid.is-stacked .domio-card-grid__card--has-media p,
+body.domio-template .domio-landing-template .domio-card-grid.is-stacked .domio-card-grid__card--has-media .domio-card-grid__text {
+	color: var(--wp--preset--color--domio-muted, #777777) !important;
+	text-shadow: none;
+}
+
+body.domio-template .domio-landing-template .domio-card-grid.is-stacked .domio-card-grid__card--has-media .domio-card-grid__link:hover,
+body.domio-template .domio-landing-template .domio-card-grid.is-stacked .domio-card-grid__card--has-media a:hover {
+	color: var(--wp--preset--color--domio-accent, #04e78d) !important;
+}
+
+body.domio-template .domio-landing-template .domio-media-text__summary-title {
+	font-size: var(--domio-fs-body) !important;
+	font-weight: 600 !important;
+	line-height: 1.35 !important;
+	letter-spacing: 0 !important;
+}
+
+body.domio-template .domio-landing-template .domio-media-text__summary-text {
+	font-size: var(--domio-fs-small) !important;
+	font-weight: 400 !important;
+	line-height: 1.5 !important;
+}
+
+body.domio-template .domio-landing-template p:not(.domio-media-text__summary-title):not(.domio-media-text__summary-text),
+body.domio-template .domio-landing-template li:not(.domio-related-links__item):not(.domio-media-text__summary-item),
 body.domio-template .domio-landing-template .domio-hero__subheading,
 body.domio-template .domio-landing-template .domio-card-grid__intro,
 body.domio-template .domio-landing-template .domio-card-grid__card-text,

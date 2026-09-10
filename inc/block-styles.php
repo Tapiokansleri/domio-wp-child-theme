@@ -41,6 +41,14 @@ function domio_register_block_styles() {
 	);
 
 	register_block_style(
+		'domio/card-grid',
+		array(
+			'name'  => 'value',
+			'label' => __( 'Arvot', 'domio' ),
+		)
+	);
+
+	register_block_style(
 		'domio/cta',
 		array(
 			'name'       => 'band',

@@ -42,6 +42,7 @@ require_once DOMIO_THEME_DIR . '/inc/block-styles.php';
 require_once DOMIO_THEME_DIR . '/inc/patterns.php';
 require_once DOMIO_THEME_DIR . '/inc/schema.php';
 require_once DOMIO_THEME_DIR . '/inc/icons.php';
+require_once DOMIO_THEME_DIR . '/inc/avatars.php';
 require_once DOMIO_THEME_DIR . '/inc/typography.php';
 require_once DOMIO_THEME_DIR . '/inc/settings.php';
 require_once DOMIO_THEME_DIR . '/inc/header.php';

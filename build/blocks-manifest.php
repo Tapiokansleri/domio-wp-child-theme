@@ -9,11 +9,12 @@ return array(
 		'title' => 'Domio: Korttiruudukko',
 		'category' => 'domio',
 		'icon' => 'grid-view',
-		'description' => 'Korttiruudukko palveluille, perusteluille tai referensseille.',
+		'description' => 'Korttiruudukko palveluille, perusteluille, arvoille tai referensseille.',
 		'keywords' => array(
 			'kortti',
 			'ruudukko',
 			'palvelut',
+			'arvot',
 			'domio'
 		),
 		'textdomain' => 'domio',
@@ -542,7 +543,7 @@ PL 62521
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'domio/hero',
-		'version' => '1.1.0',
+		'version' => '1.1.1',
 		'title' => 'Domio: Hero',
 		'category' => 'domio',
 		'icon' => 'cover-image',
@@ -703,15 +704,17 @@ PL 62521
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'domio/media-text',
-		'version' => '1.0.0',
+		'version' => '1.1.5',
 		'title' => 'Domio: Teksti ja media',
 		'category' => 'domio',
 		'icon' => 'align-pull-right',
-		'description' => 'Teksti- ja mediapalsta InnerBlocks-sisällöllä.',
+		'description' => 'Teksti- ja mediapalsta kuvalla tai ikoniyhteenvedolla.',
 		'keywords' => array(
 			'media',
 			'teksti',
 			'kuva',
+			'ikoni',
+			'yhteenveto',
 			'domio'
 		),
 		'textdomain' => 'domio',
@@ -725,6 +728,10 @@ PL 62521
 				'default' => 'Kiinteistöhuolto [alueella]'
 			),
 			'layout' => array(
+				'type' => 'string',
+				'default' => 'default'
+			),
+			'contentWidth' => array(
 				'type' => 'string',
 				'default' => 'default'
 			),
@@ -759,6 +766,12 @@ PL 62521
 			'patternOpacity' => array(
 				'type' => 'number',
 				'default' => 3
+			),
+			'summaryItems' => array(
+				'type' => 'array',
+				'default' => array(
+					
+				)
 			)
 		),
 		'supports' => array(
@@ -856,15 +869,17 @@ PL 62521
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'domio/steps',
-		'version' => '1.0.0',
+		'version' => '1.1.0',
 		'title' => 'Domio: Vaiheet',
 		'category' => 'domio',
 		'icon' => 'editor-ol',
-		'description' => 'Numeroitu vaihelista prosessin esittelyyn.',
+		'description' => 'Numeroitu vaihelista tai aikajana prosessin esittelyyn.',
 		'keywords' => array(
 			'vaiheet',
 			'prosessi',
 			'lista',
+			'aikajana',
+			'timeline',
 			'domio'
 		),
 		'textdomain' => 'domio',

@@ -18,7 +18,7 @@ $intro   = isset( $attributes['intro'] ) ? $attributes['intro'] : '';
 $columns = isset( $attributes['columns'] ) ? (int) $attributes['columns'] : 3;
 $cards   = isset( $attributes['cards'] ) && is_array( $attributes['cards'] ) ? $attributes['cards'] : array();
 $variant = function_exists( 'domio_get_variant_from_attributes' )
-	? domio_get_variant_from_attributes( $attributes, array( 'service', 'reason', 'reference' ), 'service' )
+	? domio_get_variant_from_attributes( $attributes, array( 'service', 'reason', 'reference', 'value' ), 'service' )
 	: ( isset( $attributes['variant'] ) ? $attributes['variant'] : 'service' );
 
 if ( ! in_array( $columns, array( 2, 3, 4 ), true ) ) {
@@ -60,6 +60,8 @@ $wrapper_attributes = get_block_wrapper_attributes(
 					$link_text    = isset( $card['linkText'] ) ? $card['linkText'] : '';
 					$quote_author = isset( $card['quoteAuthor'] ) ? $card['quoteAuthor'] : '';
 					$quote_meta   = isset( $card['quoteMeta'] ) ? $card['quoteMeta'] : '';
+					$rows         = isset( $card['rows'] ) && is_array( $card['rows'] ) ? $card['rows'] : array();
+					$featured     = ! empty( $card['featured'] );
 
 					// Skip empty reference placeholders so they are never published by accident.
 					if ( 'reference' === $variant && ! $text && ! $quote_author && ! $quote_meta && ! $image_id ) {
@@ -76,11 +78,26 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								'class'    => 'domio-card-grid__image',
 								'loading'  => 'lazy',
 								'decoding' => 'async',
+								'alt'      => '',
 							)
 						);
 					}
+
+					$card_class = 'domio-card-grid__card';
+					if ( $image_html ) {
+						$card_class .= ' domio-card-grid__card--has-media';
+					}
+					if ( $featured ) {
+						$card_class .= ' domio-card-grid__card--featured';
+					}
 					?>
-					<article class="domio-card-grid__card">
+					<article class="<?php echo esc_attr( $card_class ); ?>">
+						<?php if ( $image_html ) : ?>
+							<div class="domio-card-grid__media" aria-hidden="true">
+								<?php echo $image_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image. ?>
+							</div>
+						<?php endif; ?>
+
 						<?php if ( 'reference' !== $variant && $icon ) : ?>
 							<span class="domio-card-grid__icon">
 								<?php
@@ -89,12 +106,6 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								);
 								?>
 							</span>
-						<?php endif; ?>
-
-						<?php if ( $image_html ) : ?>
-							<div class="domio-card-grid__media">
-								<?php echo $image_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image. ?>
-							</div>
 						<?php endif; ?>
 
 						<?php if ( 'reference' === $variant ) : ?>
@@ -123,7 +134,30 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								<h3 class="domio-card-grid__card-title"><?php echo wp_kses_post( $title ); ?></h3>
 							<?php endif; ?>
 
-							<?php if ( $text ) : ?>
+							<?php if ( ! empty( $rows ) ) : ?>
+								<dl class="domio-card-grid__rows">
+									<?php foreach ( $rows as $row ) : ?>
+										<?php
+										if ( ! is_array( $row ) ) {
+											continue;
+										}
+										$label      = isset( $row['label'] ) ? $row['label'] : '';
+										$value      = isset( $row['value'] ) ? $row['value'] : '';
+										$row_class  = 'domio-card-grid__row';
+										if ( ! empty( $row['total'] ) ) {
+											$row_class .= ' domio-card-grid__row--total';
+										}
+										if ( '' === $label && '' === $value ) {
+											continue;
+										}
+										?>
+										<div class="<?php echo esc_attr( $row_class ); ?>">
+											<dt><?php echo wp_kses_post( $label ); ?></dt>
+											<dd><?php echo wp_kses_post( $value ); ?></dd>
+										</div>
+									<?php endforeach; ?>
+								</dl>
+							<?php elseif ( $text ) : ?>
 								<p class="domio-card-grid__text"><?php echo wp_kses_post( $text ); ?></p>
 							<?php endif; ?>
 

@@ -10,6 +10,11 @@ export const DOMIO_ICON_KEYS = [
 	'snowflake',
 	'check',
 	'pin',
+	'users',
+	'handshake',
+	'chart',
+	'lock',
+	'leaf',
 ];
 
 export const DOMIO_ICON_LABELS = {
@@ -20,6 +25,11 @@ export const DOMIO_ICON_LABELS = {
 	snowflake: 'Lumihiutale',
 	check: 'Tarkistusmerkki',
 	pin: 'Sijainti',
+	users: 'Ihmiset',
+	handshake: 'Kättely',
+	chart: 'Kehitys',
+	lock: 'Lukko',
+	leaf: 'Lehti',
 };
 
 /**
@@ -85,6 +95,45 @@ export function DomioIcon( { name, ...props } ) {
 				<svg { ...common }>
 					<path d="M12 21s7-4.5 7-11a7 7 0 10-14 0c0 6.5 7 11 7 11z" />
 					<circle cx="12" cy="10" r="2.5" />
+				</svg>
+			);
+		case 'users':
+			return (
+				<svg { ...common }>
+					<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
+					<circle cx="9" cy="7" r="4" />
+					<path d="M22 21v-2a4 4 0 00-3-3.87" />
+					<path d="M16 3.13a4 4 0 010 7.75" />
+				</svg>
+			);
+		case 'handshake':
+			return (
+				<svg { ...common }>
+					<path d="m11 17 2 2a5 5 0 007-7l-4-4" />
+					<path d="m14 14 1.5 1.5a2.1 2.1 0 003-3L13 7l-1.5 1.5" />
+					<path d="M2 15l6.5-6.5a2.1 2.1 0 013 0L14 11" />
+					<path d="m7 8 3 3" />
+				</svg>
+			);
+		case 'chart':
+			return (
+				<svg { ...common }>
+					<path d="M3 3v18h18" />
+					<path d="M7 14v4M12 10v8M17 6v12" />
+				</svg>
+			);
+		case 'lock':
+			return (
+				<svg { ...common }>
+					<rect x="5" y="11" width="14" height="10" rx="2" />
+					<path d="M8 11V8a4 4 0 018 0v3" />
+				</svg>
+			);
+		case 'leaf':
+			return (
+				<svg { ...common }>
+					<path d="M11 20A7 7 0 019.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+					<path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
 				</svg>
 			);
 		default:

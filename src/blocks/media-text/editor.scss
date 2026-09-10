@@ -24,3 +24,24 @@
 .editor-styles-wrapper .domio-media-text .components-notice {
 	margin-bottom: 1rem;
 }
+
+.domio-media-text-editor__help {
+	margin: 0 0 1rem;
+	font-size: 12px;
+	color: #757575;
+}
+
+.domio-media-text-editor__item {
+	margin-bottom: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+
+.domio-media-text-editor__item-label {
+	margin: 0 0 0.5rem;
+	font-weight: 600;
+}
+
+.editor-styles-wrapper .domio-media-text--has-summary .domio-media-text__media {
+	min-height: 0;
+}

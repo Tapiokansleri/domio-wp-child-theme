@@ -62,16 +62,16 @@ $wrapper_attributes = get_block_wrapper_attributes(
 					?>
 					<li class="domio-steps__item">
 						<div class="domio-steps__content">
+							<?php if ( $time_label ) : ?>
+								<span class="domio-steps__time"><?php echo esc_html( $time_label ); ?></span>
+							<?php endif; ?>
+
 							<?php if ( $title ) : ?>
 								<h3 class="domio-steps__title"><?php echo wp_kses_post( $title ); ?></h3>
 							<?php endif; ?>
 
 							<?php if ( $text ) : ?>
 								<p class="domio-steps__text"><?php echo wp_kses_post( $text ); ?></p>
-							<?php endif; ?>
-
-							<?php if ( $time_label ) : ?>
-								<span class="domio-steps__time"><?php echo esc_html( $time_label ); ?></span>
 							<?php endif; ?>
 						</div>
 					</li>

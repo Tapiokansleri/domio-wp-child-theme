@@ -87,3 +87,104 @@ function domio_hide_elementor_classic_switch() {
 	echo '<style id="domio-hide-elementor-classic">#elementor-switch-mode,#elementor-editor{display:none!important}</style>';
 }
 add_action( 'admin_head', 'domio_hide_elementor_classic_switch' );
+
+/**
+ * Do not let Elementor Theme Builder wrap Domio sivupohja posts/pages.
+ *
+ * @param bool   $need_override Whether Elementor should override the location.
+ * @param string $location      Theme Builder location slug.
+ * @return bool
+ */
+function domio_skip_elementor_theme_builder( $need_override, $location ) {
+	if ( ! $need_override ) {
+		return $need_override;
+	}
+
+	if ( ! function_exists( 'domio_post_uses_sivupohja' ) || ! is_singular() ) {
+		return $need_override;
+	}
+
+	if ( ! in_array( $location, array( 'single', 'single-post', 'page' ), true ) ) {
+		return $need_override;
+	}
+
+	if ( domio_post_uses_sivupohja() ) {
+		return false;
+	}
+
+	return $need_override;
+}
+add_filter( 'elementor/theme/need_override_location', 'domio_skip_elementor_theme_builder', 20, 2 );
+
+/**
+ * Do not print Elementor Theme Builder single layout on sivupohja.
+ *
+ * @param bool $should_do Whether Elementor should render the location.
+ * @return bool
+ */
+function domio_prevent_elementor_single( $should_do ) {
+	if ( function_exists( 'domio_post_uses_sivupohja' ) && is_singular() && domio_post_uses_sivupohja() ) {
+		return false;
+	}
+
+	return $should_do;
+}
+add_filter( 'elementor/theme/do_location/single', 'domio_prevent_elementor_single' );
+
+/**
+ * Force Domio sivupohja even if Elementor Theme Builder swaps template_include.
+ *
+ * @param string $template Resolved template path.
+ * @return string
+ */
+function domio_sivupohja_template_include( $template ) {
+	if ( ! is_singular() || ! function_exists( 'domio_post_uses_sivupohja' ) || ! function_exists( 'domio_get_page_template_slug' ) ) {
+		return $template;
+	}
+
+	if ( ! domio_post_uses_sivupohja() ) {
+		return $template;
+	}
+
+	$found = locate_template( domio_get_page_template_slug() );
+
+	return $found ? $found : $template;
+}
+add_filter( 'template_include', 'domio_sivupohja_template_include', 99 );
+
+/**
+ * Drop Theme Builder single CSS on sivupohja so the old blog sidebar cannot leak in.
+ *
+ * @return void
+ */
+function domio_dequeue_elementor_single_css() {
+	if ( ! function_exists( 'domio_post_uses_sivupohja' ) || ! is_singular() || ! domio_post_uses_sivupohja() ) {
+		return;
+	}
+
+	wp_dequeue_style( 'elementor-post-1676' );
+	wp_deregister_style( 'elementor-post-1676' );
+}
+add_action( 'wp_enqueue_scripts', 'domio_dequeue_elementor_single_css', 100 );
+
+/**
+ * Remove Theme Builder body class on sivupohja.
+ *
+ * @param string[] $classes Body classes.
+ * @return string[]
+ */
+function domio_filter_elementor_body_class( $classes ) {
+	if ( ! function_exists( 'domio_post_uses_sivupohja' ) || ! is_singular() || ! domio_post_uses_sivupohja() ) {
+		return $classes;
+	}
+
+	return array_values(
+		array_filter(
+			$classes,
+			static function ( $class ) {
+				return 0 !== strpos( (string) $class, 'elementor-page-' );
+			}
+		)
+	);
+}
+add_filter( 'body_class', 'domio_filter_elementor_body_class', 40 );

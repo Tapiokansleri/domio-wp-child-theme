@@ -27,7 +27,7 @@ import {
 	withStyleSlug,
 } from '../../shared/block-style';
 
-const CARD_GRID_VARIANTS = [ 'service', 'reason', 'reference' ];
+const CARD_GRID_VARIANTS = [ 'service', 'reason', 'reference', 'value' ];
 
 const uid = ( prefix ) =>
 	`${ prefix }-${ Date.now() }-${ Math.floor( Math.random() * 1000 ) }`;
@@ -70,6 +70,43 @@ const SERVICE_DEFAULTS = {
 	intro: 'Domion kiinteistöhuolto kattaa kaikki ne osa-alueet, joista kiinteistön laadukas huolto ja ylläpito koostuu.',
 };
 
+const VALUE_DEFAULTS = {
+	heading: 'Arvot, jotka ohjaavat meidän toimintaamme',
+	intro: 'Domio kiinteistöpalveluiden ytimessä on asiakas – ja kaikki mitä teemme, tähtää sujuvaan, turvalliseen ja huolettomaan kiinteistöarkeen.',
+	cards: [
+		{
+			icon: 'heart',
+			title: 'Välittäminen',
+			text: 'Huolehdimme kiinteistöstäsi kuin omastamme ja panostamme pitkäaikaisiin, luottamukseen perustuviin asiakassuhteisiin.',
+		},
+		{
+			icon: 'users',
+			title: 'Yhteisöllisyys',
+			text: 'Domio toimii osana paikallista yhteisöä – emme vain palvele, vaan olemme läsnä ja mukana arjessa.',
+		},
+		{
+			icon: 'check',
+			title: 'Sitoutuminen',
+			text: 'Emme tee asioita puoliksi. Me sitoudumme siihen, mitä lupaamme – olipa kyseessä aikataulu, työn jälki tai palvelun laatu.',
+		},
+		{
+			icon: 'chart',
+			title: 'Kehittyminen',
+			text: 'Haluamme kehittyä – asiakkaidemme ja alan mukana. Koulutamme henkilökuntaamme säännöllisesti.',
+		},
+		{
+			icon: 'lock',
+			title: 'Rehellisyys',
+			text: 'Toimimme läpinäkyvästi ja avoimesti kaikissa tilanteissa. Uskomme, että rehellisyys on luottamuksen perusta.',
+		},
+		{
+			icon: 'handshake',
+			title: 'Yhteistyö',
+			text: 'Yhteistyö on meille jatkuvaa ja avointa vuorovaikutusta asiakkaan suuntaan. Olemme helposti tavoitettavissa.',
+		},
+	],
+};
+
 /**
  * Resolve attachment URL for a card image preview.
  *
@@ -104,17 +141,23 @@ function CardPreview( { card, index, variant, onChange } ) {
 	const isReference = variant === 'reference';
 
 	return (
-		<article className="domio-card-grid__card">
+		<article
+			className={
+				'domio-card-grid__card' +
+				( imageUrl ? ' domio-card-grid__card--has-media' : '' ) +
+				( card.featured ? ' domio-card-grid__card--featured' : '' )
+			}
+		>
+			{ imageUrl ? (
+				<div className="domio-card-grid__media" aria-hidden="true">
+					<img src={ imageUrl } alt="" />
+				</div>
+			) : null }
+
 			{ ! isReference && card.icon ? (
 				<span className="domio-card-grid__icon">
 					<DomioIcon name={ card.icon } />
 				</span>
-			) : null }
-
-			{ imageUrl ? (
-				<div className="domio-card-grid__media">
-					<img src={ imageUrl } alt="" />
-				</div>
 			) : null }
 
 			{ isReference ? (
@@ -148,14 +191,37 @@ function CardPreview( { card, index, variant, onChange } ) {
 						placeholder={ __( 'Kortin otsikko…', 'domio' ) }
 						allowedFormats={ [] }
 					/>
-					<RichText
-						tagName="p"
-						className="domio-card-grid__text"
-						value={ card.text || '' }
-						onChange={ ( value ) => onChange( index, 'text', value ) }
-						placeholder={ __( 'Kortin teksti…', 'domio' ) }
-						allowedFormats={ [ 'core/bold', 'core/italic' ] }
-					/>
+					{ Array.isArray( card.rows ) && card.rows.length ? (
+						<dl className="domio-card-grid__rows">
+							{ card.rows.map( ( row, rowIndex ) =>
+								row && ( row.label || row.value ) ? (
+									<div
+										className={
+											'domio-card-grid__row' +
+											( row.total
+												? ' domio-card-grid__row--total'
+												: '' )
+										}
+										key={ rowIndex }
+									>
+										<dt>{ row.label }</dt>
+										<dd>{ row.value }</dd>
+									</div>
+								) : null
+							) }
+						</dl>
+					) : (
+						<RichText
+							tagName="p"
+							className="domio-card-grid__text"
+							value={ card.text || '' }
+							onChange={ ( value ) =>
+								onChange( index, 'text', value )
+							}
+							placeholder={ __( 'Kortin teksti…', 'domio' ) }
+							allowedFormats={ [ 'core/bold', 'core/italic' ] }
+						/>
+					) }
 					{ card.linkText ? (
 						<span className="domio-card-grid__link">{ card.linkText }</span>
 					) : null }
@@ -268,6 +334,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						options={ [
 							{ label: __( 'Palvelut', 'domio' ), value: 'service' },
 							{ label: __( 'Miksi Domio', 'domio' ), value: 'reason' },
+							{ label: __( 'Arvot', 'domio' ), value: 'value' },
 							{ label: __( 'Referenssit', 'domio' ), value: 'reference' },
 						] }
 						onChange={ ( value ) => {
@@ -279,6 +346,21 @@ export default function Edit( { attributes, setAttributes } ) {
 									intro: REASON_DEFAULTS.intro,
 									columns: 2,
 									cards: REASON_DEFAULTS.cards.map( ( card ) => ( {
+										...card,
+										id: uid( 'c' ),
+									} ) ),
+								} );
+								return;
+							}
+
+							if ( value === 'value' ) {
+								setAttributes( {
+									variant: value,
+									className: withStyleSlug( className, value ),
+									heading: VALUE_DEFAULTS.heading,
+									intro: VALUE_DEFAULTS.intro,
+									columns: 3,
+									cards: VALUE_DEFAULTS.cards.map( ( card ) => ( {
 										...card,
 										id: uid( 'c' ),
 									} ) ),

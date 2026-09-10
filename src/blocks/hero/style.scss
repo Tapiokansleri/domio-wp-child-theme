@@ -148,6 +148,17 @@
 	);
 }
 
+@media (max-width: 781px) {
+	.domio-hero--banner .domio-hero__media::after {
+		background: linear-gradient(
+			180deg,
+			rgb(18 18 18 / 42%) 0%,
+			rgb(18 18 18 / 62%) 38%,
+			rgb(18 18 18 / 86%) 100%
+		);
+	}
+}
+
 .domio-hero--banner .domio-hero__image {
 	position: absolute;
 	inset: 0;

@@ -13,6 +13,9 @@
 
 	const setOpen = ( open ) => {
 		header.classList.toggle( 'is-nav-open', open );
+		if ( open ) {
+			header.classList.remove( 'is-hidden' );
+		}
 		if ( toggle ) {
 			toggle.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
 		}
@@ -155,7 +158,6 @@
 		} );
 	}
 
-	const desktopQuery = window.matchMedia( '(min-width: 981px)' );
 	const scrollMode = header.getAttribute( 'data-domio-header-scroll' ) || 'always';
 	let lastScrollY = window.scrollY;
 
@@ -171,7 +173,7 @@
 
 		header.classList.toggle( 'is-scrolled', y > 8 );
 
-		if ( 'scroll-up' !== scrollMode || ! desktopQuery.matches || header.classList.contains( 'is-nav-open' ) ) {
+		if ( 'scroll-up' !== scrollMode || header.classList.contains( 'is-nav-open' ) ) {
 			header.classList.remove( 'is-hidden' );
 			lastScrollY = y;
 			return;
@@ -185,9 +187,9 @@
 
 		if ( y <= 16 ) {
 			header.classList.remove( 'is-hidden' );
-		} else if ( y > lastScrollY + 8 ) {
+		} else if ( y > lastScrollY + 12 ) {
 			header.classList.add( 'is-hidden' );
-		} else if ( y < lastScrollY - 8 ) {
+		} else if ( y < lastScrollY - 12 ) {
 			header.classList.remove( 'is-hidden' );
 		}
 

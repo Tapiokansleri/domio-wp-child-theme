@@ -510,10 +510,10 @@ function domio_render_settings_header_fields( $settings ) {
 			</td>
 		</tr>
 		<tr>
-			<th scope="row"><?php echo esc_html__( 'Header työpöydällä', 'domio' ); ?></th>
+			<th scope="row"><?php echo esc_html__( 'Header rullatessa', 'domio' ); ?></th>
 			<td>
 				<fieldset>
-					<legend class="screen-reader-text"><?php echo esc_html__( 'Headerin käyttäytyminen työpöydällä', 'domio' ); ?></legend>
+					<legend class="screen-reader-text"><?php echo esc_html__( 'Headerin käyttäytyminen sivua rullatessa', 'domio' ); ?></legend>
 					<label>
 						<input
 							name="domio_theme_settings[header_scroll]"
@@ -535,7 +535,7 @@ function domio_render_settings_header_fields( $settings ) {
 					</label>
 				</fieldset>
 				<p class="description">
-					<?php echo esc_html__( 'Koskee vain työpöytänäkymää. Puhelimessa valikko toimii ennallaan.', 'domio' ); ?>
+					<?php echo esc_html__( 'Toimii työpöydällä ja puhelimessa. Avoin valikko pysyy aina näkyvissä.', 'domio' ); ?>
 				</p>
 			</td>
 		</tr>
