@@ -168,7 +168,17 @@
 	z-index: 1;
 	display: flex;
 	align-items: flex-end;
+	box-sizing: border-box;
+	min-height: inherit;
 	padding-block: clamp(1.75rem, 1.25rem + 2vw, 2.75rem);
+	/* Overlay header is position:fixed; keep the title below it. */
+	padding-top: calc(var(--domio-header-height, 7.25rem) + 1.25rem);
+}
+
+@media (max-width: 781px) {
+	.domio-hero--banner .domio-hero__inner {
+		align-items: flex-start;
+	}
 }
 
 .domio-hero--banner .domio-hero__heading {

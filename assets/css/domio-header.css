@@ -2,6 +2,10 @@
  * Domio site header — improved from brand reference.
  */
 
+html {
+	--domio-header-height: 7.25rem;
+}
+
 .domio-header {
 	--domio-header-bg: #121212;
 	--domio-header-accent: #04e78d;

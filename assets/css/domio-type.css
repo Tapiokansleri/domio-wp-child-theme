@@ -42,7 +42,7 @@
 	--domio-section-bg: var(--wp--preset--color--domio-surface, #ffffff);
 	--domio-section-text: var(--wp--preset--color--domio-ink, #121212);
 	--domio-section-muted: var(--wp--preset--color--domio-muted, #777777);
-	--domio-header-offset: 4.5rem;
+	--domio-header-offset: var(--domio-header-height, 7.25rem);
 }
 
 /* Smooth in-page anchors under sticky Domio header */
