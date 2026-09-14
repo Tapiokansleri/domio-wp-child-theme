@@ -24,17 +24,6 @@ import { dateI18n, getSettings as getDateSettings } from '@wordpress/date';
 import { BackgroundControls, getSectionClasses, getPatternStyle } from '../../shared/background';
 import { DomioTemplateNotice } from '../../shared/template-notice';
 
-const DEFAULT_HERO_IMAGE =
-	( typeof window !== 'undefined' &&
-		window.domioBlockDefaults &&
-		window.domioBlockDefaults.heroImageUrl ) ||
-	'';
-const DEFAULT_HERO_ALT =
-	( typeof window !== 'undefined' &&
-		window.domioBlockDefaults &&
-		window.domioBlockDefaults.heroImageAlt ) ||
-	'';
-
 /**
  * @param {Object} props Block props.
  * @return {JSX.Element} Editor element.
@@ -58,8 +47,8 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	} = attributes;
 
 	const normalizedLayout = layout === 'overlay' ? 'banner' : layout;
-	const displayImageUrl = imageUrl || DEFAULT_HERO_IMAGE;
-	const displayImageAlt = imageAlt || ( imageUrl ? '' : DEFAULT_HERO_ALT );
+	const displayImageUrl = imageUrl || '';
+	const displayImageAlt = imageAlt || '';
 
 	const postMeta = useSelect( ( select ) => {
 		const postType = select( editorStore ).getCurrentPostType();
@@ -138,6 +127,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		className: [
 			'domio-hero',
 			`domio-hero--${ normalizedLayout }`,
+			displayImageUrl ? '' : 'domio-hero--no-media',
 			postMeta ? 'domio-hero--has-meta' : '',
 			getSectionClasses( background, pattern ),
 		]
@@ -253,7 +243,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 											? __( 'Vaihda kuva', 'domio' )
 											: __( 'Valitse kuva', 'domio' ) }
 									</Button>
-									{ imageId ? (
+									{ imageId || imageUrl ? (
 										<Button
 											isDestructive
 											variant="link"
@@ -265,7 +255,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 												} )
 											}
 										>
-											{ __( 'Palauta oletuskuva', 'domio' ) }
+											{ __( 'Poista kuva', 'domio' ) }
 										</Button>
 									) : null }
 								</div>
@@ -297,19 +287,15 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 					</Notice>
 				) : null }
 
-				<div className="domio-hero__media">
-					{ displayImageUrl ? (
+				{ displayImageUrl ? (
+					<div className="domio-hero__media">
 						<img
 							src={ displayImageUrl }
 							alt={ displayImageAlt || '' }
 							className="domio-hero__image"
 						/>
-					) : (
-						<div className="domio-hero__media-placeholder">
-							{ __( 'Valitse taustakuva sivupalkista', 'domio' ) }
-						</div>
-					) }
-				</div>
+					</div>
+				) : null }
 
 				<div className="domio-hero__inner">
 					<div className="domio-hero__content">

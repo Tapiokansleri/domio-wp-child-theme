@@ -212,6 +212,27 @@
 	max-width: 42rem;
 }
 
+.domio-hero--banner.domio-hero--no-media {
+	min-height: 0;
+	color: var(--domio-hero-text);
+	background: var(--domio-hero-bg);
+}
+
+.domio-hero--banner.domio-hero--no-media .domio-hero__inner {
+	min-height: 0;
+	align-items: flex-start;
+}
+
+.domio-hero--banner.domio-hero--no-media .domio-hero__heading,
+.domio-hero--banner.domio-hero--no-media .domio-hero__subheading {
+	color: inherit;
+}
+
+.domio-hero--banner.domio-hero--no-media .domio-hero__cta--secondary {
+	color: var(--domio-hero-dark);
+	border-color: var(--domio-hero-dark);
+}
+
 /* Post meta (single post only) */
 .domio-hero__meta {
 	display: flex;

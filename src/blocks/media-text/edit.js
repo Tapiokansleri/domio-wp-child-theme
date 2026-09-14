@@ -82,13 +82,15 @@ export default function Edit( { attributes, setAttributes } ) {
 		: 'default';
 	const isNarrow = normalizedLayout === 'narrow';
 	const isContentFull = normalizedWidth === 'full';
-	const missingAlt = Boolean( mediaId && ! mediaAlt && ! hasSummary );
-	const hasAside = hasSummary || Boolean( mediaUrl );
+	const missingAlt = Boolean( mediaId && ! mediaAlt );
+	const hasMedia = Boolean( mediaUrl );
+	const hasAside = hasSummary || hasMedia;
 
 	const blockProps = useBlockProps( {
 		className: [
 			'domio-media-text',
 			hasSummary ? 'domio-media-text--has-summary' : '',
+			hasMedia ? 'domio-media-text--has-media' : '',
 			isNarrow
 				? 'domio-media-text--narrow'
 				: hasAside
@@ -137,15 +139,37 @@ export default function Edit( { attributes, setAttributes } ) {
 		} );
 	};
 
-	const mediaPicker = ( open ) => (
-		<button
-			type="button"
-			className="domio-media-text__media-placeholder"
-			onClick={ open }
-		>
-			{ __( 'Valitse kuva', 'domio' ) }
-		</button>
-	);
+	const summaryList = hasSummary ? (
+		<ul className="domio-media-text__summary">
+			{ items.map( ( item, index ) =>
+				item.title || item.text ? (
+					<li
+						className="domio-media-text__summary-item"
+						key={ item.id || index }
+					>
+						<span
+							className="domio-media-text__summary-icon"
+							aria-hidden="true"
+						>
+							<DomioIcon name={ item.icon || 'check' } />
+						</span>
+						<div className="domio-media-text__summary-copy">
+							{ item.title ? (
+								<p className="domio-media-text__summary-title">
+									{ item.title }
+								</p>
+							) : null }
+							{ item.text ? (
+								<p className="domio-media-text__summary-text">
+									{ item.text }
+								</p>
+							) : null }
+						</div>
+					</li>
+				) : null
+			) }
+		</ul>
+	) : null;
 
 	return (
 		<>
@@ -238,7 +262,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				>
 					<p className="domio-media-text-editor__help">
 						{ __(
-							'Jos lisäät kohtia, ne korvaavat kuvan oikeassa (tai vasemmassa) palstassa.',
+							'Ikonit ja kuva voivat näkyä yhtä aikaa. Ilman kuvaa ikonit tulevat sivupalkkiin; kuvan kanssa ne tulevat tekstin alle.',
 							'domio'
 						) }
 					</p>
@@ -295,8 +319,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					) : null }
 				</PanelBody>
 
-				{ ! hasSummary ? (
-					<PanelBody title={ __( 'Media', 'domio' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Media', 'domio' ) } initialOpen={ ! hasSummary }>
 						<MediaUploadCheck>
 							<MediaUpload
 								onSelect={ ( media ) =>
@@ -358,7 +381,6 @@ export default function Edit( { attributes, setAttributes } ) {
 							/>
 						) : null }
 					</PanelBody>
-				) : null }
 			</InspectorControls>
 
 			<section { ...blockProps }>
@@ -390,68 +412,20 @@ export default function Edit( { attributes, setAttributes } ) {
 								templateLock={ false }
 							/>
 						</div>
+						{ hasSummary && hasMedia ? summaryList : null }
 					</div>
 
-					{ hasSummary ? (
-						<ul className="domio-media-text__summary">
-							{ items.map( ( item, index ) =>
-								item.title || item.text ? (
-									<li
-										className="domio-media-text__summary-item"
-										key={ item.id || index }
-									>
-										<span
-											className="domio-media-text__summary-icon"
-											aria-hidden="true"
-										>
-											<DomioIcon
-												name={ item.icon || 'check' }
-											/>
-										</span>
-										<div className="domio-media-text__summary-copy">
-											{ item.title ? (
-												<p className="domio-media-text__summary-title">
-													{ item.title }
-												</p>
-											) : null }
-											{ item.text ? (
-												<p className="domio-media-text__summary-text">
-													{ item.text }
-												</p>
-											) : null }
-										</div>
-									</li>
-								) : null
-							) }
-						</ul>
-					) : (
+					{ hasMedia ? (
 						<div className="domio-media-text__media">
-							{ mediaUrl ? (
-								<img
-									src={ mediaUrl }
-									alt={ mediaAlt || '' }
-									className="domio-media-text__image"
-								/>
-							) : (
-								<MediaUploadCheck>
-									<MediaUpload
-										onSelect={ ( media ) =>
-											setAttributes( {
-												mediaId: media.id,
-												mediaUrl: media.url,
-												mediaAlt: media.alt || '',
-											} )
-										}
-										allowedTypes={ [ 'image' ] }
-										value={ mediaId }
-										render={ ( { open } ) =>
-											mediaPicker( open )
-										}
-									/>
-								</MediaUploadCheck>
-							) }
+							<img
+								src={ mediaUrl }
+								alt={ mediaAlt || '' }
+								className="domio-media-text__image"
+							/>
 						</div>
-					) }
+					) : hasSummary ? (
+						summaryList
+					) : null }
 				</div>
 			</section>
 		</>

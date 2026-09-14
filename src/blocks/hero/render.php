@@ -41,19 +41,6 @@ $heading_tag = 1 === $heading_level ? 'h1' : 'h2';
 $is_banner   = ( 'banner' === $layout );
 $show_meta   = is_singular( 'post' );
 
-$wrapper_attributes = get_block_wrapper_attributes(
-	array(
-		'class' => trim(
-			'domio-hero domio-hero--' . $layout
-			. ( $is_banner ? ' alignfull' : '' )
-			. ( $show_meta ? ' domio-hero--has-meta' : '' )
-			. ' '
-			. ( function_exists( 'domio_get_section_classes' ) ? domio_get_section_classes( $attributes ) : 'domio-bg--surface' )
-		),
-		'style' => function_exists( 'domio_get_section_style' ) ? domio_get_section_style( $attributes ) : '',
-	)
-);
-
 $image_html = '';
 if ( $image_id > 0 ) {
 	$image_html = wp_get_attachment_image(
@@ -72,12 +59,6 @@ if ( $image_id > 0 ) {
 
 if ( ! $image_html ) {
 	$image_url = isset( $attributes['imageUrl'] ) ? (string) $attributes['imageUrl'] : '';
-	if ( '' === $image_url && function_exists( 'domio_get_default_hero_image_url' ) ) {
-		$image_url = domio_get_default_hero_image_url();
-	}
-	if ( '' === $image_alt && function_exists( 'domio_get_default_hero_image_alt' ) ) {
-		$image_alt = domio_get_default_hero_image_alt();
-	}
 	if ( $image_url ) {
 		$image_html = sprintf(
 			'<img src="%1$s" alt="%2$s" class="domio-hero__image" loading="eager" fetchpriority="high" decoding="async" />',
@@ -86,6 +67,20 @@ if ( ! $image_html ) {
 		);
 	}
 }
+
+$wrapper_attributes = get_block_wrapper_attributes(
+	array(
+		'class' => trim(
+			'domio-hero domio-hero--' . $layout
+			. ( $is_banner ? ' alignfull' : '' )
+			. ( $image_html ? '' : ' domio-hero--no-media' )
+			. ( $show_meta ? ' domio-hero--has-meta' : '' )
+			. ' '
+			. ( function_exists( 'domio_get_section_classes' ) ? domio_get_section_classes( $attributes ) : 'domio-bg--surface' )
+		),
+		'style' => function_exists( 'domio_get_section_style' ) ? domio_get_section_style( $attributes ) : '',
+	)
+);
 
 $author_id   = $show_meta ? (int) get_the_author_meta( 'ID' ) : 0;
 $author_name = $show_meta ? get_the_author() : '';

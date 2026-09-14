@@ -13,6 +13,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'domio_media_text_render_summary' ) ) {
+	/**
+	 * Icon summary list for the media-text block.
+	 *
+	 * @param array $summary_items Summary items.
+	 */
+	function domio_media_text_render_summary( $summary_items ) {
+		?>
+		<ul class="domio-media-text__summary">
+			<?php foreach ( $summary_items as $item ) : ?>
+				<?php
+				$icon  = isset( $item['icon'] ) ? $item['icon'] : 'check';
+				$title = isset( $item['title'] ) ? $item['title'] : '';
+				$text  = isset( $item['text'] ) ? $item['text'] : '';
+				?>
+				<li class="domio-media-text__summary-item">
+					<span class="domio-media-text__summary-icon" aria-hidden="true">
+						<?php
+						echo function_exists( 'domio_get_icon_svg' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
+							? domio_get_icon_svg( $icon )
+							: '';
+						?>
+					</span>
+					<div class="domio-media-text__summary-copy">
+						<?php if ( $title ) : ?>
+							<p class="domio-media-text__summary-title"><?php echo wp_kses_post( $title ); ?></p>
+						<?php endif; ?>
+						<?php if ( $text ) : ?>
+							<p class="domio-media-text__summary-text"><?php echo wp_kses_post( $text ); ?></p>
+						<?php endif; ?>
+					</div>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+		<?php
+	}
+}
+
 $heading        = isset( $attributes['heading'] ) ? $attributes['heading'] : '';
 $layout         = isset( $attributes['layout'] ) ? $attributes['layout'] : 'default';
 $content_width  = isset( $attributes['contentWidth'] ) ? $attributes['contentWidth'] : 'default';
@@ -60,7 +98,7 @@ $summary_items = array_slice( $summary_items, 0, 7 );
 $has_summary   = count( $summary_items ) > 0;
 
 $image_html = '';
-if ( ! $has_summary && $media_id > 0 ) {
+if ( $media_id > 0 ) {
 	$image_html = wp_get_attachment_image(
 		$media_id,
 		'large',
@@ -80,6 +118,9 @@ $has_aside = $has_summary || $has_media;
 $classes = array( 'domio-media-text' );
 if ( $has_summary ) {
 	$classes[] = 'domio-media-text--has-summary';
+}
+if ( $has_media ) {
+	$classes[] = 'domio-media-text--has-media';
 }
 if ( ! $has_aside ) {
 	$classes[] = 'domio-media-text--no-media';
@@ -118,39 +159,18 @@ $wrapper_attributes = get_block_wrapper_attributes(
 					<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- InnerBlocks. ?>
 				</div>
 			<?php endif; ?>
+
+			<?php if ( $has_summary && $has_media ) : ?>
+				<?php domio_media_text_render_summary( $summary_items ); ?>
+			<?php endif; ?>
 		</div>
 
-		<?php if ( $has_summary ) : ?>
-			<ul class="domio-media-text__summary">
-				<?php foreach ( $summary_items as $item ) : ?>
-					<?php
-					$icon  = isset( $item['icon'] ) ? $item['icon'] : 'check';
-					$title = isset( $item['title'] ) ? $item['title'] : '';
-					$text  = isset( $item['text'] ) ? $item['text'] : '';
-					?>
-					<li class="domio-media-text__summary-item">
-						<span class="domio-media-text__summary-icon" aria-hidden="true">
-							<?php
-							echo function_exists( 'domio_get_icon_svg' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
-								? domio_get_icon_svg( $icon )
-								: '';
-							?>
-						</span>
-						<div class="domio-media-text__summary-copy">
-							<?php if ( $title ) : ?>
-								<p class="domio-media-text__summary-title"><?php echo wp_kses_post( $title ); ?></p>
-							<?php endif; ?>
-							<?php if ( $text ) : ?>
-								<p class="domio-media-text__summary-text"><?php echo wp_kses_post( $text ); ?></p>
-							<?php endif; ?>
-						</div>
-					</li>
-				<?php endforeach; ?>
-			</ul>
-		<?php elseif ( $has_media ) : ?>
+		<?php if ( $has_media ) : ?>
 			<div class="domio-media-text__media">
 				<?php echo $image_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image. ?>
 			</div>
+		<?php elseif ( $has_summary ) : ?>
+			<?php domio_media_text_render_summary( $summary_items ); ?>
 		<?php endif; ?>
 	</div>
 </section>
