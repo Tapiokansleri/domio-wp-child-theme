@@ -1,0 +1,104 @@
+.domio-related-posts {
+	--domio-related-columns: 3;
+
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink));
+	padding-block: var(--wp--preset--spacing--60);
+}
+
+.domio-related-posts__inner {
+	width: var(--domio-shell-width, min(1300px, calc(100% - 2.5rem)));
+	max-width: var(--domio-content-max, 1300px);
+	margin-inline: auto;
+	padding-inline: 0;
+	box-sizing: border-box;
+}
+
+.domio-related-posts__heading {
+	margin: 0 0 var(--wp--preset--spacing--50);
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink));
+	font-size: var(--wp--preset--font-size--x-large);
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+.domio-related-posts__grid {
+	display: grid;
+	gap: var(--wp--preset--spacing--50) var(--wp--preset--spacing--40);
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 700px) {
+	.domio-related-posts__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (min-width: 960px) {
+	.domio-related-posts__grid {
+		grid-template-columns: repeat(var(--domio-related-columns), minmax(0, 1fr));
+	}
+}
+
+.domio-related-posts__card {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	background: transparent;
+}
+
+.domio-related-posts__media {
+	display: block;
+	overflow: hidden;
+	aspect-ratio: 16 / 10;
+	margin: 0 0 1.15rem;
+	background: #e8e8e8;
+}
+
+.domio-related-posts__media img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+.domio-related-posts__date {
+	display: block;
+	margin: 0 0 0.45rem;
+	color: var(--wp--preset--color--domio-muted, #777);
+	font-size: 0.875rem;
+	line-height: 1.4;
+}
+
+.domio-related-posts__title {
+	margin: 0;
+	font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.domio-related-posts__title a {
+	color: var(--domio-btn-bg, #004c3e);
+	text-decoration: none;
+}
+
+.domio-related-posts__title a:hover {
+	color: var(--wp--preset--color--domio-ink, #121212);
+}
+
+.domio-related-posts__title a:focus-visible {
+	outline: 3px solid var(--wp--preset--color--domio-accent, #04e78d);
+	outline-offset: 3px;
+}
+
+.domio-related-posts__excerpt {
+	margin: 0.7rem 0 0;
+	color: var(--wp--preset--color--domio-muted, #777);
+	font-size: var(--domio-fs-small, 0.9375rem);
+	line-height: 1.6;
+}
+
+.domio-related-posts__empty {
+	margin: 0;
+	color: var(--wp--preset--color--domio-muted, #777);
+}

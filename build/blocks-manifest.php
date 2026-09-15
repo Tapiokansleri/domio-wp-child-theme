@@ -704,7 +704,7 @@ PL 62521
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'domio/media-text',
-		'version' => '1.1.7',
+		'version' => '1.1.8',
 		'title' => 'Domio: Teksti ja media',
 		'category' => 'domio',
 		'icon' => 'align-pull-right',
@@ -858,6 +858,77 @@ PL 62521
 		'example' => array(
 			'attributes' => array(
 				'heading' => 'Tutustu myös'
+			)
+		),
+		'editorScript' => 'file:./index.js',
+		'editorStyle' => 'file:./index.css',
+		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php'
+	),
+	'related-posts' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'domio/related-posts',
+		'version' => '1.0.1',
+		'title' => 'Domio: Lue myös',
+		'category' => 'domio',
+		'icon' => 'grid-view',
+		'description' => 'Blogikortit liittyville artikkeleille ja sivuille.',
+		'keywords' => array(
+			'blogi',
+			'kortit',
+			'lue myös',
+			'artikkelit',
+			'domio'
+		),
+		'textdomain' => 'domio',
+		'attributes' => array(
+			'align' => array(
+				'type' => 'string',
+				'default' => 'full'
+			),
+			'heading' => array(
+				'type' => 'string',
+				'default' => 'Lue myös'
+			),
+			'postIds' => array(
+				'type' => 'array',
+				'default' => array(
+					
+				)
+			),
+			'columns' => array(
+				'type' => 'number',
+				'default' => 3
+			),
+			'background' => array(
+				'type' => 'string',
+				'default' => 'surface'
+			),
+			'pattern' => array(
+				'type' => 'string',
+				'default' => 'none'
+			),
+			'patternOpacity' => array(
+				'type' => 'number',
+				'default' => 3
+			)
+		),
+		'supports' => array(
+			'align' => array(
+				'wide',
+				'full'
+			),
+			'anchor' => true,
+			'html' => false,
+			'spacing' => array(
+				'margin' => true,
+				'padding' => true
+			)
+		),
+		'example' => array(
+			'attributes' => array(
+				'heading' => 'Lue myös'
 			)
 		),
 		'editorScript' => 'file:./index.js',

@@ -1,0 +1,60 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "domio/related-posts",
+	"version": "1.0.1",
+	"title": "Domio: Lue myös",
+	"category": "domio",
+	"icon": "grid-view",
+	"description": "Blogikortit liittyville artikkeleille ja sivuille.",
+	"keywords": [ "blogi", "kortit", "lue myös", "artikkelit", "domio" ],
+	"textdomain": "domio",
+	"attributes": {
+		"align": {
+			"type": "string",
+			"default": "full"
+		},
+		"heading": {
+			"type": "string",
+			"default": "Lue myös"
+		},
+		"postIds": {
+			"type": "array",
+			"default": []
+		},
+		"columns": {
+			"type": "number",
+			"default": 3
+		},
+		"background": {
+			"type": "string",
+			"default": "surface"
+		},
+		"pattern": {
+			"type": "string",
+			"default": "none"
+		},
+		"patternOpacity": {
+			"type": "number",
+			"default": 3
+		}
+	},
+	"supports": {
+		"align": [ "wide", "full" ],
+		"anchor": true,
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"example": {
+		"attributes": {
+			"heading": "Lue myös"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

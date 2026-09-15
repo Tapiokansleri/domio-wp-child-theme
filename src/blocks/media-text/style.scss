@@ -95,12 +95,19 @@
 	border-radius: var(--domio-radius-media, 0.75rem);
 }
 
-.domio-media-text__image {
+/* Absolute fill: Hello `.alignfull img { width: 100vw }` and `img { height: auto }`
+   otherwise leave a gray bar and a 100vw side-crop inside the 4:3 frame. */
+.domio-media-text__image,
+.domio-media-text__media img,
+.domio-media-text.alignfull .domio-media-text__media img {
+	position: absolute;
+	inset: 0;
 	display: block;
-	width: 100%;
-	height: 100%;
+	width: 100% !important;
+	max-width: none !important;
+	height: 100% !important;
 	object-fit: cover;
-	object-position: top;
+	object-position: center;
 }
 
 .domio-media-text__media-placeholder {

@@ -44,13 +44,79 @@ function domio_is_jobs_template() {
 }
 
 /**
+ * Whether the current view is a blog archive, posts index or search.
+ *
+ * @return bool
+ */
+function domio_is_blog_archive_template() {
+	if ( is_author() ) {
+		return false;
+	}
+
+	if ( function_exists( 'domio_is_tyopaikka_template' ) && domio_is_tyopaikka_template() ) {
+		return false;
+	}
+
+	return is_home() || is_category() || is_tag() || is_tax() || is_date() || is_search() || is_404();
+}
+
+/**
+ * Archive / search / blog index heading data.
+ *
+ * @return array{eyebrow:string,title:string,description:string}
+ */
+function domio_get_archive_header() {
+	$eyebrow     = '';
+	$title       = '';
+	$description = '';
+
+	if ( is_home() && ! is_front_page() ) {
+		$page_id     = (int) get_option( 'page_for_posts' );
+		$eyebrow     = __( 'Blogi', 'domio' );
+		$title       = $page_id ? get_the_title( $page_id ) : __( 'Artikkelit', 'domio' );
+		$description = $page_id ? get_the_excerpt( $page_id ) : '';
+	} elseif ( is_category() ) {
+		$eyebrow     = __( 'Kategoria', 'domio' );
+		$title       = single_cat_title( '', false );
+		$description = term_description();
+	} elseif ( is_tag() ) {
+		$eyebrow     = __( 'Avainsana', 'domio' );
+		$title       = single_tag_title( '', false );
+		$description = term_description();
+	} elseif ( is_tax() ) {
+		$eyebrow     = __( 'Arkisto', 'domio' );
+		$title       = single_term_title( '', false );
+		$description = term_description();
+	} elseif ( is_post_type_archive() ) {
+		$title = post_type_archive_title( '', false );
+	} elseif ( is_year() || is_month() || is_day() ) {
+		$eyebrow = __( 'Arkisto', 'domio' );
+		$title   = wp_strip_all_tags( get_the_archive_title() );
+	} elseif ( is_search() ) {
+		$eyebrow = __( 'Haku', 'domio' );
+		$title   = get_search_query();
+	} elseif ( is_404() ) {
+		$eyebrow = '404';
+		$title   = __( 'Sivua ei löytynyt', 'domio' );
+	} else {
+		$title = wp_strip_all_tags( get_the_archive_title() );
+	}
+
+	return array(
+		'eyebrow'     => $eyebrow,
+		'title'       => $title,
+		'description' => $description,
+	);
+}
+
+/**
  * Add body class for Domio landing / author / jobs templates.
  *
  * @param string[] $classes Body classes.
  * @return string[]
  */
 function domio_landing_body_class( $classes ) {
-	if ( domio_is_landing_template() || domio_is_author_template() || domio_is_jobs_template() ) {
+	if ( domio_is_landing_template() || domio_is_author_template() || domio_is_jobs_template() || domio_is_blog_archive_template() ) {
 		$classes[] = 'domio-template';
 	}
 
@@ -60,6 +126,10 @@ function domio_landing_body_class( $classes ) {
 
 	if ( domio_is_jobs_template() ) {
 		$classes[] = 'domio-jobs';
+	}
+
+	if ( domio_is_blog_archive_template() ) {
+		$classes[] = 'domio-archive';
 	}
 
 	if ( domio_is_landing_template() ) {
@@ -76,7 +146,7 @@ add_filter( 'body_class', 'domio_landing_body_class' );
  * @return void
  */
 function domio_enqueue_landing_typography() {
-	if ( ! domio_is_landing_template() && ! domio_is_author_template() && ! domio_is_jobs_template() ) {
+	if ( ! domio_is_landing_template() && ! domio_is_author_template() && ! domio_is_jobs_template() && ! domio_is_blog_archive_template() ) {
 		return;
 	}
 
@@ -107,6 +177,15 @@ function domio_enqueue_landing_typography() {
 		wp_enqueue_style(
 			'domio-jobs',
 			DOMIO_THEME_URI . '/assets/css/domio-jobs.css',
+			array( 'domio-type' ),
+			DOMIO_THEME_VERSION
+		);
+	}
+
+	if ( domio_is_blog_archive_template() ) {
+		wp_enqueue_style(
+			'domio-archive',
+			DOMIO_THEME_URI . '/assets/css/domio-archive.css',
 			array( 'domio-type' ),
 			DOMIO_THEME_VERSION
 		);

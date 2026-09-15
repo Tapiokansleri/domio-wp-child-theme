@@ -1,0 +1,233 @@
+/**
+ * Domio blog archive, search and 404 templates.
+ */
+
+body.domio-archive {
+	font-family: var(--domio-font, "Onest", system-ui, -apple-system, "Segoe UI", sans-serif);
+	color: var(--domio-section-text, #121212);
+	background: var(--domio-section-bg, #ffffff);
+}
+
+body.domio-archive #content.domio-archive,
+body.domio-archive .domio-archive {
+	width: 100% !important;
+	max-width: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.domio-archive__inner {
+	width: var(--domio-shell-width, min(1300px, calc(100% - 2.5rem)));
+	max-width: 100%;
+	margin-inline: auto;
+	padding-block: clamp(2.5rem, 1.5rem + 3vw, 4.5rem) clamp(3.5rem, 2rem + 4vw, 6rem);
+}
+
+.domio-archive__head {
+	margin: 0 0 clamp(2rem, 1.25rem + 2vw, 3.25rem);
+	max-width: 46rem;
+}
+
+.domio-archive__eyebrow {
+	margin: 0 0 0.4rem;
+	font-size: var(--domio-fs-small, 0.875rem);
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--domio-section-muted, #777777);
+}
+
+.domio-archive__title {
+	margin: 0;
+	font-size: var(--domio-fs-display, clamp(2.25rem, 1.6rem + 2.8vw, 3.5rem));
+	font-weight: 700;
+	line-height: var(--domio-lh-display, 1.12);
+	letter-spacing: var(--domio-tracking-display, -0.03em);
+	color: #121212;
+}
+
+.domio-archive__description,
+.domio-archive__lead {
+	margin: 1rem 0 0;
+	font-size: var(--domio-fs-body, 1.0625rem);
+	line-height: var(--domio-lh-body, 1.65);
+	color: var(--domio-section-muted, #777777);
+}
+
+.domio-archive__description p {
+	margin: 0 0 0.75rem;
+}
+
+.domio-archive__description p:last-child {
+	margin-bottom: 0;
+}
+
+.domio-archive__grid {
+	display: grid;
+	gap: var(--wp--preset--spacing--50, 2.5rem) var(--wp--preset--spacing--40, 1.5rem);
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 700px) {
+	.domio-archive__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (min-width: 960px) {
+	.domio-archive__grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+.domio-archive__card {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	margin: 0;
+	background: transparent;
+}
+
+.domio-archive__media {
+	display: block;
+	overflow: hidden;
+	aspect-ratio: 16 / 10;
+	margin: 0 0 1.15rem;
+	background: #e8e8e8;
+	line-height: 0;
+}
+
+.domio-archive__image,
+.domio-archive__media img {
+	display: block !important;
+	width: 100% !important;
+	max-width: none !important;
+	height: 100% !important;
+	object-fit: cover;
+	object-position: center;
+}
+
+.domio-archive__date {
+	display: block;
+	margin: 0 0 0.45rem;
+	color: var(--wp--preset--color--domio-muted, #777);
+	font-size: 0.875rem;
+	line-height: 1.4;
+}
+
+.domio-archive__card-title {
+	margin: 0;
+	font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.domio-archive__card-title a {
+	color: var(--domio-btn-bg, #004c3e);
+	text-decoration: none;
+}
+
+.domio-archive__card-title a:hover {
+	color: var(--wp--preset--color--domio-ink, #121212);
+}
+
+.domio-archive__card-title a:focus-visible {
+	outline: 3px solid var(--wp--preset--color--domio-accent, #04e78d);
+	outline-offset: 3px;
+}
+
+.domio-archive__excerpt {
+	margin: 0.7rem 0 0;
+	color: var(--wp--preset--color--domio-muted, #777);
+	font-size: var(--domio-fs-small, 0.9375rem);
+	line-height: 1.6;
+}
+
+.domio-archive__empty {
+	margin: 0;
+	font-size: var(--domio-fs-body, 1.0625rem);
+	color: var(--domio-section-muted, #777777);
+}
+
+.domio-archive__search {
+	max-width: 32rem;
+	margin: 0 0 2rem;
+}
+
+.domio-archive__search .search-form,
+.domio-archive__search form {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.domio-archive__search input[type="search"],
+.domio-archive__search input[type="text"] {
+	flex: 1;
+	min-height: 2.75rem;
+	padding: 0.6rem 0.9rem;
+	border: 1px solid color-mix(in srgb, #121212 16%, transparent);
+	border-radius: 0.5rem;
+	font-size: 1rem;
+}
+
+.domio-archive__search input[type="submit"],
+.domio-archive__search button {
+	border: 0;
+	border-radius: 999px;
+	padding: 0.7rem 1.15rem;
+	background: #004c3e;
+	color: #fff;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.domio-archive__home-link {
+	display: inline-flex;
+	align-items: center;
+	color: #004c3e;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.domio-archive__home-link:hover {
+	color: #121212;
+}
+
+.domio-archive .navigation.pagination {
+	margin-top: clamp(2.5rem, 1.75rem + 2.5vw, 4rem);
+	padding-top: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+	border-top: 1px solid color-mix(in srgb, #121212 12%, transparent);
+}
+
+.domio-archive .navigation.pagination .nav-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.domio-archive .navigation.pagination .page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2.5rem;
+	min-height: 2.5rem;
+	padding: 0.4rem 0.75rem;
+	border-radius: 999px;
+	font-size: var(--domio-fs-small, 0.875rem);
+	font-weight: 500;
+	color: #121212;
+	text-decoration: none;
+	background: color-mix(in srgb, #121212 6%, #ffffff);
+}
+
+.domio-archive .navigation.pagination a.page-numbers:hover,
+.domio-archive .navigation.pagination a.page-numbers:focus-visible {
+	background: #04e78d;
+	color: #121212;
+}
+
+.domio-archive .navigation.pagination .page-numbers.current {
+	background: #004c3e;
+	color: #ffffff;
+}
