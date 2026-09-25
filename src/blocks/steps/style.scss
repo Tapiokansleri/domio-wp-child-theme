@@ -31,6 +31,7 @@
 .domio-steps__item {
 	position: relative;
 	display: grid;
+	align-content: start;
 	gap: var(--wp--preset--spacing--20);
 	counter-increment: domio-step;
 }

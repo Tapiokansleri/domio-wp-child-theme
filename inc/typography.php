@@ -165,10 +165,17 @@ function domio_enqueue_landing_typography() {
 	);
 
 	if ( domio_is_author_template() ) {
+		// Article cards on the author page reuse the blog archive card styles.
+		wp_enqueue_style(
+			'domio-archive',
+			DOMIO_THEME_URI . '/assets/css/domio-archive.css',
+			array( 'domio-type' ),
+			DOMIO_THEME_VERSION
+		);
 		wp_enqueue_style(
 			'domio-author',
 			DOMIO_THEME_URI . '/assets/css/domio-author.css',
-			array( 'domio-type' ),
+			array( 'domio-archive' ),
 			DOMIO_THEME_VERSION
 		);
 	}

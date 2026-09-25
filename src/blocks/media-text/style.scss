@@ -17,6 +17,11 @@
 	grid-template-columns: 1fr;
 }
 
+/* Let the column shrink so wide content (tables) scrolls inside its wrapper. */
+.domio-media-text__content {
+	min-width: 0;
+}
+
 .domio-media-text__heading {
 	margin: 0 0 var(--wp--preset--spacing--30);
 	font-size: var(--wp--preset--font-size--x-large);
@@ -40,7 +45,7 @@
 .domio-media-text__body > ul {
 	display: grid;
 	gap: 0.85rem;
-	margin: 1.25rem 0 0;
+	margin: 1.25rem 0;
 	padding: 0;
 	list-style: none;
 }
@@ -192,10 +197,23 @@ button.domio-media-text__media-placeholder:focus-visible {
 
 .domio-media-text__body th,
 .domio-media-text__body td {
+	border: 0;
 	border-bottom: 1px solid color-mix(in srgb, var(--wp--preset--color--domio-ink) 12%, transparent);
 	padding: 0.75rem 0.85rem 0.75rem 0;
 	text-align: left;
 	vertical-align: top;
+}
+
+/* Hello Elementor's reset stripes table rows; keep plain row lines here. */
+.domio-media-text .domio-media-text__body tbody > tr > * {
+	background: none;
+}
+
+/* On phones, scroll the table sideways instead of breaking words mid-word. */
+@media (max-width: 781px) {
+	.domio-media-text__body table {
+		min-width: 36rem;
+	}
 }
 
 .domio-media-text__body thead th {
