@@ -1134,11 +1134,11 @@ PL 62521
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'domio/trustmary',
-		'version' => '1.0.1',
+		'version' => '1.1.0',
 		'title' => 'Domio: Trustmary',
 		'category' => 'domio',
 		'icon' => 'star-filled',
-		'description' => 'Upottaa Trustmary-arvosteluwidgetin.',
+		'description' => 'Näyttää Trustmary-arvostelut: sivun tekstinä tai Trustmary-widgettinä.',
 		'keywords' => array(
 			'trustmary',
 			'arvostelut',
@@ -1154,6 +1154,22 @@ PL 62521
 			'widgetSrc' => array(
 				'type' => 'string',
 				'default' => 'https://widget.trustmary.com/n3eIUlhS5'
+			),
+			'mode' => array(
+				'type' => 'string',
+				'default' => 'widget'
+			),
+			'heading' => array(
+				'type' => 'string',
+				'default' => 'Asiakkaidemme kokemuksia'
+			),
+			'limit' => array(
+				'type' => 'number',
+				'default' => 6
+			),
+			'showSummary' => array(
+				'type' => 'boolean',
+				'default' => true
 			),
 			'background' => array(
 				'type' => 'string',

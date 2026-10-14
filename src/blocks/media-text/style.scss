@@ -214,6 +214,11 @@ button.domio-media-text__media-placeholder:focus-visible {
 	.domio-media-text__body table {
 		min-width: 36rem;
 	}
+
+	/* A two-column table (a label and a value per row) fits a phone as it is. */
+	.domio-media-text__body table:not(:has(tr > :nth-child(3))) {
+		min-width: 0;
+	}
 }
 
 .domio-media-text__body thead th {

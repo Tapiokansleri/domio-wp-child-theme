@@ -3,7 +3,13 @@
  */
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl } from '@wordpress/components';
+import {
+	PanelBody,
+	RangeControl,
+	SelectControl,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 import { BackgroundControls, getSectionClasses, getPatternStyle } from '../../shared/background';
 import { DomioTemplateNotice } from '../../shared/template-notice';
 
@@ -12,7 +18,9 @@ import { DomioTemplateNotice } from '../../shared/template-notice';
  * @return {JSX.Element} Editor element.
  */
 export default function Edit( { attributes, setAttributes } ) {
-	const { widgetSrc, background, pattern, patternOpacity } = attributes;
+	const { widgetSrc, mode, heading, limit, showSummary, background, pattern, patternOpacity } =
+		attributes;
+	const isReviews = mode === 'reviews';
 
 	const blockProps = useBlockProps( {
 		className: `domio-trustmary alignfull ${ getSectionClasses(
@@ -37,26 +45,78 @@ export default function Edit( { attributes, setAttributes } ) {
 			/>
 			<InspectorControls>
 				<PanelBody title={ __( 'Asetukset', 'domio' ) } initialOpen={ true }>
+					<SelectControl
+						label={ __( 'Näyttötapa', 'domio' ) }
+						value={ mode }
+						options={ [
+							{ label: __( 'Arvostelut sivun tekstinä', 'domio' ), value: 'reviews' },
+							{ label: __( 'Trustmary-widget', 'domio' ), value: 'widget' },
+						] }
+						onChange={ ( value ) => setAttributes( { mode: value } ) }
+						help={
+							isReviews
+								? __(
+										'Arvostelut haetaan palvelimella ja kirjoitetaan sivulle, joten hakukoneet ja tekoäly lukevat ne eikä kävijän selain lataa Trustmarya.',
+										'domio'
+								  )
+								: __(
+										'Trustmaryn oma widget latautuu kävijän selaimessa.',
+										'domio'
+								  )
+						}
+						__nextHasNoMarginBottom
+					/>
+					{ isReviews && (
+						<>
+							<TextControl
+								label={ __( 'Otsikko', 'domio' ) }
+								value={ heading }
+								onChange={ ( value ) => setAttributes( { heading: value } ) }
+								__nextHasNoMarginBottom
+							/>
+							<RangeControl
+								label={ __( 'Arvostelujen määrä', 'domio' ) }
+								value={ limit }
+								onChange={ ( value ) => setAttributes( { limit: value ?? 6 } ) }
+								min={ 0 }
+								max={ 30 }
+								help={ __( '0 näyttää kaikki arvostelut.', 'domio' ) }
+								__nextHasNoMarginBottom
+							/>
+							<ToggleControl
+								label={ __( 'Näytä keskiarvo', 'domio' ) }
+								checked={ showSummary }
+								onChange={ ( value ) => setAttributes( { showSummary: value } ) }
+								__nextHasNoMarginBottom
+							/>
+						</>
+					) }
 					<TextControl
 						label={ __( 'Widgetin osoite', 'domio' ) }
 						value={ widgetSrc }
 						onChange={ ( value ) => setAttributes( { widgetSrc: value } ) }
 						type="url"
 						help={ __(
-							'Trustmary-widgetin script-osoite. Widgetti tuo otsikon mukanaan.',
+							'Trustmary-widgetin script-osoite. Arvostelut luetaan tästä widgetistä.',
 							'domio'
 						) }
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 			</InspectorControls>
 
 			<section { ...blockProps }>
 				<div className="domio-trustmary__inner">
+					{ isReviews && heading && (
+						<h2 className="domio-trustmary__heading">{ heading }</h2>
+					) }
 					<div className="domio-trustmary__placeholder">
-						{ __(
-							'Trustmary-arvostelut näkyvät julkaistulla sivulla.',
-							'domio'
-						) }
+						{ isReviews
+							? __(
+									'Arvostelut kirjoitetaan sivulle tekstinä julkaistulla sivulla.',
+									'domio'
+							  )
+							: __( 'Trustmary-arvostelut näkyvät julkaistulla sivulla.', 'domio' ) }
 					</div>
 				</div>
 			</section>

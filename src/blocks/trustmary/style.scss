@@ -15,3 +15,103 @@
 	width: 100%;
 	min-height: 4rem;
 }
+
+// Reviews written into the page (mode "reviews").
+
+.domio-trustmary__heading {
+	margin: 0 0 var(--wp--preset--spacing--30);
+	font-size: var(--wp--preset--font-size--x-large);
+	line-height: 1.2;
+	font-weight: 500;
+	color: var(--domio-section-text, var(--wp--preset--color--domio-ink));
+}
+
+.domio-trustmary__summary {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.75rem;
+	margin: 0 0 var(--wp--preset--spacing--50);
+	color: var(--domio-section-muted, var(--wp--preset--color--domio-muted));
+	font-size: var(--wp--preset--font-size--large);
+}
+
+// Five stars filled to --domio-stars (0–5).
+.domio-trustmary__stars {
+	display: inline-block;
+	font-size: 1.25rem;
+	line-height: 1;
+	letter-spacing: 0.1em;
+	white-space: nowrap;
+
+	&::before {
+		content: "★★★★★";
+		background: linear-gradient(90deg, #ffca05 calc(var(--domio-stars, 5) / 5 * 100%), #d6d6d6 0);
+		background-clip: text;
+		-webkit-background-clip: text;
+		color: transparent;
+	}
+}
+
+.domio-trustmary__reviews {
+	display: grid;
+	gap: var(--wp--preset--spacing--40);
+	grid-template-columns: 1fr;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+@media (min-width: 600px) {
+	.domio-trustmary__reviews {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (min-width: 960px) {
+	.domio-trustmary__reviews {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+.domio-trustmary__review {
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--20);
+	margin: 0;
+	padding: var(--wp--preset--spacing--40);
+	background: var(--wp--preset--color--domio-surface);
+	border: 1px solid color-mix(in srgb, var(--wp--preset--color--domio-ink) 12%, transparent);
+	color: var(--wp--preset--color--domio-ink);
+}
+
+.domio-trustmary__text {
+	flex: 1;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: var(--wp--preset--font-size--medium);
+	line-height: 1.5;
+
+	p {
+		margin: 0;
+	}
+}
+
+.domio-trustmary__author {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+	margin: 0;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--domio-muted);
+
+	strong {
+		color: var(--wp--preset--color--domio-ink);
+		font-weight: 600;
+	}
+}
+
+.domio-trustmary__source time::before {
+	content: " · ";
+}

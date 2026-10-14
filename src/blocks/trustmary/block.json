@@ -2,11 +2,11 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "domio/trustmary",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"title": "Domio: Trustmary",
 	"category": "domio",
 	"icon": "star-filled",
-	"description": "Upottaa Trustmary-arvosteluwidgetin.",
+	"description": "Näyttää Trustmary-arvostelut: sivun tekstinä tai Trustmary-widgettinä.",
 	"keywords": [ "trustmary", "arvostelut", "referenssit", "domio" ],
 	"textdomain": "domio",
 	"attributes": {
@@ -17,6 +17,22 @@
 		"widgetSrc": {
 			"type": "string",
 			"default": "https://widget.trustmary.com/n3eIUlhS5"
+		},
+		"mode": {
+			"type": "string",
+			"default": "widget"
+		},
+		"heading": {
+			"type": "string",
+			"default": "Asiakkaidemme kokemuksia"
+		},
+		"limit": {
+			"type": "number",
+			"default": 6
+		},
+		"showSummary": {
+			"type": "boolean",
+			"default": true
 		},
 		"background": {
 			"type": "string",
