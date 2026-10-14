@@ -18,14 +18,17 @@ if ( ! $excerpt ) {
 $excerpt = preg_replace( '/<!--.*?-->/s', ' ', (string) $excerpt );
 $excerpt = preg_replace( '/<\/(p|h[1-6]|li|div|blockquote)>/i', ' ', $excerpt );
 $excerpt = wp_trim_words( wp_strip_all_tags( $excerpt ), 22, ' …' );
+// The card is at most a third of a 1300px grid, so tell the browser the real width:
+// without sizes it picks the full 2560px original for every card.
 $thumb   = get_the_post_thumbnail(
 	$post_id,
-	'large',
+	'medium_large',
 	array(
 		'class'    => 'domio-archive__image',
 		'loading'  => 'lazy',
 		'decoding' => 'async',
 		'alt'      => '',
+		'sizes'    => '(min-width: 960px) 420px, (min-width: 600px) 50vw, 100vw',
 	)
 );
 ?>

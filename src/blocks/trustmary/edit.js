@@ -83,6 +83,20 @@ export default function Edit( { attributes, setAttributes } ) {
 								help={ __( '0 näyttää kaikki arvostelut.', 'domio' ) }
 								__nextHasNoMarginBottom
 							/>
+							<SelectControl
+								label={ __( 'Järjestys', 'domio' ) }
+								value={ attributes.order }
+								options={ [
+									{ label: __( 'Uusimmat ensin', 'domio' ), value: 'latest' },
+									{ label: __( 'Kattavimmat ensin', 'domio' ), value: 'longest' },
+								] }
+								onChange={ ( value ) => setAttributes( { order: value } ) }
+								help={ __(
+									'Kattavimmat ensin on tarkoitettu Trustmary-widgetin rinnalle: se jättää pois kolme uusinta, jotka widget näyttää ensin, ja näyttää muista kattavimmat.',
+									'domio'
+								) }
+								__nextHasNoMarginBottom
+							/>
 							<ToggleControl
 								label={ __( 'Näytä keskiarvo', 'domio' ) }
 								checked={ showSummary }

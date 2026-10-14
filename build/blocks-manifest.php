@@ -1167,6 +1167,10 @@ PL 62521
 				'type' => 'number',
 				'default' => 6
 			),
+			'order' => array(
+				'type' => 'string',
+				'default' => 'latest'
+			),
 			'showSummary' => array(
 				'type' => 'boolean',
 				'default' => true

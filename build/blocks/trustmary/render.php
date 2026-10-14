@@ -55,7 +55,21 @@ $domio_rating_text = static function ( $value ) {
 	<div class="domio-trustmary__inner">
 		<?php if ( 'reviews' === $mode ) : ?>
 			<?php
-			$reviews = $limit > 0 ? array_slice( $data['reviews'], 0, $limit ) : $data['reviews'];
+			$reviews = $data['reviews'];
+			// "longest" is for a text section next to the Trustmary widget: it leaves out the three
+			// newest reviews the widget carousel opens with and shows the most detailed of the rest.
+			if ( isset( $attributes['order'] ) && 'longest' === $attributes['order'] ) {
+				if ( count( $reviews ) > 3 + max( 1, $limit ) ) {
+					$reviews = array_slice( $reviews, 3 );
+				}
+				usort(
+					$reviews,
+					static function ( $a, $b ) {
+						return mb_strlen( $b['text'] ) <=> mb_strlen( $a['text'] );
+					}
+				);
+			}
+			$reviews = $limit > 0 ? array_slice( $reviews, 0, $limit ) : $reviews;
 			$sources = array_map( 'domio_trustmary_source_label', $data['sources'] );
 			?>
 			<?php if ( '' !== $heading ) : ?>
