@@ -230,7 +230,16 @@
 	flex: 1 1 auto;
 }
 
-.domio-contacts img.domio-contacts__photo {
+// Imagify serves WebP by wrapping the image in <picture> and moving the class onto the wrapper,
+// so the photo size applies to the wrapper and to the image inside it as well.
+.domio-contacts picture.domio-contacts__photo {
+	display: block;
+	width: 5.5rem;
+	height: 5.5rem;
+}
+
+.domio-contacts img.domio-contacts__photo,
+.domio-contacts .domio-contacts__photo img {
 	display: block;
 	width: 5.5rem !important;
 	height: 5.5rem !important;
@@ -342,7 +351,13 @@
 		gap: 1.35rem;
 	}
 
-	.domio-contacts img.domio-contacts__photo {
+	.domio-contacts picture.domio-contacts__photo {
+		width: 4.75rem;
+		height: 4.75rem;
+	}
+
+	.domio-contacts img.domio-contacts__photo,
+	.domio-contacts .domio-contacts__photo img {
 		width: 4.75rem !important;
 		height: 4.75rem !important;
 		max-width: 4.75rem !important;
