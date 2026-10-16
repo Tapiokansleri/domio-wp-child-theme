@@ -543,7 +543,7 @@ PL 62521
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'domio/hero',
-		'version' => '1.1.2',
+		'version' => '1.1.5',
 		'title' => 'Domio: Hero',
 		'category' => 'domio',
 		'icon' => 'cover-image',

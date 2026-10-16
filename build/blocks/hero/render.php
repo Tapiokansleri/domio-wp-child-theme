@@ -24,6 +24,19 @@ $image_id       = isset( $attributes['imageId'] ) ? (int) $attributes['imageId']
 $image_alt      = isset( $attributes['imageAlt'] ) ? $attributes['imageAlt'] : '';
 $layout         = isset( $attributes['layout'] ) ? $attributes['layout'] : 'banner';
 
+// Link plain Finnish phone numbers in the subheading ourselves. Otherwise iOS Safari auto-detects them
+// and paints them in its own link colours, which are unreadable on the hero image.
+if ( $subheading && false === stripos( $subheading, '<a ' ) ) {
+	$subheading = preg_replace_callback(
+		'/(?<![\d+])0\d{2}[ \x{00A0}]?\d{3}[ \x{00A0}]?\d{4}(?!\d)/u',
+		static function ( $match ) {
+			$digits = preg_replace( '/\D+/', '', $match[0] );
+			return '<a class="domio-hero__tel" href="tel:+358' . substr( $digits, 1 ) . '">' . str_replace( ' ', "\u{00A0}", $match[0] ) . '</a>';
+		},
+		$subheading
+	);
+}
+
 // Backward compatibility with earlier "overlay" layout name.
 if ( 'overlay' === $layout ) {
 	$layout = 'banner';

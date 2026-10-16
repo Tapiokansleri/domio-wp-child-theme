@@ -484,3 +484,12 @@ a.domio-hero__meta-author-name:focus-visible {
 		transition: none;
 	}
 }
+
+
+.domio-hero .domio-hero__subheading a.domio-hero__tel {
+	color: inherit;
+	font-weight: 600;
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.18em;
+}

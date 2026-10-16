@@ -307,3 +307,29 @@
 		transition: none;
 	}
 }
+
+// Placeholder while MetForm builds the form in the browser; :empty stops matching once the form is mounted.
+.domio-cta__form .mf-form-wrapper:empty {
+	display: block;
+	min-height: 33.5rem;
+	border-radius: 0.5rem;
+	background:
+		linear-gradient(#e6ebe9, #e6ebe9) 0 0 / 34% 0.9rem no-repeat,
+		linear-gradient(#f0f3f2, #f0f3f2) 0 1.5rem / 100% 2.9rem no-repeat,
+		linear-gradient(#e6ebe9, #e6ebe9) 0 5.6rem / 28% 0.9rem no-repeat,
+		linear-gradient(#f0f3f2, #f0f3f2) 0 7.1rem / 100% 2.9rem no-repeat,
+		linear-gradient(#e6ebe9, #e6ebe9) 0 11.2rem / 40% 0.9rem no-repeat,
+		linear-gradient(#f0f3f2, #f0f3f2) 0 12.7rem / 100% 7rem no-repeat,
+		linear-gradient(#d5e2dd, #d5e2dd) 0 21rem / 9.5rem 2.75rem no-repeat;
+	animation: domio-form-skeleton 1.4s ease-in-out infinite;
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: none;
+	}
+}
+
+@keyframes domio-form-skeleton {
+	50% {
+		opacity: 0.5;
+	}
+}
