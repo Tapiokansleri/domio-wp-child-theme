@@ -23,6 +23,15 @@ $secondary_url  = isset( $attributes['secondaryCtaUrl'] ) ? $attributes['seconda
 $image_id       = isset( $attributes['imageId'] ) ? (int) $attributes['imageId'] : 0;
 $image_alt      = isset( $attributes['imageAlt'] ) ? $attributes['imageAlt'] : '';
 $layout         = isset( $attributes['layout'] ) ? $attributes['layout'] : 'banner';
+$aside_heading  = isset( $attributes['asideHeading'] ) ? trim( (string) $attributes['asideHeading'] ) : '';
+$aside_links    = array_values(
+	array_filter(
+		isset( $attributes['asideLinks'] ) && is_array( $attributes['asideLinks'] ) ? $attributes['asideLinks'] : array(),
+		static function ( $link ) {
+			return is_array( $link ) && ! empty( $link['label'] ) && ! empty( $link['url'] );
+		}
+	)
+);
 
 // Backward compatibility with earlier "overlay" layout name.
 if ( 'overlay' === $layout ) {
@@ -75,6 +84,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 			. ( $is_banner ? ' alignfull' : '' )
 			. ( $image_html ? '' : ' domio-hero--no-media' )
 			. ( $show_meta ? ' domio-hero--has-meta' : '' )
+			. ( $aside_links ? ' domio-hero--has-aside' : '' )
 			. ' '
 			. ( function_exists( 'domio_get_section_classes' ) ? domio_get_section_classes( $attributes ) : 'domio-bg--surface' )
 		),
@@ -220,5 +230,25 @@ if ( $show_meta ) {
 				</div>
 			<?php endif; ?>
 		</div>
+
+		<?php if ( $aside_links ) : ?>
+			<nav class="domio-hero__aside" aria-label="<?php echo esc_attr( $aside_heading ? $aside_heading : __( 'Pikalinkit', 'domio' ) ); ?>">
+				<?php if ( $aside_heading ) : ?>
+					<h2 class="domio-hero__aside-title"><?php echo esc_html( $aside_heading ); ?></h2>
+				<?php endif; ?>
+				<ul class="domio-hero__aside-list">
+					<?php foreach ( $aside_links as $link ) : ?>
+						<li>
+							<a class="domio-hero__aside-link" href="<?php echo esc_url( $link['url'], array( 'http', 'https', 'tel', 'mailto' ) ); ?>">
+								<?php if ( ! empty( $link['icon'] ) && function_exists( 'domio_get_icon_svg' ) ) : ?>
+									<span class="domio-hero__aside-icon" aria-hidden="true"><?php echo domio_get_icon_svg( $link['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?></span>
+								<?php endif; ?>
+								<span class="domio-hero__aside-label"><?php echo esc_html( $link['label'] ); ?></span>
+							</a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</nav>
+		<?php endif; ?>
 	</div>
 </section>

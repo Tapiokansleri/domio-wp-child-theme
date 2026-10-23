@@ -115,3 +115,8 @@
 .domio-trustmary__source time::before {
 	content: " · ";
 }
+
+// Written reviews right under the Trustmary widget: the widget's width, so they read as one block.
+.domio-trustmary--widget + .domio-trustmary--reviews .domio-trustmary__inner {
+	max-width: 70rem;
+}

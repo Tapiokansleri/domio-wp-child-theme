@@ -45,6 +45,7 @@ require_once DOMIO_THEME_DIR . '/inc/icons.php';
 require_once DOMIO_THEME_DIR . '/inc/avatars.php';
 require_once DOMIO_THEME_DIR . '/inc/author-profile.php';
 require_once DOMIO_THEME_DIR . '/inc/trustmary.php';
+require_once DOMIO_THEME_DIR . '/inc/mobile-cta.php';
 require_once DOMIO_THEME_DIR . '/inc/typography.php';
 require_once DOMIO_THEME_DIR . '/inc/settings.php';
 require_once DOMIO_THEME_DIR . '/inc/header.php';

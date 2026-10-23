@@ -13,6 +13,7 @@ import {
 	PanelBody,
 	SelectControl,
 	TextControl,
+	TextareaControl,
 	Button,
 	Flex,
 	FlexItem,
@@ -222,6 +223,13 @@ function CardPreview( { card, index, variant, onChange } ) {
 							allowedFormats={ [ 'core/bold', 'core/italic' ] }
 						/>
 					) }
+					{ Array.isArray( card.items ) && card.items.length ? (
+						<ul className="domio-card-grid__list">
+							{ card.items.map( ( item, i ) => (
+								<li key={ i }>{ item }</li>
+							) ) }
+						</ul>
+					) : null }
 					{ card.linkText ? (
 						<span className="domio-card-grid__link">{ card.linkText }</span>
 					) : null }
@@ -470,6 +478,19 @@ export default function Edit( { attributes, setAttributes } ) {
 								</>
 							) : (
 								<>
+									<TextareaControl
+										label={ __( 'Luettelo', 'domio' ) }
+										value={ Array.isArray( card.items ) ? card.items.join( '\n' ) : '' }
+										onChange={ ( value ) =>
+											updateCard(
+												index,
+												'items',
+												value.split( '\n' ).map( ( line ) => line.trim() ).filter( Boolean )
+											)
+										}
+										help={ __( 'Valinnainen. Yksi kohta per rivi, näkyy tekstin alla luettelona.', 'domio' ) }
+										rows={ 4 }
+									/>
 									<TextControl
 										label={ __( 'Linkin teksti', 'domio' ) }
 										value={ card.linkText || '' }

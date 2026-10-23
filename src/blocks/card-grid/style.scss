@@ -262,6 +262,36 @@
 	color: var(--wp--preset--color--domio-ink);
 }
 
+.domio-card-grid__list {
+	display: grid;
+	gap: 0.35rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.5;
+}
+
+.domio-card-grid__list li {
+	position: relative;
+	margin: 0;
+	padding-left: 1.15rem;
+}
+
+.domio-card-grid__list li::before {
+	content: "";
+	position: absolute;
+	top: 0.55em;
+	left: 0;
+	width: 0.45rem;
+	height: 0.45rem;
+	background: var(--wp--preset--color--domio-accent, #04e78d);
+}
+
+.domio-card-grid.domio-bg--green .domio-card-grid__card:not(.domio-card-grid__card--has-media) .domio-card-grid__list {
+	color: rgba(255, 255, 255, 0.86);
+}
+
 .domio-card-grid--reason .domio-card-grid__card {
 	border-color: transparent;
 	background: color-mix(in srgb, var(--wp--preset--color--domio-accent) 10%, var(--wp--preset--color--domio-surface));
@@ -413,4 +443,23 @@
 	.domio-card-grid--value .domio-card-grid__card:hover {
 		transform: none;
 	}
+}
+
+/* Lists and links in stacked image cards (image on top, white card below). */
+.domio-card-grid.is-stacked .domio-card-grid__card--has-media .domio-card-grid__list,
+.domio-card-grid.is-stacked .domio-card-grid__card--has-media .domio-card-grid__link {
+	position: relative;
+	z-index: 1;
+	margin-left: var(--wp--preset--spacing--40);
+	margin-right: var(--wp--preset--spacing--40);
+}
+
+.domio-card-grid.is-stacked .domio-card-grid__card--has-media .domio-card-grid__list {
+	color: var(--wp--preset--color--domio-ink, #121212);
+}
+
+.domio-card-grid.is-stacked .domio-card-grid__card--has-media .domio-card-grid__link {
+	margin-top: auto;
+	color: var(--domio-btn-bg, #004c3e);
+	text-shadow: none;
 }

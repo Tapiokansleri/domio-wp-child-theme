@@ -14,6 +14,7 @@ import {
 	PanelBody,
 	SelectControl,
 	TextControl,
+	TextareaControl,
 	Button,
 	Notice,
 } from '@wordpress/components';
@@ -44,7 +45,20 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		background,
 		pattern,
 		patternOpacity,
+		asideHeading,
+		asideLinks,
 	} = attributes;
+
+	// Side panel links, edited as one line each: "Teksti | osoite | ikoni".
+	const links = Array.isArray( asideLinks ) ? asideLinks : [];
+	const linksToText = ( list ) =>
+		list.map( ( link ) => [ link.label, link.url, link.icon ].filter( Boolean ).join( ' | ' ) ).join( '\n' );
+	const textToLinks = ( text ) =>
+		text
+			.split( '\n' )
+			.map( ( line ) => line.split( '|' ).map( ( part ) => part.trim() ) )
+			.filter( ( parts ) => parts[ 0 ] && parts[ 1 ] )
+			.map( ( [ label, url, icon ] ) => ( { label, url, icon: icon || '' } ) );
 
 	const normalizedLayout = layout === 'overlay' ? 'banner' : layout;
 	const displayImageUrl = imageUrl || '';
@@ -129,6 +143,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 			`domio-hero--${ normalizedLayout }`,
 			displayImageUrl ? '' : 'domio-hero--no-media',
 			postMeta ? 'domio-hero--has-meta' : '',
+			asideHeading || links.length ? 'domio-hero--has-aside' : '',
 			getSectionClasses( background, pattern ),
 		]
 			.filter( Boolean )
@@ -215,6 +230,22 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 							setAttributes( { secondaryCtaUrl: value } )
 						}
 						type="url"
+					/>
+				</PanelBody>
+
+				<PanelBody title={ __( 'Sivupaneeli', 'domio' ) } initialOpen={ false }>
+					<TextControl
+						label={ __( 'Paneelin otsikko', 'domio' ) }
+						value={ asideHeading }
+						onChange={ ( value ) => setAttributes( { asideHeading: value } ) }
+						help={ __( 'Esim. Asiakkaalle. Paneeli näkyy bannerin oikeassa reunassa.', 'domio' ) }
+					/>
+					<TextareaControl
+						label={ __( 'Linkit', 'domio' ) }
+						value={ linksToText( links ) }
+						onChange={ ( value ) => setAttributes( { asideLinks: textToLinks( value ) } ) }
+						help={ __( 'Yksi linkki per rivi: Teksti | osoite | ikoni (esim. clock, key, users).', 'domio' ) }
+						rows={ 8 }
 					/>
 				</PanelBody>
 
@@ -397,6 +428,21 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 							</div>
 						) : null }
 					</div>
+
+					{ asideHeading || links.length ? (
+						<div className="domio-hero__aside">
+							{ asideHeading ? (
+								<h2 className="domio-hero__aside-title">{ asideHeading }</h2>
+							) : null }
+							<ul className="domio-hero__aside-list">
+								{ links.map( ( link, index ) => (
+									<li key={ index }>
+										<span className="domio-hero__aside-link">{ link.label }</span>
+									</li>
+								) ) }
+							</ul>
+						</div>
+					) : null }
 				</div>
 			</section>
 		</>

@@ -229,6 +229,7 @@ body.domio-template .domio-landing-template [id] {
 .domio-bg--green .domio-card-grid__card a,
 .domio-bg--green .domio-card-grid__card span,
 .domio-bg--green .domio-card-grid__card cite,
+.domio-bg--green .domio-card-grid__card li,
 .domio-bg--green .domio-cta__panel,
 .domio-bg--green .domio-cta__panel p,
 .domio-bg--green .domio-cta__panel label,
@@ -585,6 +586,14 @@ body.domio-template .domio-landing-template .domio-bg--green .domio-cta__panel p
 body.domio-template .domio-landing-template .domio-bg--green .domio-cta__panel label,
 body.domio-template .domio-landing-template .domio-bg--green .domio-cta__panel .mf-input-label {
 	color: var(--wp--preset--color--domio-ink, #121212) !important;
+}
+
+/* The value variant's cards are see-through on green, so their text stays light. */
+body.domio-template .domio-landing-template .domio-card-grid--value.domio-bg--green .domio-card-grid__card,
+body.domio-template .domio-landing-template .domio-card-grid--value.domio-bg--green .domio-card-grid__card-title,
+body.domio-template .domio-landing-template .domio-card-grid--value.domio-bg--green .domio-card-grid__card li,
+body.domio-template .domio-landing-template .domio-card-grid--value.domio-bg--green .domio-card-grid__link {
+	color: var(--wp--preset--color--domio-surface, #fff) !important;
 }
 
 /* Editor canvas mirrors the same type system */

@@ -484,3 +484,131 @@ a.domio-hero__meta-author-name:focus-visible {
 		transition: none;
 	}
 }
+
+/* Side panel (e.g. "Asiakkaalle" quick links) in the banner's right column. */
+.domio-hero__aside {
+	box-sizing: border-box;
+	width: 100%;
+	background: #f4f4f4;
+	color: var(--wp--preset--color--domio-ink, #121212);
+	border: 3px solid var(--domio-hero-accent);
+}
+
+.domio-hero__aside-title {
+	margin: 0;
+	padding: 0.9rem 1.25rem;
+	background: var(--domio-hero-accent);
+	color: var(--wp--preset--color--domio-ink, #121212);
+	font-family: inherit;
+	font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.6rem);
+	font-weight: 600;
+	line-height: 1.2;
+}
+
+.domio-hero__aside-list {
+	display: grid;
+	gap: 0.45rem;
+	margin: 0;
+	padding: 0.6rem;
+	list-style: none;
+}
+
+.domio-hero__aside-list li {
+	margin: 0;
+}
+
+.domio-hero__aside-link {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.8rem 1rem;
+	background: #fff;
+	color: var(--wp--preset--color--domio-ink, #121212);
+	font-size: 1rem;
+	font-weight: 500;
+	line-height: 1.3;
+	text-decoration: none;
+	transition: background-color 0.12s ease;
+}
+
+.domio-hero__aside-link::after {
+	content: "»";
+	margin-left: auto;
+	color: var(--domio-btn-bg, #004c3e);
+	font-weight: 600;
+}
+
+.domio-hero__aside-link:hover,
+.domio-hero__aside-link:focus-visible {
+	background: color-mix(in srgb, var(--domio-hero-accent) 14%, #fff);
+	color: var(--wp--preset--color--domio-ink, #121212);
+}
+
+.domio-hero__aside-icon {
+	display: inline-flex;
+	flex: 0 0 auto;
+	width: 1.4rem;
+	height: 1.4rem;
+	color: var(--domio-btn-bg, #004c3e);
+}
+
+.domio-hero__aside-icon svg {
+	width: 100%;
+	height: 100%;
+}
+
+.domio-hero--banner.domio-hero--has-aside .domio-hero__inner {
+	flex-direction: column;
+	align-items: stretch;
+	gap: 1.75rem;
+}
+
+@media (min-width: 1024px) {
+	.domio-hero--banner.domio-hero--has-aside .domio-hero__inner {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(18rem, 22rem);
+		align-items: end;
+		gap: 3rem;
+	}
+}
+
+/* Compact banner for bands further down a page (a quote, a closing call to action):
+   lower, and no room reserved for the fixed header. */
+.domio-hero--banner.is-style-compact {
+	min-height: clamp(22rem, 40vh, 30rem);
+}
+
+.domio-hero--banner.is-style-compact .domio-hero__inner {
+	align-items: center;
+	padding-block: clamp(3rem, 2rem + 3vw, 5rem);
+}
+
+.domio-hero--banner.is-style-compact .domio-hero__heading {
+	max-width: 28ch;
+	font-size: clamp(1.75rem, 1.25rem + 2vw, 2.75rem);
+}
+
+/* Centred band, e.g. a customer quote. */
+.domio-hero--banner.is-style-quote .domio-hero__inner {
+	justify-content: center;
+	text-align: center;
+}
+
+.domio-hero--banner.is-style-quote .domio-hero__content {
+	align-items: center;
+	margin-inline: auto;
+}
+
+.domio-hero--banner.is-style-quote .domio-hero__heading,
+.domio-hero--banner.is-style-quote .domio-hero__subheading {
+	margin-inline: auto;
+}
+
+.domio-hero--banner.is-style-quote .domio-hero__actions {
+	justify-content: center;
+}
+
+// The quote sits in the middle of the photo, so the shade is even rather than darker at the bottom.
+.domio-hero--banner.is-style-quote .domio-hero__media::after {
+	background: rgb(18 18 18 / 58%);
+}

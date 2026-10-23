@@ -1,0 +1,80 @@
+/**
+ * Floating "Laske hinta-arvio" button on phones (inc/mobile-cta.php).
+ * Centred at the bottom, so it does not cover the cookie settings button in the left corner.
+ */
+
+.domio-mobile-cta {
+	display: none;
+}
+
+@media (max-width: 781px) {
+	.domio-mobile-cta {
+		position: fixed;
+		z-index: 9990;
+		left: 50%;
+		bottom: max(16px, env(safe-area-inset-bottom));
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 3px;
+		padding: 11px 28px 12px;
+		border-radius: 999px;
+		background: var(--domio-btn-bg, #004c3e);
+		color: #fff;
+		font-family: var(--domio-font, "Onest", system-ui, sans-serif);
+		line-height: 1.1;
+		text-align: center;
+		text-decoration: none;
+		white-space: nowrap;
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+		transform: translateX(-50%);
+		transition: opacity 0.2s ease, transform 0.2s ease;
+	}
+
+	/* Elementor's kit colours every link (.elementor-kit-10 a), so the text colours need the extra weight. */
+	body a.domio-mobile-cta,
+	body a.domio-mobile-cta:hover,
+	body a.domio-mobile-cta:focus-visible,
+	body .domio-mobile-cta .domio-mobile-cta__label {
+		color: #fff;
+	}
+
+	.domio-mobile-cta:focus-visible {
+		outline: 3px solid var(--domio-btn-hover, #04e78d);
+		outline-offset: 3px;
+	}
+
+	.domio-mobile-cta__label {
+		font-size: 15px;
+		font-weight: 600;
+	}
+
+	body .domio-mobile-cta .domio-mobile-cta__hint {
+		color: var(--wp--preset--color--domio-accent, #04e78d);
+		font-size: 12px;
+		font-weight: 500;
+	}
+
+	.domio-mobile-cta.is-hidden {
+		opacity: 0;
+		pointer-events: none;
+		transform: translate(-50%, 12px);
+	}
+
+	/* Room under the footer's last line for the button, in the footer's own colour
+	   (Elementor footer 605, #0b1815); a page without that footer gets the room on the body. */
+	body:has(.domio-mobile-cta) .elementor-location-footer {
+		padding-bottom: 80px;
+		background: #0b1815;
+	}
+
+	body:has(.domio-mobile-cta):not(:has(.elementor-location-footer)) {
+		padding-bottom: 80px;
+	}
+}
+
+@media (max-width: 781px) and (prefers-reduced-motion: reduce) {
+	.domio-mobile-cta {
+		transition: none;
+	}
+}

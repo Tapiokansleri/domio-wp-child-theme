@@ -161,6 +161,17 @@ $wrapper_attributes = get_block_wrapper_attributes(
 								<p class="domio-card-grid__text"><?php echo wp_kses_post( $text ); ?></p>
 							<?php endif; ?>
 
+							<?php
+							$items = isset( $card['items'] ) && is_array( $card['items'] ) ? array_filter( array_map( 'trim', $card['items'] ) ) : array();
+							?>
+							<?php if ( $items ) : ?>
+								<ul class="domio-card-grid__list">
+									<?php foreach ( $items as $item ) : ?>
+										<li><?php echo wp_kses_post( $item ); ?></li>
+									<?php endforeach; ?>
+								</ul>
+							<?php endif; ?>
+
 							<?php if ( $link_url && $link_text ) : ?>
 								<a class="domio-card-grid__link" href="<?php echo esc_url( $link_url ); ?>">
 									<?php echo esc_html( $link_text ); ?>

@@ -5,7 +5,7 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'domio/card-grid',
-		'version' => '1.0.0',
+		'version' => '1.1.0',
 		'title' => 'Domio: Korttiruudukko',
 		'category' => 'domio',
 		'icon' => 'grid-view',
@@ -543,7 +543,7 @@ PL 62521
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'domio/hero',
-		'version' => '1.1.2',
+		'version' => '1.2.0',
 		'title' => 'Domio: Hero',
 		'category' => 'domio',
 		'icon' => 'cover-image',
@@ -615,6 +615,16 @@ PL 62521
 			'patternOpacity' => array(
 				'type' => 'number',
 				'default' => 3
+			),
+			'asideHeading' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'asideLinks' => array(
+				'type' => 'array',
+				'default' => array(
+					
+				)
 			)
 		),
 		'supports' => array(
@@ -1134,7 +1144,7 @@ PL 62521
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'domio/trustmary',
-		'version' => '1.1.0',
+		'version' => '1.2.0',
 		'title' => 'Domio: Trustmary',
 		'category' => 'domio',
 		'icon' => 'star-filled',
