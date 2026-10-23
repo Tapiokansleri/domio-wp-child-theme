@@ -612,3 +612,11 @@ a.domio-hero__meta-author-name:focus-visible {
 .domio-hero--banner.is-style-quote .domio-hero__media::after {
 	background: rgb(18 18 18 / 58%);
 }
+
+.domio-hero .domio-hero__subheading a.domio-hero__tel {
+	color: inherit;
+	font-weight: 600;
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.18em;
+}

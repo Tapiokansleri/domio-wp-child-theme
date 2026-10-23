@@ -173,6 +173,9 @@ $domio_tel = static function ( $phone ) {
 									}
 									?>
 									<div class="domio-contacts__service">
+										<?php if ( $block_title ) : ?>
+											<h3 class="domio-contacts__h--service"><?php echo esc_html( $block_title ); ?></h3>
+										<?php endif; ?>
 										<?php if ( $block_phone || $block_email ) : ?>
 											<p class="domio-contacts__service-contact">
 												<?php if ( $block_phone ) : ?>
@@ -277,6 +280,9 @@ $domio_tel = static function ( $phone ) {
 
 		<?php if ( $invoice_heading || ! empty( $invoice_rows ) ) : ?>
 			<div class="domio-contacts__billing">
+				<?php if ( $invoice_heading ) : ?>
+					<h3 class="domio-contacts__h--billing"><?php echo esc_html( $invoice_heading ); ?></h3>
+				<?php endif; ?>
 				<?php if ( ! empty( $invoice_rows ) ) : ?>
 					<div class="domio-contacts__invoice">
 						<?php foreach ( $invoice_rows as $row ) : ?>
