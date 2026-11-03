@@ -24,12 +24,18 @@ define( 'DOMIO_THEME_URI', get_stylesheet_directory_uri() );
  * @return void
  */
 function domio_enqueue_styles() {
+	$deps = array( 'hello-elementor-theme-style' );
+
+	// Without Elementor its kit (global type and colours) no longer loads; the theme carries a copy.
+	if ( ! did_action( 'elementor/loaded' ) ) {
+		wp_enqueue_style( 'domio-kit', DOMIO_THEME_URI . '/assets/css/domio-kit.css', array( 'hello-elementor-theme-style' ), DOMIO_THEME_VERSION );
+		$deps[] = 'domio-kit';
+	}
+
 	wp_enqueue_style(
 		'domio-style',
 		get_stylesheet_directory_uri() . '/style.css',
-		array(
-			'hello-elementor-theme-style',
-		),
+		$deps,
 		DOMIO_THEME_VERSION
 	);
 }
@@ -46,6 +52,10 @@ require_once DOMIO_THEME_DIR . '/inc/avatars.php';
 require_once DOMIO_THEME_DIR . '/inc/author-profile.php';
 require_once DOMIO_THEME_DIR . '/inc/trustmary.php';
 require_once DOMIO_THEME_DIR . '/inc/mobile-cta.php';
+require_once DOMIO_THEME_DIR . '/inc/metform.php';
+require_once DOMIO_THEME_DIR . '/inc/footer.php';
+require_once DOMIO_THEME_DIR . '/inc/analytics.php';
+require_once DOMIO_THEME_DIR . '/inc/exit-intent.php';
 require_once DOMIO_THEME_DIR . '/inc/typography.php';
 require_once DOMIO_THEME_DIR . '/inc/settings.php';
 require_once DOMIO_THEME_DIR . '/inc/header.php';

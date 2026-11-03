@@ -7,6 +7,7 @@
 	"private": true,
 	"scripts": {
 		"build": "wp-scripts build --webpack-copy-php --blocks-manifest",
+		"postbuild": "node scripts/strip-css-bom.js",
 		"start": "wp-scripts start --webpack-copy-php --blocks-manifest",
 		"packages-update": "wp-scripts packages-update",
 		"lint:js": "wp-scripts lint-js",

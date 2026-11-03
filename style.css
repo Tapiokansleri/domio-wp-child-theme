@@ -5,7 +5,7 @@ Description: Child theme of Hello Elementor for the Domio site. Adds Domio desig
 Author: Tapio Kauranen
 Author URI: https://tapiokauranen.com
 Template: hello-elementor
-Version: 1.0.64
+Version: 1.1.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -214,4 +214,34 @@ body.domio-has-header {
 .page-content .domio-related-links__link:focus-visible,
 .page-content .domio-related-links__link:visited {
 	text-decoration: none !important;
+}
+
+/* Long text pages such as the privacy policy: Domio: Kuva + teksti with the class "is-style-prose" (no image). */
+.domio-media-text.is-style-prose .domio-media-text__inner {
+	width: min(850px, var(--domio-shell-width, calc(100% - 2.5rem)));
+	max-width: 850px;
+	margin-inline: auto;
+}
+
+body.domio-template .domio-landing-template .domio-media-text.is-style-prose h2 {
+	margin: 2.5rem 0 0.75rem !important;
+	font-size: var(--domio-fs-h3, clamp(1.15rem, 1.05rem + 0.45vw, 1.35rem)) !important;
+}
+
+body.domio-template .domio-landing-template .domio-media-text.is-style-prose h2:first-child {
+	margin-top: 0 !important;
+}
+
+body.domio-template .domio-landing-template .domio-media-text.is-style-prose ul {
+	margin-block: 0.5rem 1rem;
+}
+
+/* Long Finnish compounds ("kiinteistönhoitopalvelut") in headings hyphenate or wrap on phones instead of
+   widening the page. Elementor used to hide the overflow with overflow-x: hidden, which cut the word off. */
+h1,
+h2,
+h3,
+.domio-hero__heading {
+	overflow-wrap: anywhere; /* also lowers the min-content width, so a grid column cannot grow past the screen */
+	hyphens: auto;
 }

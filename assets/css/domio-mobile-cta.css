@@ -61,14 +61,13 @@
 		transform: translate(-50%, 12px);
 	}
 
-	/* Room under the footer's last line for the button, in the footer's own colour
-	   (Elementor footer 605, #0b1815); a page without that footer gets the room on the body. */
-	body:has(.domio-mobile-cta) .elementor-location-footer {
+	/* Room under the footer's last line for the button, in the footer's own colour (#0b1815);
+	   a page without the footer gets the room on the body. */
+	body:has(.domio-mobile-cta) .domio-footer {
 		padding-bottom: 80px;
-		background: #0b1815;
 	}
 
-	body:has(.domio-mobile-cta):not(:has(.elementor-location-footer)) {
+	body:has(.domio-mobile-cta):not(:has(.domio-footer)) {
 		padding-bottom: 80px;
 	}
 }

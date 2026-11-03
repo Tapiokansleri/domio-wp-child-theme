@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array<string, mixed>
  */
 function domio_get_default_settings() {
-	return array(
+	$defaults = array(
 		'use_header'          => false,
 		'header_scroll'       => 'always',
 		'phone'               => '040 630 5536',
@@ -24,7 +24,12 @@ function domio_get_default_settings() {
 		'cta_url'             => '/yhteystiedot/',
 		'related_link_groups' => array(),
 		'jobs_copy'           => domio_get_default_jobs_copy(),
+		'exit_intent'         => true,
 	);
+
+	return function_exists( 'domio_get_default_footer_settings' )
+		? array_merge( $defaults, domio_get_default_footer_settings() )
+		: $defaults;
 }
 
 /**
@@ -62,6 +67,7 @@ function domio_get_default_jobs_copy() {
 function domio_get_settings_tabs() {
 	return array(
 		'header'  => __( 'Header', 'domio' ),
+		'footer'  => __( 'Footer', 'domio' ),
 		'related' => __( 'Tutustu myös', 'domio' ),
 		'jobs'    => __( 'Työpaikat', 'domio' ),
 	);
@@ -396,6 +402,11 @@ function domio_sanitize_settings( $input ) {
 		$existing['email']      = isset( $input['email'] ) ? sanitize_email( $input['email'] ) : $defaults['email'];
 		$existing['cta_text']   = isset( $input['cta_text'] ) ? sanitize_text_field( $input['cta_text'] ) : $defaults['cta_text'];
 		$existing['cta_url']    = isset( $input['cta_url'] ) ? esc_url_raw( $input['cta_url'] ) : $defaults['cta_url'];
+		$existing['exit_intent'] = ! empty( $input['exit_intent'] );
+	}
+
+	if ( 'footer' === $tab && function_exists( 'domio_sanitize_footer_settings' ) ) {
+		$existing = array_merge( $existing, domio_sanitize_footer_settings( $input ) );
 	}
 
 	if ( 'related' === $tab || isset( $_POST['domio_related_links_saved'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -444,7 +455,7 @@ function domio_render_settings_page() {
 			<input type="hidden" name="domio_settings_tab" value="<?php echo esc_attr( $current ); ?>" />
 
 			<?php if ( 'header' === $current ) : ?>
-				<p><?php echo esc_html__( 'Domio-header ohittaa Elementorin Theme Builder -headerin.', 'domio' ); ?></p>
+				<p><?php echo esc_html__( 'Sivuston ylätunniste, yhteystiedot ja kehotteet.', 'domio' ); ?></p>
 				<p class="description">
 					<?php echo esc_html__( 'Logo haetaan sivuston asetuksista:', 'domio' ); ?>
 					<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus[control]=custom_logo' ) ); ?>">
@@ -459,6 +470,9 @@ function domio_render_settings_page() {
 					echo '<a href="' . esc_url( admin_url( 'nav-menus.php' ) ) . '">' . esc_html__( 'Ulkoasu → Valikot', 'domio' ) . '</a>.';
 					?>
 				</p>
+			<?php elseif ( 'footer' === $current ) : ?>
+				<p><?php echo esc_html__( 'Alatunnisteen tekstit, toimipisteet ja somelinkit.', 'domio' ); ?></p>
+				<?php domio_render_settings_footer_fields( $settings ); ?>
 			<?php elseif ( 'related' === $current ) : ?>
 				<p>
 					<?php echo esc_html__( 'Nämä linkit näkyvät kaikilla sivuilla, joilla on Domio: Tutustu myös -palikka. Muutos päivittyy kaikkiin ländäreihin kerralla.', 'domio' ); ?>
@@ -561,6 +575,16 @@ function domio_render_settings_header_fields( $settings ) {
 			<th scope="row"><label for="domio_cta_url"><?php echo esc_html__( 'CTA-linkki', 'domio' ); ?></label></th>
 			<td>
 				<input name="domio_theme_settings[cta_url]" type="url" id="domio_cta_url" value="<?php echo esc_attr( $settings['cta_url'] ); ?>" class="regular-text" />
+			</td>
+		</tr>
+		<tr>
+			<th scope="row"><?php echo esc_html__( 'Poistumiskehote', 'domio' ); ?></th>
+			<td>
+				<label for="domio_exit_intent">
+					<input name="domio_theme_settings[exit_intent]" type="checkbox" id="domio_exit_intent" value="1" <?php checked( ! empty( $settings['exit_intent'] ) ); ?> />
+					<?php echo esc_html__( 'Näytä työpöydällä hintalaskurikehote, kun kävijä on lähdössä sivulta', 'domio' ); ?>
+				</label>
+				<p class="description"><?php echo esc_html__( 'Kerran istunnossa. Ei näy lomake-, laskuri- eikä kiitossivuilla, eikä jos kävijä on jo käyttänyt laskuria tai lomaketta.', 'domio' ); ?></p>
 			</td>
 		</tr>
 	</table>

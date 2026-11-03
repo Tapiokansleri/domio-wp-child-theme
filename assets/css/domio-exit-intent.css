@@ -1,0 +1,135 @@
+/**
+ * Exit-intent nudge (inc/exit-intent.php): a card in the lower right corner, no overlay.
+ */
+
+.domio-exit {
+	position: fixed;
+	right: 24px;
+	bottom: 24px;
+	z-index: 9990;
+	width: min(380px, calc(100vw - 48px));
+}
+
+.domio-exit[hidden] {
+	display: none;
+}
+
+.domio-exit__panel {
+	position: relative;
+	box-sizing: border-box;
+	padding: 28px 28px 26px;
+	border-radius: 16px;
+	background: #0c1815;
+	color: #fff;
+	font-family: var(--domio-font, Onest, system-ui, sans-serif);
+	box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+	opacity: 0;
+	transform: translateY(16px);
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.domio-exit.is-open .domio-exit__panel {
+	opacity: 1;
+	transform: none;
+}
+
+/* The panel takes focus only so keyboard users land in it; it is not a control, so no focus ring. */
+.domio-exit__panel:focus,
+.domio-exit__panel:focus-visible {
+	outline: none;
+}
+
+.domio-exit .domio-exit__close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.08);
+	color: #fff;
+	cursor: pointer;
+}
+
+.domio-exit .domio-exit__close:hover,
+.domio-exit .domio-exit__close:focus,
+.domio-exit .domio-exit__close:focus-visible {
+	background: rgba(255, 255, 255, 0.18);
+}
+
+.domio-exit__eyebrow {
+	margin: 0 0 0.4rem;
+	color: var(--domio-btn-hover, #04e78d);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.domio-exit .domio-exit__title {
+	margin: 0 2rem 0.6rem 0;
+	color: #fff;
+	font-family: inherit;
+	font-size: 1.375rem;
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	line-height: 1.2;
+}
+
+.domio-exit__text {
+	margin: 0 0 1.25rem;
+	color: #c3c9c6;
+	font-size: 0.9375rem;
+	line-height: 1.55;
+}
+
+.domio-exit__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem 1rem;
+	align-items: center;
+}
+
+.domio-exit .domio-exit__primary {
+	display: inline-flex;
+	align-items: center;
+	min-height: var(--domio-btn-min-height, 44px);
+	padding: var(--domio-btn-pad-y, 15px) var(--domio-btn-pad-x, 30px);
+	border-radius: var(--domio-radius-cta, 30px);
+	background: var(--domio-btn-hover, #04e78d);
+	color: #121212;
+	font-size: var(--domio-btn-font-size, 13px);
+	font-weight: 600;
+	line-height: 1;
+	text-decoration: none;
+}
+
+.domio-exit .domio-exit__primary:hover,
+.domio-exit .domio-exit__primary:focus-visible {
+	background: #fff;
+	color: #121212;
+}
+
+.domio-exit .domio-exit__secondary {
+	color: #fff;
+	font-size: 0.875rem;
+	font-weight: 500;
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+
+.domio-exit .domio-exit__secondary:hover,
+.domio-exit .domio-exit__secondary:focus-visible {
+	color: var(--domio-btn-hover, #04e78d);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.domio-exit__panel {
+		transition: none;
+	}
+}
