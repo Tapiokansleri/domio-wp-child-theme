@@ -2,7 +2,8 @@
 /**
  * Google Analytics 4 for domio.fi (moved from Elementor Pro Custom Code snippets 2471 and 2470).
  *
- * The cookie consent plugin keeps the tag from running before consent and sends the Consent Mode signals;
+ * The cookie consent plugin sends the Consent Mode signals and decides whether the tag runs before consent
+ * (Advanced Consent Mode since 2026-11-05: it loads and sends cookieless pings until the visitor accepts);
  * this file only prints the tag. It is printed on the production domain only, so local and staging copies
  * never send visits to the live property.
  *
@@ -38,7 +39,7 @@ function domio_print_ga4_tag() {
 		return;
 	}
 	?>
-<!-- Google Analytics 4 (domio.fi). Suostumustila ja tagin esto ennen suostumusta: evästebanneri-lisäosa. -->
+<!-- Google Analytics 4 (domio.fi). Suostumustila (Consent Mode): evästebanneri-lisäosa. -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_attr( DOMIO_GA4_ID ); ?>"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
