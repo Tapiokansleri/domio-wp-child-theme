@@ -149,7 +149,7 @@ return array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'domio/contacts',
-		'version' => '1.0.0',
+		'version' => '1.1.0',
 		'title' => 'Domio: Yhteystiedot',
 		'category' => 'domio',
 		'icon' => 'id',
@@ -170,6 +170,18 @@ return array(
 			'heading' => array(
 				'type' => 'string',
 				'default' => 'Yhteystiedot'
+			),
+			'layout' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'areasHeading' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'peopleHeading' => array(
+				'type' => 'string',
+				'default' => ''
 			),
 			'serviceHours' => array(
 				'type' => 'string',

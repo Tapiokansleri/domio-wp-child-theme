@@ -378,3 +378,92 @@
 body.domio-template .domio-landing-template .domio-contacts .domio-contacts__service h3.domio-contacts__h--service {
 	font-weight: 600 !important;
 }
+
+/* Grouped layout (block attribute layout = "grouped"): services and offices first, people under group headings. */
+.domio-contacts--grouped .domio-contacts__top {
+	display: grid;
+	gap: 2rem;
+	align-items: start;
+}
+
+@media (min-width: 768px) {
+	.domio-contacts--grouped .domio-contacts__top {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: clamp(2rem, 6vw, 6rem);
+	}
+}
+
+.domio-contacts__offices {
+	display: grid;
+	gap: 1rem;
+	min-width: 0;
+}
+
+.domio-contacts__h--offices {
+	margin: 0;
+	color: inherit;
+	font-size: var(--domio-fs-body, 1.125rem);
+	font-weight: 600;
+	line-height: 1.35;
+	letter-spacing: -0.01em;
+}
+
+.domio-contacts--grouped .domio-contacts__service-note {
+	max-width: 46rem;
+}
+
+.domio-contacts__team {
+	display: grid;
+	gap: 1.75rem;
+	margin-top: 0.75rem;
+	padding-top: 2.5rem;
+	border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+}
+
+.domio-contacts__team-title {
+	margin: 0;
+	color: inherit;
+	font-size: var(--domio-fs-h2, clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem));
+	font-weight: 600;
+	line-height: var(--domio-lh-heading, 1.2);
+	letter-spacing: var(--domio-tracking-heading, -0.02em);
+}
+
+.domio-contacts__groups {
+	display: grid;
+	gap: 2.5rem 3rem;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+	align-items: start;
+}
+
+.domio-contacts__group {
+	display: grid;
+	gap: 1.1rem;
+	min-width: 0;
+	align-content: start;
+}
+
+.domio-contacts__group-title {
+	margin: 0;
+	padding-bottom: 0.7rem;
+	border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+	color: inherit;
+	font-size: var(--domio-fs-body, 1.125rem);
+	font-weight: 600;
+	line-height: 1.35;
+	letter-spacing: -0.01em;
+}
+
+.domio-contacts__group-people {
+	display: grid;
+	gap: 1.5rem;
+	min-width: 0;
+}
+
+.domio-contacts__group-people .domio-contacts__person {
+	margin: 0;
+}
+
+.domio-contacts__group-people .domio-contacts__contact {
+	overflow-wrap: anywhere;
+}

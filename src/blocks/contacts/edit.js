@@ -13,6 +13,7 @@ import {
 	PanelBody,
 	TextControl,
 	TextareaControl,
+	SelectControl,
 	Button,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
@@ -134,6 +135,9 @@ function PersonPhoto( { person } ) {
 export default function Edit( { attributes, setAttributes } ) {
 	const {
 		heading,
+		layout,
+		areasHeading,
+		peopleHeading,
 		serviceHours,
 		servicePhone,
 		urgentHeading,
@@ -276,6 +280,34 @@ export default function Edit( { attributes, setAttributes } ) {
 				}
 			/>
 			<InspectorControls>
+				<PanelBody title={ __( 'Asettelu', 'domio' ) } initialOpen={ true }>
+					<SelectControl
+						label={ __( 'Asettelu', 'domio' ) }
+						value={ layout || '' }
+						options={ [
+							{ label: __( 'Klassinen: toimipisteet ja palvelut vasemmalla, henkilöt oikealla', 'domio' ), value: '' },
+							{ label: __( 'Ryhmitelty: palvelut ja toimipisteet ensin, henkilöt otsikoiden alla', 'domio' ), value: 'grouped' },
+						] }
+						onChange={ ( value ) => setAttributes( { layout: value } ) }
+						help={ __( 'Ryhmitelty asettelu näkyy sivulla; editorin esikatselu näyttää aina klassisen asettelun.', 'domio' ) }
+					/>
+					{ 'grouped' === layout && (
+						<>
+							<TextControl
+								label={ __( 'Toimipisteet-otsikko', 'domio' ) }
+								value={ areasHeading || '' }
+								onChange={ ( value ) => setAttributes( { areasHeading: value } ) }
+							/>
+							<TextControl
+								label={ __( 'Henkilöt-otsikko', 'domio' ) }
+								value={ peopleHeading || '' }
+								onChange={ ( value ) => setAttributes( { peopleHeading: value } ) }
+								help={ __( 'Henkilöt ryhmitellään Osio-kentän mukaan (Henkilöt-paneeli), ryhmät järjestyksessä jossa ne ensimmäisen kerran esiintyvät.', 'domio' ) }
+							/>
+						</>
+					) }
+				</PanelBody>
+
 				<PanelBody title={ __( 'Palvelu ja päivystys', 'domio' ) } initialOpen={ true }>
 					<TextControl
 						label={ __( 'Akuutti-otsikko', 'domio' ) }
